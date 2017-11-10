@@ -1,0 +1,51 @@
+body{
+  width:1500px;
+  margin:15px auto;
+  font-family: Arial, "MS Trebuchet", sans-serif;
+}
+
+#LogIn_Registry{
+    padding-left: 75%;    
+}
+
+#pic{
+    padding-left: 40%;
+}
+
+/*-------------Einagabebox------------------*/
+section#sidebar{
+  padding-top: 5%;
+  padding-left: 35%;
+  width: 15%;
+}
+#TxtField1{
+    margin-top: 10px; 
+    text-indent: 1px;
+}
+#TxtField2{
+    margin-top: 10px; 
+    text-indent: 1px;
+}
+#checkBox{
+    margin-top: 10px; 
+    text-indent: 1px;
+}
+#Buttons{
+    margin-top: 10px; 
+    text-indent: 1px;
+}
+#link{
+margin-top: 10px; 
+text-indent: 1px;
+link:link{color:blue;}
+link:visited{color:blueviolet;}
+}
+/*-----------------------------------------*/
+
+footer#page_footer{
+  clear: both;
+  width: 100%; 
+  text-align: right;
+  margin-top: 10%;
+  
+}

@@ -1,0 +1,42 @@
+body{
+  width:1500px;
+  margin:15px auto;
+  font-family: Arial, "MS Trebuchet", sans-serif;
+}
+
+#pic{
+    padding-left: 40%;
+}
+
+#head{
+    margin-left: 42%;
+    margin-top: 5%;
+}
+/*-------------Einagabebox------------------*/
+section#sidebar{
+  padding-left: 33%;
+  width: 15%;
+}
+#TxtField1{
+    margin-top: 10px; 
+    text-indent: 1px;
+}
+#TxtField2{
+    margin-top: 10px; 
+    text-indent: 1px;
+}
+#checkBox{
+    margin-top: 10px; 
+    text-indent: 1px;
+}
+#Buttons{
+    margin-top: 10px; 
+    text-indent: 1px;
+}
+#link{
+margin-top: 10px; 
+text-indent: 1px;
+link:link{color:blue;}
+link:visited{color:blueviolet;}
+}
+/*-----------------------------------------*/
