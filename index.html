@@ -1,47 +1,44 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
 
-    <link href="style.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <title>Papla - Dein Partyplaner!</title>
+</head>
 
-    <title>Papla - Dein Partyplaner!</title>
-  </head>
-  <body>
-    <div class="container">
-      <div id="start" class="wrapper">
-        <div id="stripes"></div>
-        <div id="navi">
-          <ul>
-            <li><a href="#registration">Registrieren</a></li>
-            <li>|</li>
-            <li><a href="#">Anmelden <img src="img/login_icon.png" alt="Anmelden"></a></li>
-          </ul>
-        </div>
-        <div id="logo"><img src="img/logo_with_name.png" alt="Papla icon"></div>
-        <div id="arrow_down"><a href="#registration"><i class="material-icons">keyboard_arrow_down</i></a></div>
+<body>
+  <div class="container">
+    <div id="start" class="wrapper">
+      <div id="stripes"></div>
+      <div id="navi">
+        <ul>
+          <li><a href="#registration">Registrieren</a></li>
+          <li>|</li>
+          <li><a href="#">Anmelden <img src="img/login_icon.png" alt="Anmelden"></a></li>
+        </ul>
       </div>
-      <div id="registration" class="wrapper">
-        <div id="arrow_up"><a href="#"><i class="material-icons">keyboard_arrow_up</i></a></div>
-        
-        <div id="registrationForm">
-          <div id="rahmen">
-            <form action="#">
-              <input type="text" name="username" value="Benutzer"><br>
-              <input type="text" name="email" value="E-Mail"><br>
-              <input type="text" name="pw" value="Password"><br>
-              <input type="text" name="pw_check" value="Password wiederholen"><br>
-              <span id="state"> Bereits registriert? <a href="#">Einloggen</a></span>
-              <input type="submit" value="Submit">
-            </form>
-          </div>
+      <div id="logo"><img src="img/logo_with_name.png" alt="Papla icon"></div>
+      <div id="arrow_down"><a href="#registration"><i class="material-icons">keyboard_arrow_down</i></a></div>
+    </div>
+    <div id="registration" class="wrapper">
+      <div id="arrow_up"><a href="#"><i class="material-icons">keyboard_arrow_up</i></a></div>
+      <div id="registrationForm">
+        <div id="rahmen">
+          <form action="#">
+            <input type="text" name="username" value="Benutzer"><br>
+            <input type="text" name="email" value="E-Mail"><br>
+            <input type="text" name="pw" value="Password"><br>
+            <input type="text" name="pw_check" value="Password wiederholen"><br>
+            <span id="state"> Bereits registriert? <a href="#">Einloggen</a></span>
+            <input type="submit" value="Submit">
+          </form>
         </div>
-
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
