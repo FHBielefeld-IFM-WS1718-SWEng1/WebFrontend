@@ -1,44 +1,62 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Import des Fonts fuer die Icons wie Pfeil etc. -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+
+  <!-- Einbinden der style.css -->
+  <link href="css/style.css" rel="stylesheet">
+
   <title>Papla - Dein Partyplaner!</title>
 </head>
-
 <body>
+
   <div class="container">
-    <div id="start" class="wrapper">
-      <div id="stripes"></div>
-      <div id="navi">
+    
+    <!-- Wrapper der Startseite -->
+    <div id="start_page" class="wrapper">
+
+      <div id="headline_stripes"></div>
+
+      <div id="navigation">
         <ul>
-          <li><a href="#registration">Registrieren</a></li>
+          <li><a href="#registration_page">Registrieren</a></li>
           <li>|</li>
           <li><a href="#">Anmelden <img src="img/login_icon.png" alt="Anmelden"></a></li>
         </ul>
       </div>
       <div id="logo"><img src="img/logo_with_name.png" alt="Papla icon"></div>
-      <div id="arrow_down"><a href="#registration"><i class="material-icons">keyboard_arrow_down</i></a></div>
+      <div id="arrow_down"><a href="#registration_page"><i class="material-icons">keyboard_arrow_down</i></a></div>
     </div>
-    <div id="registration" class="wrapper">
+
+    <!-- Wrapper der Registrationsseite -->
+    <div id="registration_page" class="wrapper">
       <div id="arrow_up"><a href="#"><i class="material-icons">keyboard_arrow_up</i></a></div>
       <div id="registrationForm">
-        <div id="rahmen">
+        <!-- Box fuer die Registrationsform -->
+        <div id="form_box">
           <form action="#">
-            <input type="text" name="username" value="Benutzer"><br>
-            <input type="text" name="email" value="E-Mail"><br>
-            <input type="text" name="pw" value="Password"><br>
-            <input type="text" name="pw_check" value="Password wiederholen"><br>
-            <span id="state"> Bereits registriert? <a href="#">Einloggen</a></span>
-            <input type="submit" value="Submit">
+            <div id="textfields">
+              <input type="text" name="username" value="Benutzer"><br>
+              <input type="text" name="email" value="E-Mail"><br>
+              <input type="text" name="pw" value="Password"><br>
+              <input type="text" name="pw_check" value="Password wiederholen"><br>
+            </div>
+
+            <!-- Unterer Kasten in der Registrationsform-->
+            <div id="bottom_box">
+              <span id="state"> Bereits registriert? <a href="#">Einloggen</a></span>
+              <input type="submit" value="" id="button-register">
+            </div>
           </form>
         </div>
       </div>
     </div>
-  </div>
-</body>
 
+  </div>
+
+</body>
 </html>
