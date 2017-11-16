@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="js/main.js" defer></script>
+    <script type="test/x-template" , id="login-form">
+        <form @submit.prevent="login()">
+            <div id="textfields">
+                <input type="text" v-if="register" v-model="username" placeholder="Benutzer"><br>
+                <input type="email" v-model="email" placeholder="E-Mail"><br>
+                <input type="password" v-model="pw" placeholder="Password"><br>
+                <input type="password" v-if="register" v-model="pw_check" placeholder="Password wiederholen">
+            </div>
+            <div id="bottom_box">
+                <span v-if="register">Bereits registriert? <button @click="register = !register"
+                                                                   type="button">Einloggen</button></span>
+                <span v-else>Neu bei Papla? <button @click="register = !register"
+                                                    type="button">Registrieren</button></span>
+                <input type="submit" value="" id="login_button"/>
+            </div>
+        </form>
+    </script>
+    <title>Papla - Dein Partyplaner!</title>
+</head>
+
+<body>
+<div class="container">
+    <div id="start" class="wrapper">
+        <div id="stripes"></div>
+        <div id="navi">
+            <ul>
+                <li><a href="#login">Registrieren</a></li>
+                <li>|</li>
+                <li><a @submit.prevent="register = !register" href="#login">Anmelden <img src="img/login_icon.png"
+                                                                                          alt="Anmelden"></a></li>
+            </ul>
+        </div>
+        <div id="logo"><img src="img/logo_with_name.png" alt="Papla icon"></div>
+        <div id="arrow_down"><a href="#login"><i class="material-icons">keyboard_arrow_down</i></a></div>
+    </div>
+    <div id="login" class="wrapper">
+        <div id="arrow_up"><a href="#"><i class="material-icons">keyboard_arrow_up</i></a></div>
+        <div id="login_form">
+            <div id="form_box">
+                <login></login>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
