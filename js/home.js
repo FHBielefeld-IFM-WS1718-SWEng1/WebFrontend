@@ -7,23 +7,54 @@ new Vue({
 
 var table = document.getElementById('party_table').getElementsByTagName('tbody').item(0);
 
-function makeRow(obj) {
-    row = document.createElement("tr");
-    cellImg = document.createElement("td");
-    cellInfo = document.createElement("td");
-    cellDesc = document.createElement("td");
-    cellImg.appendChild(document.createTextNode("[image]"));
-    cellInfo.innerHTML = "Wer?: " + obj.name + "<br>Wo?: " + obj.homeworld + "<br>Wann?: " + obj.birth_year;
+function insertParty(obj) {
+    /*Namens Zeile*/
+    row = document.createElement('tr');
+    cellName = document.createElement('td');
+    //Tag für Namens Feld setzen
+    row.setAttribute('tag', 'name');
+    //Zellenbreite einstellen
+    cellName.setAttribute('colspan', 2);
+    //Namen einfügen
+    cellName.innerHTML = obj.name;
+    row.appendChild(cellName);
+    //Zeile anhängen
+    //table.appendChild(row);
+
+    /*Daten Zeile*/
+    row = document.createElement('tr');
+    row.setAttribute('tag', 'party');
+    cellImg = document.createElement('td');
+    cellInfo = document.createElement('td');
+    cellDesc = document.createElement('td');
+    //Tag für Bild Feld setzen
+    cellImg.setAttribute('tag', 'image');
+    if (obj.image) //wenn bild vorhanden, einfügen
+        cellImg.innerHTML = '<img src='+obj.image+' alt=\"Papla icon\">';
+    else //sonst standard Bild
+        cellImg.innerHTML = '<img src=\"img/logo.png\" alt=\"Papla icon\">';
+    //Tag für Info Feld setzen
+    cellInfo.setAttribute('tag', 'info');
+    //Infos einfügen
+    cellInfo.innerHTML = 'Wer?: ' + obj.user + '<br>Wo?: ' + obj.location + '<br>Wann?: ' + obj.time;
+    //Tag für Beschreibungs Feld setzen
+    cellDesc.setAttribute('tag', 'desc');
+    //Beschreibung einfügen
     cellDesc.innerHTML = obj.description;
+    //Zellen Einfügen
     row.appendChild(cellImg);
     row.appendChild(cellInfo);
     row.appendChild(cellDesc);
-    return row;
+    //Zeile Anhängen
+    table.appendChild(row);
+
+    //Spacer Anhängen
+    table.appendChild(makeSpacer())
 }
 
 function makeSpacer() {
-    row = document.createElement("tr");
-    row.setAttribute("tag", "spacer");
+    row = document.createElement('tr');
+    row.setAttribute('tag', 'spacer');
     return row;
 }
 
@@ -37,8 +68,7 @@ for (i = 0; i < 100; i++) {
             obj = JSON.parse(xhr.responseText);
             if (!obj.error) {
                 console.log("Appending to table! " + xhr.responseText);
-                table.appendChild(makeRow(obj));
-                table.appendChild(makeSpacer());
+                insertParty(obj)
             }
         }
     });

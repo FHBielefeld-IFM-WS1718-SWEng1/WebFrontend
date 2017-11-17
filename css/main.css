@@ -5,6 +5,9 @@
     --purple: #5c258d;
     --blue: #4c669a;
     --lightblue: #4389a2;
+
+    --greybg: #ece9e6;
+    --dgreybg: #dcd9d6;
 }
 
 body {
@@ -15,15 +18,15 @@ body {
 .container {
     display: grid;
     /* Hintergrund Verlauf fuer gaengiste Browser*/
-    background: -moz-radial-gradient(center, ellipse cover, #ffffff 20%, #ece9e6 100%);
+    background: -moz-radial-gradient(center, ellipse cover, #ffffff 20%, var(--greybg) 100%);
     /* FF3.6-15 */
-    background: -webkit-radial-gradient(center, ellipse cover, #ffffff 20%, #ece9e6 100%);
+    background: -webkit-radial-gradient(center, ellipse cover, #ffffff 20%, var(--greybg) 100%);
     /* Chrome10-25,Safari5.1-6 */
-    background: #ece9e6;
+    background: var(--greybg);
     /* Wenn nicht unterstuetz */
-    background: radial-gradient(ellipse at center, #ffffff 20%, #ece9e6 100%);
+    background: radial-gradient(ellipse at center, #ffffff 20%, var(--greybg) 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ece9e6', GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr=var(--greybg), GradientType=1);
     /* IE6-9 */
 }
 
