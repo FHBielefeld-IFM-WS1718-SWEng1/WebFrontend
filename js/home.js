@@ -1,9 +1,9 @@
-new Vue({
-    el: '#start',
-    data: {
-        showNotifications: false
-    }
-})
+// new Vue({
+//     el: 'header',
+//     data: {
+//         showNotifications: false
+//     }
+// })
 
 var table = document.getElementById('party_table').getElementsByTagName('tbody').item(0);
 
@@ -58,6 +58,7 @@ function makeSpacer() {
     return row;
 }
 
+if(false)
 for (i = 0; i < 100; i++) {
 
     const xhr = new XMLHttpRequest();

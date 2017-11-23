@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
     <link href="css/home.css" rel="stylesheet">
     <script src="https://unpkg.com/vue"></script>
     <script src="js/home.js" defer></script>
@@ -12,68 +13,69 @@
     <title>Papla - Dein Partyplaner!</title>
 </head>
 
-<body>
-<div class="container">
-    <div id="start" class="wrapper">
-        <div id="stripes"></div>
-        <div id="navi">
-            <ul>
-                <li><button @click="showNotifications = !showNotifications">Benachrichtigungen</button></li>
-                <li><a href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
-            </ul>
-        </div>
-        <div id="logo"><img src="img/logo.png" alt="Papla icon"></div>
-
-        <div id="bar">
-                <a id="bar_home" href="">Home</a>
-                <a id="bar_profil" href="profil.html">Profil</a>
-                <a id="bar_eigene" href="eigeneVeranstaltungen.html">Eigene Veranstaltungen</a>
-        </div>
-        <div id="content">
-            <table id="party_table">
-                <tbody></tbody>
-                <!-- Beispiel Füllung der Tabelle-->
-                <!--<tr>
-                    <td tag="image">[image]</td>
-                    <td tag="info">Wer?: Ich<br>Wo?: Hier!<br>Wann?: 29.2.2018</td>
-                    <td tag="desc">Beschreibung: Wird voll gut, ey!</td>
-                </tr>
-                <tr tag="spacer"></tr>
-                <tr>
-                    <td tag="image">[image]</td>
-                    <td tag="info">Wer?: Du<br>Wo?: Da!<br>Wann?: Demnächst</td>
-                    <td tag="desc">Beschreibung: Warum nicht?</td>
-                </tr>-->
-            </table>
-        </div>
-
-
-        <div v-if="showNotifications" id="notifications">
-
-            This is a notification<br>
-            And so is this<br>
-            and this!<br>
-            And this is a stupidly long text to test the wrapping on this
-
-            and if I write and essay that is very long would this field possibly expand downwards or how is it handling this?<br>
-            maybe<br>
-            I<br>
-            need<br>
-            to<br>
-            use<br>
-            more <br>
-            linebreaks<br>
-            to<br>
-            make<br>
-            this<br>
-            stupidly<br>
-            long<br>
-            and<br>
-            force<br>
-            scrollbars<br>
-        </div>
+<body class="container">
+<header class="header">
+    <div id="stripes"></div>
+    <div id="navi">
+        <ul>
+            <li>
+                <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
+                                                                                               alt="Benachrichtigungen">
+                </button>
+            </li>
+            <li><a href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
+        </ul>
     </div>
+
+    <div id="logo"><img src="img/logo.png" alt="Papla icon"></div>
+</header>
+
+<nav class="navigation">
+    <div id="bar">
+        <a id="bar_home" href="">Home</a>
+        <a id="bar_profil" href="profil.html">Profil</a>
+        <a id="bar_eigene" href="eigeneVeranstaltungen.html">Eigene Veranstaltungen</a>
+    </div>
+</nav>
+
+<main class="main">
+    <div id="content">
+        <table id="party_table">
+            <tbody>
+            <!-- Beispiel Füllung der Tabelle-->
+            <tr tag="name">
+                <td colspan=2>Testparty!</td>
+            </tr>
+            <tr tag="party">
+                <td tag="image"><img src="img/logo.png" alt="Papla icon"></td>
+                <td tag="info">Wer?: Ich<br>Wo?: Hier!<br>Wann?: 29.2.2018</td>
+                <td tag="desc">Beschreibung: Wird voll gut, ey!</td>
+            </tr>
+            <!-- <tr tag="spacer"></tr>
+           <tr>
+               <td tag="image">[image]</td>
+               <td tag="info">Wer?: Du<br>Wo?: Da!<br>Wann?: Demnächst</td>
+               <td tag="desc">Beschreibung: Warum nicht?</td>
+           </tr>-->
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<div class="left">
 </div>
+<div class="right">
+</div>
+
+<footer class="footer">
+    <ul>
+        <li><a href="kontakt.html">Kontakt</a></li>
+        <li><a href="hilfe.html">Hilfe</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+    </ul>
+</footer>
+
+
 </body>
 
 </html>
