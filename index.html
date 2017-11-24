@@ -11,15 +11,15 @@
     <script type="test/x-template" , id="login-form">
         <form @submit.prevent="login()">
             <div id="textfields">
-                <input type="text" v-if="register" v-model="username" placeholder="Benutzer"><br>
+                <input type="text" v-if="$root.register" v-model="username" placeholder="Benutzer"><br>
                 <input type="email" v-model="email" placeholder="E-Mail"><br>
                 <input type="password" v-model="pw" placeholder="Password"><br>
-                <input type="password" v-if="register" v-model="pw_check" placeholder="Password wiederholen">
+                <input type="password" v-if="$root.register" v-model="pw_check" placeholder="Password wiederholen">
             </div>
             <div id="bottom_box">
-                <span v-if="register">Bereits registriert? <button @click="register = !register"
-                                                                   type="button">Einloggen</button></span>
-                <span v-else>Neu bei Papla? <button @click="register = !register"
+                <span v-if="$root.register">Bereits registriert? <button @click="$root.register = !$root.register"
+                                                                         type="button">Einloggen</button></span>
+                <span v-else>Neu bei Papla? <button @click="$root.register = !$root.register"
                                                     type="button">Registrieren</button></span>
                 <input type="submit" value="" id="login_button"/>
             </div>
@@ -34,10 +34,10 @@
         <div id="stripes"></div>
         <div id="navi">
             <ul>
-                <li><a href="#login">Registrieren</a></li>
+                <li><a @click="switchToRegister()" href="#login">Registrieren</a></li>
                 <li>|</li>
-                <li><a @click="$loginComponent.register = !$loginComponent.register" href="#login">Anmelden <img src="img/login_icon.png"
-                                                                                          alt="Anmelden"></a></li>
+                <li><a @click="switchToLogin()" href="#login">Anmelden <img src="img/login_icon.png"
+                                                                            alt="Anmelden"></a></li>
             </ul>
         </div>
         <div id="logo"><img src="img/logo_with_name.png" alt="Papla icon"></div>

@@ -1,8 +1,7 @@
 Vue.component('login', {
     template: '#login-form',
-    data: function(){
+    data: function () {
         return {
-            register: true,
             username: '',
             email: '',
             pw: '',
@@ -10,11 +9,12 @@ Vue.component('login', {
         }
     },
     methods: {
-        login(){
-            if(this.register)
-                console.log("Register new user", this.username, this.email, this.pw, this.pw_check);
-            else
+        login() {
+            if (this.$root.register)
             {
+                console.log("Register new user", this.username, this.email, this.pw, this.pw_check);
+            }
+            else {
                 console.log("Login existing user", this.email, this.pw);
                 str = window.location.href;
                 str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
@@ -25,4 +25,17 @@ Vue.component('login', {
 });
 
 
-console.log("HELLO!"+main.currentView);
+new Vue({
+    el: '.container',
+    data: {
+        register: true
+    },
+    methods: {
+        switchToLogin() {
+            this.register = false;
+        },
+        switchToRegister() {
+            this.register = true;
+        }
+    }
+})
