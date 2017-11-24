@@ -58,7 +58,6 @@ function makeSpacer() {
     return row;
 }
 
-if(false)
 for (i = 0; i < 100; i++) {
 
     const xhr = new XMLHttpRequest();
@@ -73,7 +72,7 @@ for (i = 0; i < 100; i++) {
             }
         }
     });
-    xhr.open("GET", "http://api.dleunig.de/parties/" + i);
+    xhr.open("GET", "http://api.dleunig.de/user?api=fisch/parties/" + i);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.send();
 }

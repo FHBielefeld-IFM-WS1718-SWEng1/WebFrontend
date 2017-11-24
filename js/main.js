@@ -24,20 +24,5 @@ Vue.component('login', {
     }
 });
 
-new Vue({
-    el: '#login_form',
-    data: {
-       register: true,
-       // username: 'user',
-       // email: 'mail',
-       // pw: 'pw',
-       // pw_check: 'pwC'
-    },
-    methods: {
-        switchRegister: function () {
-            //this.register = !this.register
-        },
-        reverseMessage: function () {
-        }
-    }
-})
+
+console.log("HELLO!"+main.currentView);
