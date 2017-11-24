@@ -19,7 +19,7 @@ function insertParty(obj) {
     cellName.innerHTML = obj.name;
     row.appendChild(cellName);
     //Zeile anhängen
-    //table.appendChild(row);
+    table.appendChild(row);
 
     /*Daten Zeile*/
     row = document.createElement('tr');
@@ -30,7 +30,7 @@ function insertParty(obj) {
     //Tag für Bild Feld setzen
     cellImg.setAttribute('tag', 'image');
     if (obj.image) //wenn bild vorhanden, einfügen
-        cellImg.innerHTML = '<img src='+obj.image+' alt=\"Papla icon\">';
+        cellImg.innerHTML = '<img src=' + obj.image + ' alt=\"Papla icon\">';
     else //sonst standard Bild
         cellImg.innerHTML = '<img src=\"img/logo.png\" alt=\"Papla icon\">';
     //Tag für Info Feld setzen
@@ -58,21 +58,18 @@ function makeSpacer() {
     return row;
 }
 
-for (i = 0; i < 100; i++) {
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-    const xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-
-    xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4 && xhr.responseText) {
-            obj = JSON.parse(xhr.responseText);
-            if (!obj.error) {
-                console.log("Appending to table! " + xhr.responseText);
-                insertParty(obj)
-            }
+xhr.addEventListener("readystatechange", function () {
+    if (this.readyState === 4 && xhr.responseText) {
+        obj = JSON.parse(xhr.responseText);
+        if (!obj.error && obj.values) {
+            for (var i in obj.values)
+                insertParty(obj.values[i]);
         }
-    });
-    xhr.open("GET", "http://api.dleunig.de/user?api=fisch/parties/" + i);
-    xhr.setRequestHeader("content-type", "application/json");
-    xhr.send();
-}
+    }
+});
+xhr.open("GET", "http://api.dleunig.de/parties?api=fisch/");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.send();
