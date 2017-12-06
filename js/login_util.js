@@ -1,0 +1,26 @@
+function papla_login(email, password, redirect)
+{
+    redirect = redirect || null;
+    postRequest("login",
+        JSON.stringify({"email": email, "password": password}),
+        function (data) {
+            if(data.key) {
+                console.log("Received API Key: " + data.key);
+                localStorage.setItem("apiKey", data.key);
+                if(redirect!==null)
+                    redirect();
+            }
+        });
+}
+
+function papla_logout(apiKey)
+{
+    postRequest("login",
+        JSON.stringify({"apiKey": apiKey}),
+        function (data) {
+            if(data.key) {
+                console.log("Invalidated API Key: " + data.key);
+            }
+        });
+    localStorage.removeItem("apiKey");
+}
