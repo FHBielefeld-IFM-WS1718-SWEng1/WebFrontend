@@ -1,22 +1,20 @@
-function papla_login(email, password, redirect)
+function papla_login(email, password, callback)
 {
-    redirect = redirect || null;
     postRequest("login",
         JSON.stringify({"email": email, "password": password}),
         function (data) {
             if(data.key) {
                 console.log("Received API Key: " + data.key);
                 localStorage.setItem("apiKey", data.key);
-                if(redirect!==null)
-                    redirect();
             }
+            if(callback)
+                callback(data.key);
         });
 }
 
 function papla_logout(apiKey)
 {
-    postRequest("login",
-        JSON.stringify({"apiKey": apiKey}),
+    deleteRequest("logout?api="+apiKey,
         function (data) {
             if(data.key) {
                 console.log("Invalidated API Key: " + data.key);
