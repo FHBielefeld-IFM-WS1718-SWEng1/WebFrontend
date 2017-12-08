@@ -1,10 +1,3 @@
-// new Vue({
-//     el: 'header',
-//     data: {
-//         showNotifications: false
-//     }
-// })
-
 var table = document.getElementById('party_table').getElementsByTagName('tbody').item(0);
 
 function insertParty(obj) {
@@ -58,18 +51,24 @@ function makeSpacer() {
     return row;
 }
 
-const xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
 
-xhr.addEventListener("readystatechange", function () {
-    if (this.readyState === 4 && xhr.responseText) {
-        obj = JSON.parse(xhr.responseText);
-        if (!obj.error && obj.values) {
-            for (var i in obj.values)
-                insertParty(obj.values[i]);
-        }
+var apiKey = localStorage.getItem("apiKey");
+console.log("API Key: " + apiKey);
+getRequest("parties?api=" + apiKey, function (data) {
+    if (!data.error && data.values) {
+        for (var i in data.values)
+            insertParty(data.values[i]);
     }
 });
-xhr.open("GET", "http://api.dleunig.de/parties?api=fisch/");
-xhr.setRequestHeader("content-type", "application/json");
-xhr.send();
+
+
+new Vue({
+    el: '#navi',
+    data: {
+    },
+    methods: {
+        logout() {
+            papla_logout(apiKey);
+        }
+    }
+})
