@@ -37,9 +37,10 @@ Vue.component('login', {
             }
             else {
                 console.log("Login existing user", this.email, this.pw);
+                const rooty = this.$root;
                 papla_login(this.email, this.pw, function (success) {
                     if (!success)
-                        this.$root.setInfo("Die Login Daten sind ungültig", true);
+                        rooty.setInfo("Die Login Daten sind ungültig", true);
                     else {
                         str = window.location.href;
                         str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
@@ -51,16 +52,18 @@ Vue.component('login', {
     }
 });
 
-new Vue({
+const rootVue = new Vue({
     el: '.container',
     data: {
         register: true,
         info: "",
-        error: ""
+        error: "",
+        arrow: 1
     },
     methods: {
         switchToLogin() {
             this.register = false;
+            console.log("scroll: " + window.pageYOffset);
         },
         switchToRegister() {
             this.register = true;
@@ -81,6 +84,16 @@ new Vue({
         }
     }
 });
+
+window.onscroll = function (ev) {
+    rootVue.arrow = 0;
+    if (window.pageYOffset <= 0) {
+        rootVue.arrow = 1;
+    }
+    else if (window.pageYOffset >= document.body.offsetHeight - window.innerHeight) {
+        rootVue.arrow = 2;
+    }
+};
 
 
 function importScript(url) {

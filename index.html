@@ -25,10 +25,10 @@
                 <input type="password" v-if="$root.register" v-model="pw_check" placeholder="Password wiederholen">
             </div>
             <div tag="box" id="bottom_box">
-                <span v-if="$root.register">Bereits registriert? <button @click="$root.register = !$root.register"
-                                                                         type="button">Einloggen</button></span>
-                <span v-else>Neu bei Papla? <button @click="$root.register = !$root.register"
-                                                    type="button">Registrieren</button></span>
+                <span v-if="$root.register">Bereits registriert?
+                    <button @click="$root.switchToLogin()" type="button">Einloggen</button></span>
+                <span v-else>Neu bei Papla?
+                    <button @click="$root.switchToRegister()" type="button">Registrieren</button></span>
                 <input type="submit" value="" id="login_button"/>
             </div>
         </form>
@@ -49,10 +49,10 @@
             </ul>
         </div>
         <div id="logo"><img src="img/logo_with_name.png" alt="Papla icon"></div>
-        <div id="arrow_down"><a href="#login"><i class="material-icons">keyboard_arrow_down</i></a></div>
+        <div id="arrow_down" ><a href="#login"><i v-if="arrow == 1" class="material-icons">keyboard_arrow_down</i></a></div>
     </div>
     <div id="login" class="wrapper">
-        <div id="arrow_up"><a href="#"><i class="material-icons">keyboard_arrow_up</i></a></div>
+        <div id="arrow_up"><a href="#"><i v-if="arrow == 2" class="material-icons">keyboard_arrow_up</i></a></div>
         <div id="login_form">
             <div id="form_box">
                 <login></login>
