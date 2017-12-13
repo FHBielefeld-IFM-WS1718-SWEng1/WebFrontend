@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/profile.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="js/rest_util.js"></script>
+    <script src="js/login_util.js"></script>
+    <script src="js/profile.js" defer></script>
+    <title>Papla - Dein Partyplaner!</title>
+</head>
+
+<body class="container">
+<header class="header">
+    <div id="stripes"></div>
+    <div id="navi">
+        <ul>
+            <li>
+                <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
+                                                                                               alt="Benachrichtigungen">
+                </button>
+            </li>
+            <li><a @click="" href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
+        </ul>
+    </div>
+
+    <div id="logo"><img src="img/logo.png" alt="Papla icon"></div>
+</header>
+
+<nav class="navigation">
+    <div id="bar">
+        <a id="bar_home" href="home.html">Home</a>
+        <a id="bar_profil" href="profil.html">Profil</a>
+        <a id="bar_eigene" href="eigeneVeranstaltungen.html">Eigene Veranstaltungen</a>
+    </div>
+</nav>
+
+<main class="main">
+    <div id="content">
+
+        <div id="picture">
+            <img src="img/logo.png">
+        </div>
+
+        <div id="user_data">
+            <div tag="segment">
+                <label>Nutzername</label><br>
+                <input v-model="name" placeholder="Nutzername"/>
+            </div>
+            <div tag="segment">
+                <label>E-Mail</label><br>
+                <input v-model="email" readonly/>
+            </div>
+            <div tag="segment">
+                <label>Geburtsdatum</label><br>
+                <input type="date" v-model="birthdate"/>
+            </div>
+            <div tag="segment">
+                <label>Geschlecht</label><br>
+                <input type="gender" v-model="gender"/>
+            </div>
+            <span><button @click="updateProfile">Profil Speichern</button></span>
+            <span><button @click="deleteProfile">Profil Löschen</button></span>
+        </div>
+
+        <div id="contacts">
+            <span>
+                <label> Kontakte </label>
+                <hr>
+                <input id="Suche" type="text" value="Suche"/>
+                <button value="add">+</button>
+                <ul id="list_contacts">
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                    <li>Tim Meier</li>
+                </ul>
+                <label> Kontaktanfragen </label>
+                <ul id="list_contactrequests">
+                </ul>
+            </span>
+        </div>
+
+        <div id="events_past">
+            <span>Vergangene Veranstaltungen</span>
+            <ul id="list_events_past">
+                <li>Geburtstagpsarty</li>
+                <li>Hochzeit Meier</li>
+                <li>Sackhüpfen</li>
+                <li>Tetris World Championship</li>
+            </ul>
+        </div>
+
+        <div id="events_future">
+            <span>Zukünftige Veranstaltungen</span>
+            <ul id="list_events_future">
+                <li>Saufparty</li>
+                <li>Tims Hammer Party</li>
+                <li>Poke Party</li>
+            </ul>
+        </div>
+
+    </div>
+</main>
+
+<div class="left">
+</div>
+<div class="right">
+</div>
+
+<footer class="footer">
+    <ul>
+        <li><a href="kontakt.html">Kontakt</a></li>
+        <li><a href="hilfe.html">Hilfe</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+    </ul>
+</footer>
+
+
+</body>
+
+</html>
