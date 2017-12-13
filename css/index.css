@@ -134,7 +134,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 25px; }
+  padding-bottom: 25px;
+  min-height: 24px; }
   #arrow_down a {
     color: #c8c8c8;
     text-decoration: none; }
@@ -148,7 +149,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 25px; }
+  padding-top: 25px;
+  min-height: 24px; }
   #arrow_up a {
     color: #c8c8c8;
     text-decoration: none; }
