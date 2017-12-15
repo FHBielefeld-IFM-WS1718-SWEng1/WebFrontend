@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/veranstaltung.css" rel="stylesheet">
+    <title>Papla - Dein Partyplaner!</title>
+</head>
+
+<body class="container">
+<header class="header">
+    <div id="stripes"></div>
+    <div id="navi">
+        <ul>
+            <li>
+                <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
+                                                                                               alt="Benachrichtigungen">
+                </button>
+            </li>
+            <li><a @click="" href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
+        </ul>
+    </div>
+
+    <div id="logo"><img src="img/logo.png" alt="Papla icon"></div>
+</header>
+
+<nav class="navigation">
+    <div id="bar">
+        <a id="bar_home" href="home.html">Home</a>
+        <a id="bar_profil" href="profil.html">Profil</a>
+        <a id="bar_eigene" href="eigeneVeranstaltungen.html">Eigene Veranstaltungen</a>
+    </div>
+</nav>
+
+<div class="left">
+</div>
+<div class="right">
+</div>
+
+<main class="main">
+    <div id="content">
+        <div id="picture">
+            <img src="img/logo.png"/>
+        </div>
+
+        <div id="party_description">
+            <div tag="name">
+                <label>Name</label><br>
+                <input v-model="Name" placeholder="Veranstaltungsname"/>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<footer class="footer">
+    <ul>
+        <li><a href="kontakt.html">Kontakt</a></li>
+        <li><a href="hilfe.html">Hilfe</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+    </ul>
+</footer>
+
+
+</body>
+
+</html>
