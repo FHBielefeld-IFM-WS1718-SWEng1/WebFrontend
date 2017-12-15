@@ -6,6 +6,7 @@ function papla_login(email, password, callback)
             if(data.key) {
                 console.log("Received API Key: " + data.key);
                 localStorage.setItem("apiKey", data.key);
+                localStorage.setItem("userId", data.id);
             }
             if(callback)
                 callback(data.key);
