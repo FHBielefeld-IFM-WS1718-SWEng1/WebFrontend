@@ -38,19 +38,35 @@ Vue.component('login', {
             else {
                 console.log("Login existing user", this.email, this.pw);
                 const rooty = this.$root;
-                papla_login(this.email, this.pw, function (success) {
-                    if (!success)
-                        rooty.setInfo("Die Login Daten sind ungültig", true);
-                    else {
-                        str = window.location.href;
-                        str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
-                        window.location.replace(str);
-                    }
-                });
+                /*  if (this.email = (/([\w]+@+[\w]+\.+[w]))){
+                          if(this.pw=(/(\/[\w]/[\w]/[\w]/[\w]/[\w]/[\w]/[\w]/[\w]/[\w]*))){
+                              //siehe unten
+                              HIER DEN TEIL papla_login MIT if/else Teil EINFÜGEN
+                      }
+                      else{
+                          rooty.setInfo("Falsche Passworteingabe",true);
+                      }
+                 }
+                 else{
+                   rooty.setInfo("Falsches E-Mail Adressen Format",true);
+                 }
+              */
+                    papla_login(this.email, this.pw, function (success) {
+                        if (!success)
+                            rooty.setInfo("Die Login Daten sind ungültig", true);
+                        else {
+                            str = window.location.href;
+                            str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
+                            window.location.replace(str);
+                        }
+
             }
-        }
-    }
-});
+        );
+}
+}
+}
+})
+;
 
 const rootVue = new Vue({
     el: '.container',
