@@ -12,27 +12,29 @@ Vue.component('login', {
         login() {
             if (this.$root.register) {
                 console.log("Register new user", this.username, this.email, this.pw, this.pw_check);
-                if (this.pw !== this.pw_check) {
-                    console.log("passwörter stimmen nicht überein");
-                    this.$root.setInfo("Passwörter stimmen nicht überein.", true);
-                }
-                else {
-                    const rooty = this.$root;
-                    postRequest("register",
-                        JSON.stringify({"name": this.username, "email": this.email, "password": this.pw}),
-                        function (data) {
-                            console.log("Register return, " + data);
-                            if (data.error) {
-                                if (data.error === "Email must be unique")
-                                    rooty.setInfo("Diese E-Mail ist bereits registriert.", true);
-                                else
-                                    rooty.setInfo("Fehler bei der Registrierung<br>Bitte Support kontaktieren.", true);
-                            }
-                            else {
-                                rooty.setInfo("Registrierung erfolgreich!<br>Sie können sich jetzt einloggen.", false);
-                                rooty.switchToLogin();
-                            }
-                        });
+                if(this.email === REGEXEMAIL){
+                    if (this.pw !== this.pw_check) {
+                        console.log("passwörter stimmen nicht überein");
+                        this.$root.setInfo("Passwörter stimmen nicht überein.", true);
+                    }
+                    else {
+                        const rooty = this.$root;
+                        postRequest("register",
+                            JSON.stringify({"name": this.username, "email": this.email, "password": this.pw}),
+                            function (data) {
+                                console.log("Register return, " + data);
+                                if (data.error) {
+                                    if (data.error === "Email must be unique")
+                                        rooty.setInfo("Diese E-Mail ist bereits registriert.", true);
+                                    else
+                                        rooty.setInfo("Fehler bei der Registrierung<br>Bitte Support kontaktieren.", true);
+                                }
+                                else {
+                                    rooty.setInfo("Registrierung erfolgreich!<br>Sie können sich jetzt einloggen.", false);
+                                    rooty.switchToLogin();
+                                }
+                            });
+                    }
                 }
             }
             else {
