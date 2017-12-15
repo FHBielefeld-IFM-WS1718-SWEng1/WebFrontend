@@ -4,7 +4,8 @@ const rootVue = new Vue({
         email: "",
         name: "",
         birthdate: "",
-        gender: 0
+        gender: 0,
+        owner: false
     },
     methods: {
         updateProfile() {
@@ -24,17 +25,21 @@ const rootVue = new Vue({
                 });
             } else {
             }
+        },
+        getLocalizedGender() {
+            return this.gender===1?"Männlich": this.gender===2?"Weiblich": this.gender===3?"Andere": "Keine Angabe";
         }
 
     }
 });
 
-
+var loggedInId = localStorage.getItem("userId");
 var split = /(id=)(\d+)/g.exec(window.location.href);
-var userId = (split != null && split.length > 0) ? split[2] : 23;
-console.log("User Id" + userId);
+var userId = (split != null && split.length > 0) ? split[2] : loggedInId;
 var apiKey = localStorage.getItem("apiKey");
 console.log("API Key: " + apiKey);
+rootVue.owner = userId === loggedInId;
+console.log("Is Owner: "+rootVue.owner);
 getRequest("user/" + userId + "?api=" + apiKey, function (data) {
     if (!data.error) {
         rootVue.email = data.email;
