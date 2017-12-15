@@ -34,7 +34,7 @@
 <nav class="navigation">
     <div id="bar">
         <a id="bar_home" href="home.html">Home</a>
-        <a id="bar_profil" href="profil.html">Profil</a>
+        <a id="bar_profil" href="profile.html">Profil</a>
         <a id="bar_eigene" href="eigeneVeranstaltungen.html">Eigene Veranstaltungen</a>
     </div>
 </nav>
@@ -61,7 +61,12 @@
             </div>
             <div tag="segment">
                 <label>Geschlecht</label><br>
-                <input type="gender" v-model="gender"/>
+                <select name="gender" v-model="gender">
+                    <option value=0>Keine Angabe</option>
+                    <option value=1>Männlich</option>
+                    <option value=2>Weiblich</option>
+                    <option value=3>Andere</option>
+                </select>
             </div>
             <span><button @click="updateProfile">Profil Speichern</button></span>
             <span><button @click="deleteProfile">Profil Löschen</button></span>
