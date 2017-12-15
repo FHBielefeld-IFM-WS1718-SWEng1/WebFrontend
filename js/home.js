@@ -1,5 +1,11 @@
 var table = document.getElementById('party_table').getElementsByTagName('tbody').item(0);
 
+// öffnet popup bei Click
+function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+}
+
 function insertParty(obj) {
     /*Namens Zeile*/
     row = document.createElement('tr');

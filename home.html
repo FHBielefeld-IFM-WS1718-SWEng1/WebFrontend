@@ -19,11 +19,16 @@
     <div id="stripes"></div>
     <div id="navi">
         <ul>
+            <!--My Änderung  POPUP -->
             <li>
-                <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
-                                                                                               alt="Benachrichtigungen">
-                </button>
+                <div class="popup" onclick="myFunction()">
+                    <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png" alt="Benachrichtigungen"></button>
+
+                    <span class="popuptext" id="myPopup">Sauf Party <br><br> Es wurde eine Abstimmung erstellt <br><br>
+                    <input class="tooltip" type="submit" name="Jetzt_ansehen" value="Jetzt ansehen"></span>
+                </div>
             </li>
+
             <li><a @click="" href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
         </ul>
     </div>
@@ -35,29 +40,43 @@
     <div id="bar">
         <a id="bar_home" href="">Home</a>
         <a id="bar_profil" href="profil.html">Profil</a>
-        <a id="bar_eigene" href="eigeneVeranstaltungen.html">Eigene Veranstaltungen</a>
+        <a id="bar_eigene" href="ownEvent.html">Eigene Veranstaltungen</a> <!--Änderung Namen auf Englisch--->
     </div>
 </nav>
 
 <main class="main">
     <div id="content">
-        <table id="party_table">
+        <table id="party_table" >
             <tbody>
             <!-- Beispiel Füllung der Tabelle-->
-            <!-- <tr tag="name">
+             <tr tag="name">
                <td colspan=2>Testparty!</td>
            </tr>
            <tr tag="party">
                <td tag="image"><img src="img/logo.png" alt="Papla icon"></td>
                <td tag="info">Wer?: Ich<br>Wo?: Hier!<br>Wann?: 29.2.2018</td>
-               <td tag="desc">Beschreibung: Wird voll gut, ey!</td>
+               <!--My Änderung-->
+               <td tag="desc"><span>Beschreibung: <br> Wird voll gut, ey!</span>
+                              <!--<textarea style="width: 70%" disabled="disabled" v-model="message" placeholder=""></textarea></td></td>-->
+               <td tag="butt"><input type="submit" name="Info" value="" style="background-image: url(img/info.png)">
+                              <input type="submit" name="Zusage" value="" style="background-image: url(img/thumb_down.png)">
+                              <input type="submit" name="Absage" value="" style="background-image: url(img/thumb_up.png)"></td>
+               <!--My Änderung-->
            </tr>
-          <tr tag="spacer"></tr>
-          <tr>
-              <td tag="image">[image]</td>
-              <td tag="info">Wer?: Du<br>Wo?: Da!<br>Wann?: Demnächst</td>
-              <td tag="desc">Beschreibung: Warum nicht?</td>
-          </tr>-->
+           <tr tag="spacer"></tr>
+              <tr tag="name">
+                <td colspan=2>Mega Fete!!!</td>
+            <tr tag="party">
+                <td tag="image">[image]</td>
+                <td tag="info">Wer?: Du<br> Wo?: Da! <br>Wann?: Demnächst</td>
+                <!--My Änderung-- TO-DO => Bei tag="desc" Verbindung zur 'Eigenen Veranstalltung' aufbauen... synchronisierung-->
+                <td tag="desc"><span>Beschreibung: <br> Warum nicht? </span>
+                <td tag="butt"><input type="submit" name="Info" value="" style="background-image: url(img/info.png)">
+                               <input type="submit" name="Zusage" value="" style="background-image: url(img/thumb_down.png)">
+                               <input type="submit" name="Absage" value="" style="background-image: url(img/thumb_up.png)"></td>
+                <!--My Änderung-->
+            </tr>
+
             </tbody>
         </table>
     </div>
