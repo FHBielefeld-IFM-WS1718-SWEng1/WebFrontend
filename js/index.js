@@ -12,7 +12,7 @@ Vue.component('login', {
         login() {
             if (this.$root.register) {
                 console.log("Register new user", this.username, this.email, this.pw, this.pw_check);
-                if(this.email === REGEXEMAIL){
+              //  if(this.email.match(REGEXEMAIL)){
                     if (this.pw !== this.pw_check) {
                         console.log("passwörter stimmen nicht überein");
                         this.$root.setInfo("Passwörter stimmen nicht überein.", true);
@@ -35,15 +35,19 @@ Vue.component('login', {
                                 }
                             });
                     }
-                }
+             /*   }
+                else{
+                    rooty.setInfo("Falsches E-Mail Adressen Format",true);
+                }*/
             }
             else {
                 console.log("Login existing user", this.email, this.pw);
                 const rooty = this.$root;
-                  if (this.email === REGEXEMAIL){
-                      papla_login(this.email, this.pw, function (success) {
+                mail=this.email;
+                  if (mail.toString().match(REGEXEMAIL)){
+                      papla_login(mail, this.pw, function (success) {
                           if (!success)
-                              rooty.setInfo("Die Login Daten sind ungültig", true);
+                              rooty.setInfo("Die Login Daten sind ungültig "+this.email+" "+mail, true);
                           else {
                               str = window.location.href;
                               str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
@@ -113,4 +117,4 @@ function importScript(url) {
     document.head.appendChild(script);
 }
 
-const REGEXEMAIL =(/([\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+@[\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+\.[\w][\w]+ )/g);
+const REGEXEMAIL =/([\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+@[\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+\.[\w][\w]+)/g;
