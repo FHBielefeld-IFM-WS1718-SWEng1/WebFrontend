@@ -24,7 +24,6 @@ const rootVue = new Vue({
     }
 });
 
-
 var split = /(id=)(\d+)/g.exec(window.location.href);
 var userId = (split!=null && split.length>0)?split[2]:23;
 console.log("User Id" + userId);
