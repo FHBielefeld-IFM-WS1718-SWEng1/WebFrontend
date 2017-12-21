@@ -22,4 +22,7 @@ function papla_logout(apiKey)
             }
         });
     localStorage.removeItem("apiKey");
+    str = window.location.href;
+    str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/index.html");
+    window.location.replace(str);
 }
