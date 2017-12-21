@@ -172,21 +172,29 @@
       .popup-container .popup .popup-buttons li {
         float: left;
         list-style: none; }
-        .popup-container .popup .popup-buttons li button[pos=left] {
-          border-radius: 0px 0px 0px .4em; }
-        .popup-container .popup .popup-buttons li button[pos=right] {
-          border-radius: 0px 0px .4em 0px; }
-        .popup-container .popup .popup-buttons li .confirm {
-          background: darkseagreen; }
-        .popup-container .popup .popup-buttons li .deny {
-          background: darkred; }
         .popup-container .popup .popup-buttons li button {
           display: block;
           height: 60px;
           width: var(--button-width);
           line-height: 60px;
           text-transform: uppercase;
-          border: none; }
+          border: none;
+          background: #b3b3b3; }
+          .popup-container .popup .popup-buttons li button:hover {
+            background: #cccccc;
+            font-weight: bold; }
+          .popup-container .popup .popup-buttons li button[pos=left] {
+            border-radius: 0px 0px 0px .4em; }
+          .popup-container .popup .popup-buttons li button[pos=right] {
+            border-radius: 0px 0px .4em 0px; }
+          .popup-container .popup .popup-buttons li button[class=confirm] {
+            background: #99ff99; }
+            .popup-container .popup .popup-buttons li button[class=confirm]:hover {
+              background: #66ff66; }
+          .popup-container .popup .popup-buttons li button[class=deny] {
+            background: #8b0000; }
+            .popup-container .popup .popup-buttons li button[class=deny]:hover {
+              background: #cc0000; }
 
 .main {
   grid-area: main; }

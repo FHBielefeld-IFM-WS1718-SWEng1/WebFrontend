@@ -218,18 +218,7 @@
       li {
         float: left;
         list-style: none;
-        button[pos=left] {
-          border-radius: 0px 0px 0px .4em;
-        }
-        button[pos=right] {
-          border-radius: 0px 0px .4em 0px;
-        }
-        .confirm {
-          background: darkseagreen;
-        }
-        .deny {
-          background: darkred;
-        }
+
         button {
           display: block;
           height: 60px;
@@ -237,6 +226,35 @@
           line-height: 60px;
           text-transform: uppercase;
           border: none;
+          background: #b3b3b3;
+
+          &:hover {
+            background: #cccccc;
+            font-weight: bold;
+          }
+
+          &[pos=left] {
+            border-radius: 0px 0px 0px .4em;
+          }
+          &[pos=right] {
+            border-radius: 0px 0px .4em 0px;
+          }
+
+          &[class=confirm]
+          {
+            background: #99ff99;
+            &:hover {
+              background: #66ff66;
+            }
+          }
+
+          &[class=deny]
+          {
+            background: #8b0000;
+            &:hover {
+              background: #cc0000;
+            }
+          }
         }
       }
     }
