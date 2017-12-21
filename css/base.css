@@ -4,7 +4,8 @@
 :root {
   --purple: #5c258d;
   --blue: #4c669a;
-  --lightblue: #4389a2; }
+  --lightblue: #4389a2;
+  --lightgrey: #f9f9f9; }
 
 .container {
   margin: 0;
@@ -137,6 +138,55 @@
         color: var(--lightblue);
         text-decoration: none;
         padding-left: 2%; }
+
+.popup-container {
+  grid-column-start: left;
+  grid-column-end: right;
+  grid-row-start: header;
+  grid-row-end: footer;
+  position: relative;
+  background-color: rgba(94, 110, 141, 0.7);
+  -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+  transition: opacity 0.3s 0s, visibility 0s 0.3s; }
+  .popup-container .popup {
+    background-color: var(--lightgrey);
+    margin: 16em auto;
+    max-width: 400px;
+    max-height: 250px;
+    border-radius: .25em .25em 0 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); }
+    .popup-container .popup .title {
+      margin: 0px;
+      padding: 3% 0% 1%;
+      text-align: center; }
+    .popup-container .popup .desc {
+      margin: 0% 3%;
+      padding: 0% 0% 2%;
+      font-size: 11px;
+      text-align: left; }
+    .popup-container .popup .popup-buttons {
+      --button-width: 100px;
+      padding: 0px;
+      margin: 0px; }
+      .popup-container .popup .popup-buttons li {
+        float: left;
+        list-style: none; }
+        .popup-container .popup .popup-buttons li button[pos=left] {
+          border-radius: 0px 0px 0px .4em; }
+        .popup-container .popup .popup-buttons li button[pos=right] {
+          border-radius: 0px 0px .4em 0px; }
+        .popup-container .popup .popup-buttons li .confirm {
+          background: darkseagreen; }
+        .popup-container .popup .popup-buttons li .deny {
+          background: darkred; }
+        .popup-container .popup .popup-buttons li button {
+          display: block;
+          height: 60px;
+          width: var(--button-width);
+          line-height: 60px;
+          text-transform: uppercase;
+          border: none; }
 
 .main {
   grid-area: main; }

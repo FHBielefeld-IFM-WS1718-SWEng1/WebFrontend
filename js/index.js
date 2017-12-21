@@ -63,7 +63,6 @@ const rootVue = new Vue({
     methods: {
         switchToLogin() {
             this.register = false;
-            console.log("scroll: " + window.pageYOffset);
         },
         switchToRegister() {
             this.register = true;
