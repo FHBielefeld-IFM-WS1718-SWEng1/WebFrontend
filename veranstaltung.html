@@ -46,12 +46,25 @@
             <img src="img/logo.png"/>
         </div>
 
-        <div id="party_description">
-            <div tag="name">
-                <label>Name</label><br>
-                <input v-model="Name" placeholder="Veranstaltungsname"/>
-            </div>
-        </div>
+        <table id="party_description">
+            <tr>
+                <td class="identifier"> <label>Was?</label> </td>
+                <td> <input v-model="Name" placeholder="Veranstaltungsname?"/> </td>
+                <td rowspan="4"> <textarea v-model="beschreibung" placeholder="Beschreibung der Party" rows="9" cols="60">Dies ist ein Beispieltext</textarea> </td>
+            </tr>
+            <tr>
+                <td class="identifier"> <label>Wer?</label> </td>
+                <td> <input v-model="Gastgeber" placeholder="Gastgeber?"/> </td>
+            </tr>
+            <tr>
+                <td class="identifier"> <label>Wo?</label> </td>
+                <td> <input v-model="Ort" placeholder="Veranstaltungsort?"/> </td>
+            </tr>
+            <tr>
+                <td class="identifier"> <label>Wann?</label> </td>
+                <td> <input v-model="uhrzeit" placeholder="Datum und Uhrzeit?"/> </td>
+            </tr>
+        </table>
     </div>
 </main>
 
