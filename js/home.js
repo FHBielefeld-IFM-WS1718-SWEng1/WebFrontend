@@ -29,7 +29,10 @@ function insertParty(obj) {
     //Tag für Info Feld setzen
     cellInfo.setAttribute('tag', 'info');
     //Infos einfügen
-    cellInfo.innerHTML = 'Wer?: ' + obj.user + '<br>Wo?: ' + obj.location + '<br>Wann?: ' + obj.time;
+
+    var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+    var time = new Date(obj.startDate);
+    cellInfo.innerHTML = 'Wer?: ' + obj.user + '<br>Wo?: ' + obj.location + '<br>Wann?: ' + time.toLocaleDateString('de-DE', options);
     //Tag für Beschreibungs Feld setzen
     cellDesc.setAttribute('tag', 'desc');
     //Beschreibung einfügen
@@ -54,10 +57,10 @@ function makeSpacer() {
 
 var apiKey = localStorage.getItem("apiKey");
 console.log("API Key: " + apiKey);
-getRequest("parties?api=" + apiKey, function (data) {
-    if (!data.error && data.values) {
-        for (var i in data.values)
-            insertParty(data.values[i]);
+getRequest("party?api=" + apiKey, function (data) {
+    if (!data.error && data.parties) {
+        for (var i in data.parties)
+            insertParty(data.parties[i]);
     }
 });
 
