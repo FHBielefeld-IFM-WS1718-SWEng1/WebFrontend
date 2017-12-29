@@ -48,21 +48,29 @@
 
         <table id="party_description">
             <tr>
-                <td class="identifier"> <label>Was?</label> </td>
-                <td> <input v-model="Name" placeholder="Veranstaltungsname?"/> </td>
-                <td rowspan="4"> <textarea v-model="beschreibung" placeholder="Beschreibung der Party" rows="9" cols="60">Dies ist ein Beispieltext</textarea> </td>
+                <td class="identifier"><label>Was?</label></td>
+                <td><input v-model="Name" placeholder="Veranstaltungsname?"/></td>
+                <td></td>
+                <td rowspan="4"><textarea v-model="beschreibung" placeholder="Beschreibung der Party" rows="9"
+                                          cols="55">Dies ist ein Beispieltext</textarea></td>
             </tr>
             <tr>
-                <td class="identifier"> <label>Wer?</label> </td>
-                <td> <input v-model="Gastgeber" placeholder="Gastgeber?"/> </td>
+                <td class="identifier"><label>Wer?</label></td>
+                <td><input v-model="Gastgeber" placeholder="Gastgeber?"/></td>
             </tr>
             <tr>
-                <td class="identifier"> <label>Wo?</label> </td>
-                <td> <input v-model="Ort" placeholder="Veranstaltungsort?"/> </td>
+                <td class="identifier"><label>Wo?</label></td>
+                <form action="http://maps.google.com/maps" method="get" target="_blank">
+                    <td><input v-model="Ort" placeholder="Veranstaltungsort?" name="daddr"/></td>
+                    <td>
+                        <button type="submit"><img src="img/maps_icon.png" width="20px"></button>
+                    </td>
+                </form>
+
             </tr>
             <tr>
-                <td class="identifier"> <label>Wann?</label> </td>
-                <td> <input v-model="uhrzeit" placeholder="Datum und Uhrzeit?"/> </td>
+                <td class="identifier"><label>Wann?</label></td>
+                <td><input v-model="uhrzeit" placeholder="Datum und Uhrzeit?"/></td>
             </tr>
         </table>
     </div>
