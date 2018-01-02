@@ -23,14 +23,14 @@ function insertParty(obj) {
     //Tag für Bild Feld setzen
     cellImg.setAttribute('tag', 'image');
     if (obj.image) //wenn bild vorhanden, einfügen
-        cellImg.innerHTML = '<img src=' + obj.image + ' alt=\"Papla icon\">';
+        cellImg.innerHTML = '<img src=\"data:image/jpeg;base64,' + obj.image + '\" alt="img/logo.png">';
     else //sonst standard Bild
         cellImg.innerHTML = '<img src=\"img/logo.png\" alt=\"Papla icon\">';
-    //Tag für Info Feld setzen
+
     cellInfo.setAttribute('tag', 'info');
     //Infos einfügen
 
-    var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+    var options = {weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'};
     var time = new Date(obj.startDate);
     cellInfo.innerHTML = 'Wer?: ' + obj.user + '<br>Wo?: ' + obj.location + '<br>Wann?: ' + time.toLocaleDateString('de-DE', options);
     //Tag für Beschreibungs Feld setzen
@@ -67,8 +67,7 @@ getRequest("party?api=" + apiKey, function (data) {
 
 new Vue({
     el: '#navi',
-    data: {
-    },
+    data: {},
     methods: {
         logout() {
             papla_logout(apiKey);
