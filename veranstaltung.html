@@ -9,6 +9,7 @@
     <link href="css/veranstaltung.css" rel="stylesheet">
     <script src="https://unpkg.com/vue"></script>
     <script src="js/rest_util.js"></script>
+    <script src="js/header.js" defer></script>
     <title>Papla - Dein Partyplaner!</title>
 </head>
 
@@ -17,7 +18,7 @@
     <div id="stripes"></div>
     <div id="navi">
         <ul>
-            <li></li>
+            <li>{{name}}</li>
             <li>|</li>
             <li>
                 <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
@@ -53,19 +54,19 @@
         <table id="party_description">
             <tr>
                 <td class="identifier"><label>Was?</label></td>
-                <td><input v-model="Name" placeholder="Veranstaltungsname?"/></td>
+                <td><input v-model="partyname" placeholder="Veranstaltungsname?"/></td>
                 <td></td>
                 <td rowspan="4"><textarea v-model="beschreibung" placeholder="Beschreibung der Party" rows="9"
                                           cols="55">Dies ist ein Beispieltext</textarea></td>
             </tr>
             <tr>
                 <td class="identifier"><label>Wer?</label></td>
-                <td><input v-model="Gastgeber" placeholder="Gastgeber?"/></td>
+                <td><input v-model="gastgeber" placeholder="Gastgeber?"/></td>
             </tr>
             <tr>
                 <td class="identifier"><label>Wo?</label></td>
                 <form action="http://maps.google.com/maps" method="get" target="_blank">
-                    <td><input v-model="Ort" placeholder="Veranstaltungsort?" name="daddr"/></td>
+                    <td><input v-model="ort" placeholder="Veranstaltungsort?" name="daddr"/></td>
                     <td>
                         <button type="submit"><img src="img/maps_icon.png" width="20px"></button>
                     </td>
