@@ -1,7 +1,7 @@
 const naviVue = new Vue({
     el: '#navi',
     data: {
-        name: "Torwart"
+        name: ""
     }
 });
 
