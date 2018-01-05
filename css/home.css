@@ -1,3 +1,4 @@
+@charset "UTF-8";
 #notifications {
   background-color: white;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
@@ -10,6 +11,52 @@
   margin-top: 8px;
   overflow-y: scroll; }
 
+/*My ├änderung TOOLTIP*/
+/*My ├änderung*/
+#navi {
+  /* Popup container */
+  /* Toggle this class when clicking on the popup container (hide and show the popup) */ }
+  #navi input {
+    background-color: lightskyblue;
+    background-position: center;
+    position: relative;
+    width: 100px;
+    height: 40px; }
+  #navi .popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    /* The actual popup (appears on top) */
+    /* Popup arrow */ }
+    #navi .popup .popuptext {
+      visibility: hidden;
+      width: 160px;
+      background-color: #37b4d1;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 8px 0;
+      position: absolute;
+      /*z-index: 1;
+      bottom: 125%;
+      left: 50%;*/
+      margin-top: 5%;
+      margin-left: -160px; }
+    #navi .popup .popuptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent;
+      /*#555*/ }
+  #navi .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s; }
+
 #content {
   grid-area: main;
   padding-left: 3%;
@@ -17,9 +64,12 @@
   #content table {
     border-collapse: collapse;
     align-content: center;
-    width: 100%; }
+    width: 100%;
+    margin-top: 5%;
+    /* My ├änderung*/ }
     #content table tbody > tr[tag=spacer] {
-      height: 10px;
+      height: 20px;
+      /*vorher 10*/
       border: none; }
     #content table tbody > tr[tag=name] > td {
       margin-left: 10%; }
@@ -47,6 +97,15 @@
           #content table tbody > tr[tag=party] td[tag=info] {
             width: 20%; } }
       #content table tbody > tr[tag=party] td[tag=desc] {
-        width: 60%; }
+        width: 50%;
+        /*vorher 60%*/
+        text-align: center;
+        white-space: pre-line;
+        /*My ├änderung*/ }
+      #content table tbody > tr[tag=party] td[tag=butt] input {
+        background-position: center;
+        width: 32px;
+        height: 32px;
+        background-repeat: no-repeat; }
 
 /*# sourceMappingURL=home.css.map */
