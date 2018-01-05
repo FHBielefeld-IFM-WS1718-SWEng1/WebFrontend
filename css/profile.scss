@@ -55,6 +55,17 @@
     input[type=date] {
       font-family: 'Poppins', sans-serif;
     }
+    select {
+      font-family: 'Poppins', sans-serif;
+      width: 75%;
+      padding: 8px 12px;
+      display: inline-block;
+      border: 1px solid #dfdfdf;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+      background-color: #f9f9f9;
+    }
 
     div[tag=value] {
       margin-top: 1%;

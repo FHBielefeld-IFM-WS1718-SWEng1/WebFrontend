@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8">
@@ -10,6 +10,8 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="js/rest_util.js"></script>
     <script src="js/login_util.js"></script>
+    <script src="js/header.js" defer></script>
+    <script src="js/popup_util.js" defer></script>
     <script src="js/profile.js" defer></script>
     <title>Papla - Dein Partyplaner!</title>
 </head>
@@ -19,6 +21,8 @@
     <div id="stripes"></div>
     <div id="navi">
         <ul>
+            <li>{{name}}</li>
+            <li>|</li>
             <li>
                 <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
                                                                                                alt="Benachrichtigungen">
@@ -34,10 +38,25 @@
 <nav class="navigation">
     <div id="bar">
         <a id="bar_home" href="home.html">Home</a>
-        <a id="bar_profil" href="profil.html">Profil</a>
+        <a id="bar_profil" href="profile.html">Profil</a>
         <a id="bar_eigene" href="ownEvent.html">Eigene Veranstaltungen</a>
     </div>
 </nav>
+
+<div class="popup-container" role="alert" v-if="show['delete']">
+    <div class="popup" role="alert" v-if="show['delete']">
+        <p class="title">Profil Löschen</p>
+        <p class="desc">Bist du dir sicher, dass du dein Profil löschen möchtest? Dieser Vorgang kann nicht rückgängig gemacht werden und wird dich automatisch ausloggen.</p>
+        <ul class="popup-buttons" style="--button-width: 200px">
+            <li>
+                <button pos="left" class="confirm" @click="confirm('delete')">Ja</button>
+            </li>
+            <li>
+                <button pos="right" class="deny" @click="show['delete'] = false">Nein</button>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <main class="main">
     <div id="content">
@@ -49,30 +68,36 @@
         <div id="user_data">
             <div tag="segment">
                 <label>Nutzername</label><br>
-                <input v-model="name" placeholder="Nutzername"/>
+                <input v-model="name" placeholder="Nutzername" v-bind:readonly="!owner"/>
             </div>
-            <div tag="segment">
+            <div tag="segment" v-if="owner">
                 <label>E-Mail</label><br>
                 <input v-model="email" readonly/>
             </div>
             <div tag="segment">
                 <label>Geburtsdatum</label><br>
-                <input type="date" v-model="birthdate"/>
+                <input type="date" v-model="birthdate" v-bind:readonly="!owner"/>
             </div>
             <div tag="segment">
                 <label>Geschlecht</label><br>
-                <input type="gender" v-model="gender"/>
+                <select name="gender" v-model="gender" v-if="owner"/>
+                <option value=0>Keine Angabe</option>
+                <option value=1>Männlich</option>
+                <option value=2>Weiblich</option>
+                <option value=3>Andere</option>
+                </select>
+                <input v-model="getLocalizedGender()" v-else/>
             </div>
-            <span><button @click="updateProfile">Profil Speichern</button></span>
-            <span><button @click="deleteProfile">Profil Löschen</button></span>
+            <span><button @click="updateProfile" v-if="owner">Profil Speichern</button></span>
+            <span><button @click="confirmDelete" v-if="owner">Profil Löschen</button></span>
         </div>
 
         <div id="contacts">
             <span>
                 <label> Kontakte </label>
                 <hr>
-                <input id="Suche" type="text" value="Suche"/>
-                <button value="add">+</button>
+                <input id="Suche" type="text" value="Suche" v-if="owner"/>
+                <button value="add" v-if="owner">+</button>
                 <ul id="list_contacts">
                     <li>Tim Meier</li>
                     <li>Tim Meier</li>
@@ -94,8 +119,8 @@
                     <li>Tim Meier</li>
                     <li>Tim Meier</li>
                 </ul>
-                <label> Kontaktanfragen </label>
-                <ul id="list_contactrequests">
+                <label v-if="owner"> Kontaktanfragen </label>
+                <ul id="list_contactrequests" v-if="owner">
                 </ul>
             </span>
         </div>

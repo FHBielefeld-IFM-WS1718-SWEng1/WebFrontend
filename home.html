@@ -10,6 +10,7 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="js/rest_util.js"></script>
     <script src="js/login_util.js"></script>
+    <script src="js/header.js" defer></script>
     <script src="js/home.js" defer></script>
     <title>Papla - Dein Partyplaner!</title>
 </head>
@@ -19,7 +20,8 @@
     <div id="stripes"></div>
     <div id="navi">
         <ul>
-            <!--My Änderung  POPUP -->
+            <li>{{name}}</li>
+            <li>|</li>
             <li>
                 <div class="popup" onclick="myFunction()">
                     <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png" alt="Benachrichtigungen"></button>
@@ -28,7 +30,6 @@
                     <input class="tooltip" type="submit" name="Jetzt_ansehen" value="Jetzt ansehen"></span>
                 </div>
             </li>
-
             <li><a @click="" href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
         </ul>
     </div>

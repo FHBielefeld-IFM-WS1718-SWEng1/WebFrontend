@@ -6,6 +6,7 @@ function papla_login(email, password, callback)
             if(data.key) {
                 console.log("Received API Key: " + data.key);
                 localStorage.setItem("apiKey", data.key);
+                localStorage.setItem("userId", data.id);
             }
             if(callback)
                 callback(data.key);
@@ -21,4 +22,7 @@ function papla_logout(apiKey)
             }
         });
     localStorage.removeItem("apiKey");
+    str = window.location.href;
+    str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/index.html");
+    window.location.replace(str);
 }
