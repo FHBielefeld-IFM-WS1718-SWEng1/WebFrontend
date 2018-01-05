@@ -10,6 +10,7 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="js/rest_util.js"></script>
     <script src="js/login_util.js"></script>
+    <script src="js/header.js" defer></script>
     <script src="js/popup_util.js" defer></script>
     <script src="js/profile.js" defer></script>
     <title>Papla - Dein Partyplaner!</title>
@@ -20,6 +21,8 @@
     <div id="stripes"></div>
     <div id="navi">
         <ul>
+            <li>{{name}}</li>
+            <li>|</li>
             <li>
                 <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
                                                                                                alt="Benachrichtigungen">
