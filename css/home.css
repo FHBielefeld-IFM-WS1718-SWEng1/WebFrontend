@@ -1,52 +1,82 @@
 #notifications {
-  background-color: white;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
-  width: 60%;
-  border-radius: 8px;
-  text-align: left;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 4px;
-  margin-top: 8px;
-  overflow-y: scroll; }
+    background-color: white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+    width: 60%;
+    border-radius: 8px;
+    text-align: left;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    margin-top: 8px;
+    overflow-y: scroll;
+}
 
 #content {
-  grid-area: main;
-  padding-left: 3%;
-  padding-right: 3%; }
-  #content table {
+    grid-area: main;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+#content table {
     border-collapse: collapse;
     align-content: center;
-    width: 100%; }
-    #content table tbody > tr[tag=spacer] {
-      height: 10px;
-      border: none; }
-    #content table tbody > tr[tag=name] > td {
-      margin-left: 10%; }
-    #content table tbody > tr[tag=party] {
-      border-collapse: collapse;
-      height: 20%;
-      border-bottom: 2px solid var(--purple); }
-      #content table tbody > tr[tag=party] td[tag=image] {
-        width: 10%; }
-        #content table tbody > tr[tag=party] td[tag=image] img {
-          width: 60px; }
-          @media (max-device-width: 450px) {
-            #content table tbody > tr[tag=party] td[tag=image] img {
-              width: 30px; } }
-      #content table tbody > tr[tag=party] td[tag=info] {
-        /*Abstufung der Zellenbreite, je nach Display, da Infos wichtiger sind als Beschreibung*/
-        width: 50%; }
-        @media (min-device-width: 400px) {
-          #content table tbody > tr[tag=party] td[tag=info] {
-            width: 40%; } }
-        @media (min-device-width: 520px) {
-          #content table tbody > tr[tag=party] td[tag=info] {
-            width: 30%; } }
-        @media (min-device-width: 700px) {
-          #content table tbody > tr[tag=party] td[tag=info] {
-            width: 20%; } }
-      #content table tbody > tr[tag=party] td[tag=desc] {
-        width: 60%; }
+    width: 100%;
+}
+
+#content table tbody > tr[tag=spacer] {
+    height: 10px;
+    border: none;
+}
+
+#content table tbody > tr[tag=name] > td {
+    margin-left: 10%;
+}
+
+#content table tbody > tr[tag=party] {
+    border-collapse: collapse;
+    height: 20%;
+    border-bottom: 2px solid var(--purple);
+}
+
+#content table tbody > tr[tag=party] td[tag=image] {
+    width: 10%;
+}
+
+#content table tbody > tr[tag=party] td[tag=image] img {
+    width: 60px;
+}
+
+@media (max-device-width: 450px) {
+    #content table tbody > tr[tag=party] td[tag=image] img {
+        width: 30px;
+    }
+}
+
+#content table tbody > tr[tag=party] td[tag=info] {
+    /*Abstufung der Zellenbreite, je nach Display, da Infos wichtiger sind als Beschreibung*/
+    width: 50%;
+}
+
+@media (min-device-width: 400px) {
+    #content table tbody > tr[tag=party] td[tag=info] {
+        width: 40%;
+    }
+}
+
+@media (min-device-width: 520px) {
+    #content table tbody > tr[tag=party] td[tag=info] {
+        width: 30%;
+    }
+}
+
+@media (min-device-width: 700px) {
+    #content table tbody > tr[tag=party] td[tag=info] {
+        width: 20%;
+    }
+}
+
+#content table tbody > tr[tag=party] td[tag=desc] {
+    width: 60%;
+}
 
 /*# sourceMappingURL=home.css.map */
