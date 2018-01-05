@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/base.css" rel="stylesheet">
-    <link href="css/home.css" rel="stylesheet">
+    <link href="css/party.css" rel="stylesheet">
     <script src="https://unpkg.com/vue"></script>
     <script src="js/rest_util.js"></script>
-    <script src="js/login_util.js"></script>
     <script src="js/header.js" defer></script>
-    <script src="js/home.js" defer></script>
+    <script src="js/party.js" defer></script>
     <title>Papla - Dein Partyplaner!</title>
 </head>
 
@@ -42,34 +41,45 @@
     </div>
 </nav>
 
-<main class="main">
-    <div id="content">
-        <table id="party_table">
-            <tbody>
-            <!-- Beispiel Füllung der Tabelle-->
-            <tr tag="name">
-                <td colspan=2>Testparty!</td>
-            </tr>
-            <tr tag="party">
-                <td tag="image"><img src="img/logo.png" alt="Papla icon"></td>
-                <td tag="info">Wer?: Ich<br>Wo?: Hier!<br>Wann?: 29.2.2018</td>
-                <td tag="desc">Beschreibung: Wird voll gut, ey!</td>
-            </tr>
-            <tr tag="spacer"></tr>
-            <tr>
-                <td tag="image">[image]</td>
-                <td tag="info">Wer?: Du<br>Wo?: Da!<br>Wann?: Demnächst</td>
-                <td tag="desc">Beschreibung: Warum nicht?</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</main>
-
 <div class="left">
 </div>
 <div class="right">
 </div>
+
+<main class="main">
+    <div id="content">
+        <div id="picture">
+            <img src="img/logo.png"/>
+        </div>
+
+        <table id="party_description">
+            <tr>
+                <td class="identifier"><label>Was?</label></td>
+                <td><input v-model="partyname"/></td>
+                <td></td>
+                <td rowspan="4"><textarea v-model="beschreibung" rows="9"
+                                          cols="55">Dies ist ein Beispieltext</textarea></td>
+            </tr>
+            <tr>
+                <td class="identifier"><label>Wer?</label></td>
+                <td><input v-model="gastgeber"/></td>
+            </tr>
+            <tr>
+                <td class="identifier"><label>Wo?</label></td>
+                    <td><input v-model="ort" name="daddr"/></td>
+                    <td>
+                        <button @click="mapsAufrufen()"><img src="img/maps_icon.png" width="20px"></button>
+                    </td>
+
+            </tr>
+            <tr>
+                <td class="identifier"><label>Wann?</label></td>
+                <td><input v-model="uhrzeit"/></td>
+            </tr>
+        </table>
+    </div>
+</main>
+
 
 <footer class="footer">
     <ul>
