@@ -34,22 +34,19 @@ const contentVue = new Vue({
         getLocalizedGender() {
             return this.gender === 1 ? "Männlich" : this.gender === 2 ? "Weiblich" : this.gender === 3 ? "Andere" : "Keine Angabe";
         },
-        search() {
+        async search() {
             console.log('Show popup!');
             popupVue.showPopup('search');
-            var searchresults = document.getElementById('searchresults');
+            var searchresults = await popupVue.findPopup('searchresults');
             console.log('results: '+searchresults);
             for (var i in userList)
                 if (userList[i].name.startsWith(this.searchString)) {
                     console.log('  found:'+userList[i].name);
                     var entry = document.createElement('li');
-                    entry.innerHTML = '<a href="profile.html?id=' + i + '">' + userList[i] + '</a>'
-                    entry.innerHTML += '<button pos="right" class="confirm" @click="confirm(\'search\'' + i + ')">+</button>'
+                    entry.style["float"] = "right";
+                    entry.innerHTML = '<span style="display:inline-flex;"><a style="width:80%;" href="profile.html?id=' + i + '">' + userList[i].name + '</a> - <button class="confirm" @click="confirm(\'search\'' + i + ')">+</button></span>';
                     searchresults.appendChild(entry);
                 }
-            // <li>
-            // <button pos="right" class="deny" @click="show['delete'] = false">Nein</button>
-            //     </li>
         }
     }
 });

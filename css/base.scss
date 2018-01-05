@@ -213,6 +213,7 @@
     }
     .popup-buttons {
       --button-width: 100px;
+      --button-height: 60px;
       padding: 0px;
       margin: 0px;
       li {
@@ -221,9 +222,9 @@
 
         button {
           display: block;
-          height: 60px;
+          height: var(--button-height);
           width: var(--button-width);
-          line-height: 60px;
+          line-height: var(--button-height);
           text-transform: uppercase;
           border: none;
           background: #b3b3b3;

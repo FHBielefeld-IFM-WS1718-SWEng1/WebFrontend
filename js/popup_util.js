@@ -25,4 +25,18 @@ class PopupHandler {
     hidePopup(type) {
         this.popupVue.show[type] = false;
     }
+
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async findPopup(id) {
+        var element = document.getElementById(id);
+        var timeout = 0;
+        while (!element && timeout++<20) {
+            await this.sleep(200)
+            element = document.getElementById(id);
+        }
+        return element;
+    }
 }
