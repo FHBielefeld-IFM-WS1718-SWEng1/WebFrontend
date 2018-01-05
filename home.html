@@ -23,7 +23,7 @@
             <li>{{name}}</li>
             <li>|</li>
             <li>
-                <div class="popup" onclick="myFunction()">
+                <div class="popup">
                     <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png" alt="Benachrichtigungen"></button>
 
                     <span class="popuptext" id="myPopup">Sauf Party <br><br> Es wurde eine Abstimmung erstellt <br><br>
@@ -47,7 +47,7 @@
 
 <main class="main">
     <div id="content">
-        <table id="party_table">
+        <table id="party_table" >
             <tbody>
             <!-- Beispiel Füllung der Tabelle-->
             <tr tag="name">

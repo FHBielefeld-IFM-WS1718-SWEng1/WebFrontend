@@ -10,9 +10,9 @@
     <link href="css/home.css" rel="stylesheet">
     <script src="https://unpkg.com/vue"></script>
     <script src="js/ownEvent.js"></script>
-    <!--<script src="js/rest_util.js"></script>
+    <script src="js/rest_util.js"></script>
     <script src="js/login_util.js"></script>
-    <script src="js/home.js" defer></script>-->
+    <script src="js/home.js" defer></script>
     <title>Papla - Dein Partyplaner!</title>
 </head>
 
@@ -49,7 +49,7 @@
 
 <main class="main">
 
-    <form action="Party_EV.html">
+    <form action="TEST_PartyEV.html">
         <input id="Button_New_Event" type="submit" name="NewEvent" value="Neue Veranstalltung erstellen">
     </form>
 
@@ -65,6 +65,7 @@
                     <td tag="image"><img src="img/logo.png" alt="Papla icon"></td>
                     <td tag="info">Wer?: Ich<br>Wo?: Hier!<br>Wann?: 29.2.2018</td>
                     <td tag="desc">Beschreibung: </td>
+
                     <td tag="butt">
                         <input type="submit" name="Edit" value="" style="background-image: url(img/pencil.png)">
                         <input id ="deleteDep" type="submit" name="Trash" value="" style="background-image: url(img/trash.png)" onclick= "delHeader('tb1'); deleteRow(this)">
