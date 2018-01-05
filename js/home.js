@@ -41,7 +41,7 @@ function insertParty(obj) {
     cellInfo.setAttribute('tag', 'info');
     //Infos einfügen
 
-    var options = {weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'};
+    var options = {year: 'numeric', month: 'short', day: 'numeric'};
     var time = new Date(obj.startDate);
     cellInfo.innerHTML = 'Wer?: ' + obj.user + '<br>Wo?: ' + obj.location + '<br>Wann?: ' + time.toLocaleDateString('de-DE', options);
     //Tag für Beschreibungs Feld setzen
@@ -87,8 +87,11 @@ console.log("API Key: " + apiKey);
 var dateNow = new Date();
 getRequest("party?api=" + apiKey, function (data) {
     if (!data.error && data.parties) {
-        for (var i in data.parties)
-            if (new Date(data.parties[i].endDate) > dateNow)//Nur Parties anzeigen die noch nicht vorbei sind
+        for (var i in data.parties) {
+            var party = data.parties[i];
+            var date = new Date(party.endDate ? party.endDate : party.startDate);
+            if (date > dateNow)//Nur Parties anzeigen die noch nicht vorbei sind
                 insertParty(data.parties[i]);
+        }
     }
 });
