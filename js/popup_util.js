@@ -7,8 +7,8 @@ class PopupHandler {
                 callbackConfirm: callbacks
             },
             methods: {
-                confirm(type) {
-                    this.callbackConfirm[type]();
+                confirm(type, parameters) {
+                    this.callbackConfirm[type](parameters);
                 }
             }
         });

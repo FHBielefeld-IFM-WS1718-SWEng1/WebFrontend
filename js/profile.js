@@ -6,7 +6,7 @@ const contentVue = new Vue({
         birthdate: "",
         gender: 0,
         owner: true,
-        popup_delete: false
+        searchString: "Tim"
     },
     methods: {
         updateProfile() {
@@ -22,7 +22,7 @@ const contentVue = new Vue({
             });
         },
         confirmDelete() {
-            popupVue.showPopup('delete')
+            popupVue.showPopup('delete');
         },
         deleteProfile() {
             deleteRequest("user/" + userId + "?api=" + apiKey, function (data) {
@@ -33,6 +33,23 @@ const contentVue = new Vue({
         },
         getLocalizedGender() {
             return this.gender === 1 ? "Männlich" : this.gender === 2 ? "Weiblich" : this.gender === 3 ? "Andere" : "Keine Angabe";
+        },
+        search() {
+            console.log('Show popup!');
+            popupVue.showPopup('search');
+            var searchresults = document.getElementById('searchresults');
+            console.log('results: '+searchresults);
+            for (var i in userList)
+                if (userList[i].name.startsWith(this.searchString)) {
+                    console.log('  found:'+userList[i].name);
+                    var entry = document.createElement('li');
+                    entry.innerHTML = '<a href="profile.html?id=' + i + '">' + userList[i] + '</a>'
+                    entry.innerHTML += '<button pos="right" class="confirm" @click="confirm(\'search\'' + i + ')">+</button>'
+                    searchresults.appendChild(entry);
+                }
+            // <li>
+            // <button pos="right" class="deny" @click="show['delete'] = false">Nein</button>
+            //     </li>
         }
     }
 });
@@ -51,19 +68,25 @@ getRequest("user/" + userId + "?api=" + apiKey, function (data) {
     }
 });
 
+function addContact(id) {
+    console.log("Add contact: "+id);
+}
+
 /*
  * Popups Initialisieren
  */
 const popupVue = new PopupHandler('.popup-container',
-    {'delete': false},
-    {'delete': contentVue.deleteProfile});
+    {'delete': false, 'search': false},
+    {'delete': contentVue.deleteProfile, 'search': addContact});
+
+var userList;
 
 if (contentVue.owner) {
     var eventsPast = document.getElementById('list_events_past');
     var eventsFuture = document.getElementById('list_events_future');
 
     function insertParty(obj) {
-        var time = new Date(obj.endDate?obj.endDate:obj.startDate);
+        var time = new Date(obj.endDate ? obj.endDate : obj.startDate);
         /*Tabellen auswahl, je nach dem ob das event vor oder nach jetzt ist */
         var table = time < new Date() ? eventsPast : eventsFuture;
 
@@ -79,6 +102,12 @@ if (contentVue.owner) {
         if (!data.error && data.parties) {
             for (var i in data.parties)
                 insertParty(data.parties[i]);
+        }
+    });
+
+    getRequest("user?api=" + apiKey, function (data) {
+        if (!data.error && data.values) {
+            userList = data.values;
         }
     });
 }

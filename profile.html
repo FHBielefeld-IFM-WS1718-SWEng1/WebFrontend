@@ -56,6 +56,12 @@
             </li>
         </ul>
     </div>
+    <div class="popup" role="alert" v-if="show['search']">
+        <p class="title">Suchfunktion</p>
+        <ul class="popup-buttons" id="searchresults" style="--button-width: 200px">
+
+        </ul>
+    </div>
 </div>
 
 <main class="main">
@@ -96,8 +102,8 @@
             <span>
                 <label> Kontakte </label>
                 <hr>
-                <input id="Suche" type="text" value="Suche" v-if="owner"/>
-                <button value="add" v-if="owner">+</button>
+                <input id="Suche" type="text" v-model="searchString" v-if="owner"/>
+                <button value="add" @click="search" v-if="owner">+</button>
                 <ul id="list_contacts">
                     <li>Tim Meier</li>
                     <li>Tim Meier</li>
