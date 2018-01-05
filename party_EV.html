@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet">
+    <link href="css/party_EV.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="js/rest_util.js"></script>
+    <script src="js/login_util.js"></script>
+    <script src="js/home.js" defer></script>
+    <script src="js/party_ev.js"></script>
+
+    <title>Papla - Dein Partyplaner!</title>
+</head>
+
+<body class="container">
+<header class="header">
+    <div id="stripes"></div>
+    <div id="navi">
+        <ul>
+            <!--My Änderung  POPUP -->
+            <li>
+                <div class="popup" onclick="myFunction()">
+                    <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png" alt="Benachrichtigungen"></button>
+
+                    <span class="popuptext" id="myPopup">Sauf Party <br><br> Es wurde eine Abstimmung erstellt <br><br>
+                    <input class="tooltip" type="submit" name="Jetzt_ansehen" value="Jetzt ansehen"></span>
+                </div>
+            </li>
+
+            <li><a @click="" href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
+        </ul>
+    </div>
+
+    <div id="logo"><img src="img/logo.png" alt="Papla icon"></div>
+</header>
+
+<nav class="navigation">
+    <div id="bar">
+        <a id="bar_home" href="">Home</a>
+        <a id="bar_profil" href="profile.html">Profil</a>
+        <a id="bar_eigene" href="ownEvent.html">Eigene Veranstaltungen</a> <!--Änderung Namen auf Englisch--->
+    </div>
+</nav>
+
+<main class="main">
+
+    <fieldset id="Field">
+        <div>
+            <img id="Profile_Pic" src="img/logo.png">
+        </div>
+        <div id="samp_Arrea">
+            <samp class="samp_Bsp"> Was?: Sauf Party </samp>
+            <input type="button" name="Weiter" value="" style= "background-image: url(img/pencil.png)"><p></p>
+
+            <samp class="samp_Bsp"> Wer?: Malte </samp>
+            <input type="button" name="Weiter" value="" style="background-image: url(img/pencil.png)"><p></p>
+
+            <samp class="samp_Bsp"> Wo?: Bierbude </samp>
+            <input  type="button" name="Weiter" value="" style="background-image: url(img/pencil.png)"><p></p>
+
+            <samp class="samp_Bsp"> Wann?: 30.02.1043 </samp>
+            <samp class="samp_Bsp"> 19 Uhr </samp>
+            <input  type="button" name="Weiter" value="" style="background-image: url(img/pencil.png)"><p></p>
+        </div>
+       <fieldset id="Sec_Description">
+            <legend>Beschreibung</legend>
+            <textarea id="TextArea" name="Txt_Area" cols="50" rows="10"> Hier deinen Text eingeben...</textarea>
+        </fieldset>
+        <input id="butt_shift" type="button" name="Weiter" value="" style="background-image: url(img/pencil.png);"><p></p>
+   </fieldset>
+
+    <fieldset>
+        <div id="Gallery">
+            <img class="Gallery_Pics" src="img/logo.png">
+            <img class="Gallery_Pics" src="img/logo.png">
+            <img class="Gallery_Pics" src="img/logo.png">
+            <form action="Party_Gallerie.html">
+                <input type="submit" name="Gallery" value="Gallerie öffnen">
+            </form>
+        </div>
+    </fieldset>
+
+    <!------------------------------------------TABS START------------------------------------------------------------>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Kommentare')" id="defaultOpen">Kommentare</button>
+        <button class="tablinks" onclick="openTab(event, 'Aufgabenliste')" id="OpenAufgabenliste">Aufgabenliste</button>
+        <button class="tablinks" onclick="openTab(event, 'Gaesteliste')" id="OpenGaeste">Gästeliste</button>
+        <button class="tablinks" onclick="openTab(event, 'ToDoListe')" id="OpenGaeste">ToDo-Liste</button>
+        <button class="tablinks" onclick="openTab(event, 'Abstimmungen')" id="OpenAbstimmung">Abstimmungen</button>
+        <button class="tablinks" onclick="openTab(event, 'Bewertung')" id="OpenBewertung">Bewertung</button>
+    </div>
+    <!-------------------------------------------TABS ENDE------------------------------------------------------------>
+
+    <!------------------------------------------KOMMENTARE START------------------------------------------------------------>
+    <div id="Kommentare" class="tabcontent">
+        <textarea id="myTextArea" name="Txt_Area" cols="112" rows="5">Hier deinen Text eingeben...</textarea>
+
+        <div id="Sec_Weiter_Butt">
+            <input type="button" name="Weiter" value="" style=" background-image: url(img/shift.png)">
+        </div>
+
+        <div id="logo_inside">
+            <img src="img/logo.png">
+            <div class="Report" style="margin-top: -10%; margin-left: 15%">
+               <label for="vorname">Angela</label><br>
+                <samp class="samp_Report">Beliebige Beiträgeder Person...</samp><br>
+                <samp class="samp_Report"> Beliebiger Beispieltext </samp>
+                <div id="buttons">
+                    <input id="Ret_Button" type="submit" name="zurück" value="" style="background-image: url(img/return.png)">
+                    <input id="Butt_trash" type="submit" name="trash" value="" style="background-image: url(img/trash.png)">
+                </div>
+            </div>
+        </div>
+
+        <hr style="width: 90%; margin-left: 2%; margin-top: 5%">
+
+        <div id="logo_inside">
+            <img src="img/logo.png">
+            <div class="Report" style="margin-top: -10%; margin-left: 15%">
+                <label for="vorname">Christian</label><br>
+                <samp class="samp_Report">Beliebige Beiträgeder Person...</samp><br>
+                <samp class="samp_Report"> Beliebiger Beispieltext </samp>
+                <div id="buttons">
+                    <input id="Ret_Button" type="submit" name="zurück" value="" style="background-image: url(img/return.png)">
+                    <input id="Butt_trash" type="submit" name="trash" value="" style="background-image: url(img/trash.png)">
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-------------------------------------------KOMMENTARE ENDE------------------------------------------------------------>
+
+    <!-------------------------------------------AUFGABENLISTE START------------------------------------------------------------>
+    <div id="Aufgabenliste" class="tabcontent">
+        <div id="Aufgaben_samp">
+            <label for="vorname">Aufgaben:</label><p></p>
+            <samp class="samp_Report">Getränke</samp><p></p>
+            <samp class="samp_Report"> Kuchen </samp> <p></p>
+            <samp class="samp_Report">Skat Spiel </samp> <p></p>
+            <samp class="samp_Report"> Kaffee </samp> <p></p>
+            <samp class="samp_Report"> Bastelsachen </samp> <p></p>
+            <samp class="samp_Report"> Musikbox </samp>
+        </div>
+
+        <div id="Responsible">
+            <label class="Resp_Header" for="vorname">Verantwortlicher:</label><p></p>
+            <samp class="samp_Report">Edmund</samp><p></p>
+            <samp class="samp_Report"> Ursula </samp> <p></p>
+            <samp class="samp_Report">Angela </samp> <p></p>
+            <samp class="samp_Report"> Martin </samp> <p></p>
+            <samp class="samp_Report"> Sarah </samp> <p></p>
+            <samp class="samp_Report" style="color: blue"> wird gesucht </samp>
+            <input type="button" name="Meldung" value="" style="background-repeat: no-repeat; border-color: #0000cd; background-image: url(finger.jpg);
+                            background-position: center; width: 15px; height:25px">
+        </div>
+
+        <div id="Pencil_Butt">
+            <input type="button" name="Change_1" value="" style="background-image: url(img/pencil.png)"><p></p>
+            <input type="button" name="Change_2" value="" style="background-image: url(img/pencil.png)"><p></p>
+            <input type="button" name="Change_3" value="" style="background-image: url(img/pencil.png)"><p></p>
+            <input type="button" name="Change_4" value="" style="background-image: url(img/pencil.png)"><p></p>
+            <input type="button" name="Change_5" value="" style="background-image: url(img/pencil.png)"><p></p>
+            <input type="button" name="Change_6" value="" style="background-image: url(img/pencil.png)">
+        </div>
+
+       <div id="Status">
+            <center><label for="vorname">Status:</label><p></p>
+                <input type="checkbox" name="cp_1" ><p></p>
+                <input type="checkbox" name="cp_2" ><p></p>
+                <input type="checkbox" name="cp_3" checked="checked"><p></p>
+                <input type="checkbox" name="cp_4" ><p></p>
+                <input type="checkbox" name="cp_5" checked="checked"><p></p>
+                <input type="checkbox" name="cp_6" >
+            </center>
+        </div>
+
+         <div id="Trash_Butt">
+            <input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)"><p></p>
+            <input type="button" name="Trash_2" value="" style="background-image: url(img/trash.png)"><p></p>
+            <input type="button" name="Trash_3" value="" style="background-image: url(img/trash.png)"><p></p>
+            <input type="button" name="Trash_4" value="" style="background-image: url(img/trash.png)"><p></p>
+            <input type="button" name="Trash_5" value="" style="background-image: url(img/trash.png)"><p></p>
+            <input type="button" name="Trash_6" value="" style="background-image: url(img/trash.png)">
+        </div>
+
+        <div id="Butt_Add">
+            <input type="button" name="Add_Someone" value="+" style="background-image: url(Plus.jpg)">
+        </div>
+    </div>
+    <!-------------------------------------------AUFGABENLISTE ENDE------------------------------------------------------------->
+</main>
+</body>
+</html>
