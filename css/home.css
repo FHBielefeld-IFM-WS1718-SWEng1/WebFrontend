@@ -11,6 +11,52 @@
     overflow-y: scroll;
 }
 
+/*My ├änderung TOOLTIP*/
+/*My ├änderung*/
+#navi {
+  /* Popup container */
+  /* Toggle this class when clicking on the popup container (hide and show the popup) */ }
+  #navi input {
+    background-color: lightskyblue;
+    background-position: center;
+    position: relative;
+    width: 100px;
+    height: 40px; }
+  #navi .popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    /* The actual popup (appears on top) */
+    /* Popup arrow */ }
+    #navi .popup .popuptext {
+      visibility: hidden;
+      width: 160px;
+      background-color: #37b4d1;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 8px 0;
+      position: absolute;
+      /*z-index: 1;
+      bottom: 125%;
+      left: 50%;*/
+      margin-top: 5%;
+      margin-left: -160px; }
+    #navi .popup .popuptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent;
+      /*#555*/ }
+  #navi .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s; }
+
 #content {
     grid-area: main;
     padding-left: 3%;
@@ -20,63 +66,36 @@
 #content table {
     border-collapse: collapse;
     align-content: center;
-    width: 100%;
-}
-
-#content table tbody > tr[tag=spacer] {
-    height: 10px;
-    border: none;
-}
-
-#content table tbody > tr[tag=name] > td {
-    margin-left: 10%;
-}
-
-#content table tbody > tr[tag=party] {
-    border-collapse: collapse;
-    height: 20%;
-    border-bottom: 2px solid var(--purple);
-}
-
-#content table tbody > tr[tag=party] td[tag=image] {
-    width: 10%;
-}
-
-#content table tbody > tr[tag=party] td[tag=image] img {
-    width: 60px;
-}
-
-@media (max-device-width: 450px) {
-    #content table tbody > tr[tag=party] td[tag=image] img {
-        width: 30px;
-    }
-}
-
-#content table tbody > tr[tag=party] td[tag=info] {
-    /*Abstufung der Zellenbreite, je nach Display, da Infos wichtiger sind als Beschreibung*/
-    width: 50%;
-}
-
-@media (min-device-width: 400px) {
-    #content table tbody > tr[tag=party] td[tag=info] {
-        width: 40%;
-    }
-}
-
-@media (min-device-width: 520px) {
-    #content table tbody > tr[tag=party] td[tag=info] {
-        width: 30%;
-    }
-}
-
-@media (min-device-width: 700px) {
-    #content table tbody > tr[tag=party] td[tag=info] {
-        width: 20%;
-    }
-}
-
-#content table tbody > tr[tag=party] td[tag=desc] {
-    width: 60%;
-}
+    width: 100%; }
+    #content table tbody > tr[tag=spacer] {
+      height: 10px;
+      border: none; }
+    #content table tbody > tr[tag=name] > td {
+      margin-left: 10%; }
+    #content table tbody > tr[tag=party] {
+      border-collapse: collapse;
+      height: 20%;
+      border-bottom: 2px solid var(--purple); }
+      #content table tbody > tr[tag=party] td[tag=image] {
+        width: 10%; }
+        #content table tbody > tr[tag=party] td[tag=image] img {
+          width: 60px; }
+          @media (max-device-width: 450px) {
+            #content table tbody > tr[tag=party] td[tag=image] img {
+              width: 30px; } }
+      #content table tbody > tr[tag=party] td[tag=info] {
+        /*Abstufung der Zellenbreite, je nach Display, da Infos wichtiger sind als Beschreibung*/
+        width: 50%; }
+        @media (min-device-width: 400px) {
+          #content table tbody > tr[tag=party] td[tag=info] {
+            width: 40%; } }
+        @media (min-device-width: 520px) {
+          #content table tbody > tr[tag=party] td[tag=info] {
+            width: 30%; } }
+        @media (min-device-width: 700px) {
+          #content table tbody > tr[tag=party] td[tag=info] {
+            width: 20%; } }
+      #content table tbody > tr[tag=party] td[tag=desc] {
+        width: 60%; }
 
 /*# sourceMappingURL=home.css.map */
