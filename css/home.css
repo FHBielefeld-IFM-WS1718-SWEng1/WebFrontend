@@ -11,8 +11,6 @@
   margin-top: 8px;
   overflow-y: scroll; }
 
-/*My ├änderung TOOLTIP*/
-/*My ├änderung*/
 #navi {
   /* Popup container */
   /* Toggle this class when clicking on the popup container (hide and show the popup) */ }
@@ -66,7 +64,7 @@
     align-content: center;
     width: 100%;
     margin-top: 5%;
-    /* My ├änderung*/ }
+    /* My Änderung*/ }
     #content table tbody > tr[tag=spacer] {
       height: 20px;
       /*vorher 10*/
@@ -101,7 +99,7 @@
         /*vorher 60%*/
         text-align: center;
         white-space: pre-line;
-        /*My ├änderung*/ }
+        /*My Änderung*/ }
       #content table tbody > tr[tag=party] td[tag=butt] input {
         background-position: center;
         width: 32px;

@@ -5,7 +5,7 @@ const contentVue = new Vue({
         name: "",
         birthdate: "",
         gender: 0,
-        owner: false,
+        owner: true,
         popup_delete: false
     },
     methods: {
@@ -15,7 +15,11 @@ const contentVue = new Vue({
                 "birthdate": this.birthdate,
                 "gender": parseInt(this.gender)
             });
-            putRequest("user/" + userId + "?api=" + apiKey, json, function (data) {});
+            putRequest("user/" + userId + "?api=" + apiKey, json, function (data) {
+                if (!data.error && data.name)
+                    localStorage.setItem("userName", data.name);
+                naviVue.refreshName();
+            });
         },
         confirmDelete() {
             popupVue.showPopup('delete')
@@ -54,3 +58,27 @@ const popupVue = new PopupHandler('.popup-container',
     {'delete': false},
     {'delete': contentVue.deleteProfile});
 
+if (contentVue.owner) {
+    var eventsPast = document.getElementById('list_events_past');
+    var eventsFuture = document.getElementById('list_events_future');
+
+    function insertParty(obj) {
+        var time = new Date(obj.endDate?obj.endDate:obj.startDate);
+        /*Tabellen auswahl, je nach dem ob das event vor oder nach jetzt ist */
+        var table = time < new Date() ? eventsPast : eventsFuture;
+
+        /*Namens Zeile*/
+        entry = document.createElement('li');
+
+        entry.innerHTML = '<a href=\"party.html?id=' + obj.id + '\">' + obj.name + '<\a>';
+        //Zeile anhängen
+        table.appendChild(entry);
+    }
+
+    getRequest("party?api=" + apiKey, function (data) {
+        if (!data.error && data.parties) {
+            for (var i in data.parties)
+                insertParty(data.parties[i]);
+        }
+    });
+}
