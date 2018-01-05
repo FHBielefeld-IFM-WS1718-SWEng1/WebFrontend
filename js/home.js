@@ -84,9 +84,11 @@ function makeSpacer() {
 
 var apiKey = localStorage.getItem("apiKey");
 console.log("API Key: " + apiKey);
+var dateNow = new Date();
 getRequest("party?api=" + apiKey, function (data) {
     if (!data.error && data.parties) {
         for (var i in data.parties)
-            insertParty(data.parties[i]);
+            if (new Date(data.parties[i].endDate) > dateNow)//Nur Parties anzeigen die noch nicht vorbei sind
+                insertParty(data.parties[i]);
     }
 });

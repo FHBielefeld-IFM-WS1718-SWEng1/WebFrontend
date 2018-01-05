@@ -1,18 +1,16 @@
+@charset "UTF-8";
 #notifications {
-    background-color: white;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
-    width: 60%;
-    border-radius: 8px;
-    text-align: left;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-top: 4px;
-    margin-top: 8px;
-    overflow-y: scroll;
-}
+  background-color: white;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+  width: 60%;
+  border-radius: 8px;
+  text-align: left;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  margin-top: 8px;
+  overflow-y: scroll; }
 
-/*My ├änderung TOOLTIP*/
-/*My ├änderung*/
 #navi {
   /* Popup container */
   /* Toggle this class when clicking on the popup container (hide and show the popup) */ }
@@ -58,17 +56,18 @@
     animation: fadeIn 1s; }
 
 #content {
-    grid-area: main;
-    padding-left: 3%;
-    padding-right: 3%;
-}
-
-#content table {
+  grid-area: main;
+  padding-left: 3%;
+  padding-right: 3%; }
+  #content table {
     border-collapse: collapse;
     align-content: center;
-    width: 100%; }
+    width: 100%;
+    margin-top: 5%;
+    /* My Änderung*/ }
     #content table tbody > tr[tag=spacer] {
-      height: 10px;
+      height: 20px;
+      /*vorher 10*/
       border: none; }
     #content table tbody > tr[tag=name] > td {
       margin-left: 10%; }
@@ -96,6 +95,15 @@
           #content table tbody > tr[tag=party] td[tag=info] {
             width: 20%; } }
       #content table tbody > tr[tag=party] td[tag=desc] {
-        width: 60%; }
+        width: 50%;
+        /*vorher 60%*/
+        text-align: center;
+        white-space: pre-line;
+        /*My Änderung*/ }
+      #content table tbody > tr[tag=party] td[tag=butt] input {
+        background-position: center;
+        width: 32px;
+        height: 32px;
+        background-repeat: no-repeat; }
 
 /*# sourceMappingURL=home.css.map */
