@@ -63,14 +63,3 @@ getRequest("party?api=" + apiKey, function (data) {
             insertParty(data.parties[i]);
     }
 });
-
-
-new Vue({
-    el: '#navi',
-    data: {},
-    methods: {
-        logout() {
-            papla_logout(apiKey);
-        }
-    }
-})

@@ -16,6 +16,9 @@ const contentVue = new Vue({
                 "gender": parseInt(this.gender)
             });
             putRequest("user/" + userId + "?api=" + apiKey, json, function (data) {
+                if (!data.error && data.name)
+                    localStorage.setItem("userName", data.name);
+                    naviVue.refreshName();
             });
         },
         confirmDelete() {
@@ -66,7 +69,7 @@ function insertParty(obj) {
     /*Namens Zeile*/
     entry = document.createElement('li');
 
-    entry.innerHTML = '<a href=\"party.html?id='+obj.id+'\">'+obj.name+'<\a>';
+    entry.innerHTML = '<a href=\"party.html?id=' + obj.id + '\">' + obj.name + '<\a>';
     //Zeile anhängen
     table.appendChild(entry);
 }
