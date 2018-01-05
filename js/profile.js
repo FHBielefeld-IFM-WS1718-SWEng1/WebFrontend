@@ -63,7 +63,7 @@ if (contentVue.owner) {
     var eventsFuture = document.getElementById('list_events_future');
 
     function insertParty(obj) {
-        var time = new Date(obj.startDate);
+        var time = new Date(obj.endDate);
         /*Tabellen auswahl, je nach dem ob das event vor oder nach jetzt ist */
         var table = time < new Date() ? eventsPast : eventsFuture;
 
