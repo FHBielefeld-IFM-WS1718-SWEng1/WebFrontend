@@ -125,13 +125,13 @@
             </span>
         </div>
 
-        <div id="events_past">
+        <div id="events_past" v-if="owner">
             <span>Vergangene Veranstaltungen</span>
             <ul id="list_events_past">
             </ul>
         </div>
 
-        <div id="events_future">
+        <div id="events_future" v-if="owner">
             <span>Zukünftige Veranstaltungen</span>
             <ul id="list_events_future">
             </ul>
