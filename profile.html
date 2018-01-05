@@ -83,7 +83,7 @@
                 <option value=2>Weiblich</option>
                 <option value=3>Andere</option>
                 </select>
-                <input v-model="getLocalizedGender()" v-else/>
+                <input v-model="getLocalizedGender()" v-else readonly/>
             </div>
             <span><button @click="updateProfile" v-if="owner">Profil Speichern</button></span>
             <span><button @click="confirmDelete" v-if="owner">Profil Löschen</button></span>
