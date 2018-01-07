@@ -88,7 +88,7 @@
     width: 100%;
     align-self: start;
     font-size: 18px;
-    /*Geräte mit 320px und 400px oder weniger haben kleineren Text*/
+    /*Ger├ñte mit 320px und 400px oder weniger haben kleineren Text*/
     text-align: left;
     justify-content: center;
     display: flex; }
@@ -176,7 +176,11 @@
         .popup-container .popup .popup-buttons li button {
           display: block;
           height: var(--button-height);
+          min-height: var(--button-height);
+          max-height: var(--button-height);
           width: var(--button-width);
+          min-width: var(--button-width);
+          max-width: var(--button-width);
           line-height: var(--button-height);
           text-transform: uppercase;
           border: none;

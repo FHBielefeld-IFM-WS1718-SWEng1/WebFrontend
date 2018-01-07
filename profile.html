@@ -43,23 +43,31 @@
     </div>
 </nav>
 
-<div class="popup-container" role="alert" v-if="showAny()" @click="hideAll()">
+<div class="popup-container" v-if="showAny()">
     <div class="popup" role="alert" v-if="show['delete']">
         <p class="title">Profil Löschen</p>
         <p class="desc">Bist du dir sicher, dass du dein Profil löschen möchtest? Dieser Vorgang kann nicht rückgängig
             gemacht werden und wird dich automatisch ausloggen.</p>
         <ul class="popup-buttons" style="--button-width: 200px">
             <li>
-                <button pos="left" class="confirm" @click="confirm('delete')">Ja</button>
+                <button pos="left" class="confirm" @click="callback('delete')">Ja</button>
             </li>
             <li>
                 <button pos="right" class="deny" @click="show['delete'] = false">Nein</button>
             </li>
         </ul>
     </div>
-    <div class="popup" role="alert" v-if="show['search']">
-        <p class="title">Suchfunktion</p>
-        <ul class="popup-buttons" id="searchresults" style="--button-width: 40px;--button-height: 30px">
+    <div class="popup" role="search" v-if="show['search']"
+         style="margin: 20em auto 16em 56em; width: fit-content; max-height: none;">
+        <ul class="popup-buttons" id="searchresults"
+            style="--button-width: 40px;--button-height: 30px; list-style-type: none; text-align: right;">
+            <p class="title">Results: </p>
+            <li v-for="(user, index) in callback('search_results')" :key="index" style="float: none;">
+                <span style="display:inline-flex; margin: 3px 0px 3px 40px;">
+                        <a style="width:80%;" :href="'profile.html?id='+user.id">{{user.name}}</a> -
+                        <button class="confirm" @click="callback('search_confirm', user.id)">+</button>
+                </span>
+            </li>
         </ul>
     </div>
 </div>
@@ -105,25 +113,9 @@
                 <input id="Suche" type="text" v-model="searchString" v-if="owner"/>
                 <button value="add" @click="search" v-if="owner">+</button>
                 <ul id="list_contacts">
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
+                    <li v-for="(user, index) in contactList" :key="index">
+                        <a :href="'profile.html?id='+user.id">{{user.name}}</a>
+                    </li>
                 </ul>
                 <label v-if="owner"> Kontaktanfragen </label>
                 <ul id="list_contactrequests" v-if="owner">

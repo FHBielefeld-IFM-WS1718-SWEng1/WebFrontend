@@ -223,7 +223,11 @@
         button {
           display: block;
           height: var(--button-height);
+          min-height: var(--button-height);
+          max-height: var(--button-height);
           width: var(--button-width);
+          min-width: var(--button-width);
+          max-width: var(--button-width);
           line-height: var(--button-height);
           text-transform: uppercase;
           border: none;
@@ -241,16 +245,14 @@
             border-radius: 0px 0px .4em 0px;
           }
 
-          &[class=confirm]
-          {
+          &[class=confirm] {
             background: #99ff99;
             &:hover {
               background: #66ff66;
             }
           }
 
-          &[class=deny]
-          {
+          &[class=deny] {
             background: #8b0000;
             &:hover {
               background: #cc0000;

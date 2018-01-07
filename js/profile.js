@@ -6,6 +6,7 @@ const contentVue = new Vue({
         birthdate: "",
         gender: 0,
         owner: true,
+        contactList: [],
         searchString: "Tim"
     },
     methods: {
@@ -34,19 +35,8 @@ const contentVue = new Vue({
         getLocalizedGender() {
             return this.gender === 1 ? "Männlich" : this.gender === 2 ? "Weiblich" : this.gender === 3 ? "Andere" : "Keine Angabe";
         },
-        async search() {
-            console.log('Show popup!');
+        search() {
             popupVue.showPopup('search');
-            var searchresults = await popupVue.findPopup('searchresults');
-            console.log('results: '+searchresults);
-            for (var i in userList)
-                if (userList[i].name.startsWith(this.searchString)) {
-                    console.log('  found:'+userList[i].name);
-                    var entry = document.createElement('li');
-                    entry.style["float"] = "right";
-                    entry.innerHTML = '<span style="display:inline-flex;"><a style="width:80%;" href="profile.html?id=' + i + '">' + userList[i].name + '</a> - <button class="confirm" @click="confirm(\'search\'' + i + ')">+</button></span>';
-                    searchresults.appendChild(entry);
-                }
         }
     }
 });
@@ -65,18 +55,40 @@ getRequest("user/" + userId + "?api=" + apiKey, function (data) {
     }
 });
 
+
+var userList;
+
+function getSearchResults() {
+    return userList.filter(function (obj) {
+        return contentVue.searchString && obj.name.toLowerCase().startsWith(contentVue.searchString.toLowerCase());
+    });
+}
+
 function addContact(id) {
-    console.log("Add contact: "+id);
+    putRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
+        console.log("contact added: "+data);
+    });
 }
 
 /*
  * Popups Initialisieren
  */
 const popupVue = new PopupHandler('.popup-container',
-    {'delete': false, 'search': false},
-    {'delete': contentVue.deleteProfile, 'search': addContact});
+    {
+        'delete': false,
+        'search': false
+    },
+    {
+        'delete': contentVue.deleteProfile,
+        'search_results': getSearchResults, 'search_confirm': addContact
+    });
 
-var userList;
+
+getRequest("user/contact?api=" + apiKey, function (data) {
+    if (!data.error && data.contacts) {
+        contentVue.contactList = data.contacts;
+    }
+});
 
 if (contentVue.owner) {
     var eventsPast = document.getElementById('list_events_past');

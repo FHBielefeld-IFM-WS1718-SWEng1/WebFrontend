@@ -4,13 +4,32 @@ class PopupHandler {
             el: container,
             data: {
                 show: values,
-                callbackConfirm: callbacks
+                callbackMethods: callbacks,
+                hoverBG: false
             },
             methods: {
-                confirm(type, parameters) {
-                    this.callbackConfirm[type](parameters);
+                callback(type, parameters) {
+                    console.log("callback for "+type+", call "+this.callbackMethods[type]);
+                    return this.callbackMethods[type](parameters);
+                },
+                showAny() {
+                    for (var k in this.show)
+                        if (this.show[k])
+                            return true;
+                    return false;
+                },
+                hideAll() {
+                    for (var k in this.show)
+                        this.show[k] = false;
                 }
             }
+        });
+        const c_container = container.slice(1);
+        const c_vue = this.popupVue;
+        document.body.addEventListener('click', function (e) {
+            var elem = document.elementFromPoint(event.clientX, event.clientY);
+            if (elem.className === c_container)
+                c_vue.hideAll()
         });
     }
 
@@ -33,7 +52,7 @@ class PopupHandler {
     async findPopup(id) {
         var element = document.getElementById(id);
         var timeout = 0;
-        while (!element && timeout++<20) {
+        while (!element && timeout++ < 20) {
             await this.sleep(200)
             element = document.getElementById(id);
         }
