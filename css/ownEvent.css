@@ -49,7 +49,7 @@
         text-align: center;
         white-space: pre-line;
         /*My ├änderung*/ }
-      #content table tbody > tr[tag=personalEvent] td[tag=butt] input {
+      #content table tbody > tr[tag=personalEvent] td[tag=butt] form input {
         background-position: center;
         width: 32px;
         height: 32px;
