@@ -21,17 +21,16 @@
     <div id="stripes"></div>
     <div id="navi">
         <ul>
-            <!--My Änderung  POPUP -->
+            <li><a href="profile.html">{{name}}</a></li>
+            <li>|</li>
             <li>
-                <div class="popup" onclick="myFunction()">
-                    <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png" alt="Benachrichtigungen"></button>
-
-                    <span class="popuptext" id="myPopup">Sauf Party <br><br> Es wurde eine Abstimmung erstellt <br><br>
-                    <input class="tooltip" type="submit" name="Jetzt_ansehen" value="Jetzt ansehen"></span>
-                </div>
+                <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
+                                                                                               alt="Benachrichtigungen">
+                </button>
             </li>
-
-            <li><a @click="" href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
+            <li>
+                <button @click="logout()">Abmelden<img src="img/login_icon.png" alt="Abmelden"></button>
+            </li>
         </ul>
     </div>
 

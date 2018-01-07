@@ -16,14 +16,17 @@ function papla_login(email, password, callback)
 
 function papla_logout(apiKey)
 {
+    localStorage.removeItem("apiKey");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
+    str = window.location.href;
+    str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/index.html");
+    window.location.replace(str);
+
     deleteRequest("logout?api="+apiKey,
         function (data) {
             if(data.key) {
                 console.log("Invalidated API Key: " + data.key);
             }
         });
-    localStorage.removeItem("apiKey");
-    str = window.location.href;
-    str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/index.html");
-    window.location.replace(str);
 }
