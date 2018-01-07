@@ -118,6 +118,7 @@
     #list_contacts {
       padding-left: 10px;
       max-height: 230px;
+      min-height: 50px;
       overflow-y: auto;
       list-style-type: none;
     }
@@ -127,6 +128,40 @@
     }
     button {
       width: 15%;
+    }
+  }
+}
+
+.popup-container {
+  .popup[role=search] {
+    //margin: 20em auto 16em 56em;
+    margin-top: 20em;
+    margin-left: 60%;
+    width: fit-content;
+    max-height: none;
+    grid-column: 4;
+
+    @media (max-device-width: 700px) {
+      margin-left: auto;
+      margin-right: 5%;
+    }
+    @media (min-device-width: 700px) and (max-device-width: 1024px) {
+      margin-left: auto;
+      margin-right: 17%;
+    }
+
+    .popup-buttons {
+      --button-width: 40px;
+      --button-height: 30px;
+      list-style-type: none;
+      text-align: right;
+
+      li {
+        float: none;
+        a {
+          padding-right: 15px;
+        }
+      }
     }
   }
 }

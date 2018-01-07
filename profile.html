@@ -59,14 +59,11 @@
             </li>
         </ul>
     </div>
-    <div class="popup" role="search" v-if="show['search']"
-         style="margin: 20em auto 16em 56em; width: fit-content; max-height: none;">
-        <ul class="popup-buttons" id="searchresults"
-            style="--button-width: 40px;--button-height: 30px; list-style-type: none; text-align: right;">
-            <p class="title">Results: </p>
-            <li v-for="(user, index) in callback('search_results')" :key="index" style="float: none;">
+    <div class="popup" role="search" v-if="show['search']">
+        <ul class="popup-buttons" id="searchresults">
+            <li v-for="(user, index) in callback('search_results')" :key="index">
                 <span style="display:inline-flex; margin: 3px 0px 3px 40px;">
-                        <a style="width:80%;" :href="'profile.html?id='+user.id">{{user.name}}</a> -
+                        <a :href="'profile.html?id='+user.id">{{user.name}}</a>
                         <button class="confirm" @click="callback('search_confirm', user.id)">+</button>
                 </span>
             </li>
@@ -119,7 +116,9 @@
                         <a :href="'profile.html?id='+user.id">{{user.name}}</a>
                     </li>
                 </ul>
+                <hr>
                 <label v-if="owner"> Kontaktanfragen </label>
+                <hr>
                 <ul id="list_contactrequests" v-if="owner">
                 </ul>
             </span>
