@@ -52,6 +52,36 @@
     <div id="content">
         <table id="party_table">
             <tbody>
+            <template v-for="(party, index) in parties">
+                <tr tag="name">
+                    <td colspan=2>{{ party.name }}</td>
+                </tr>
+                <tr tag="party">
+                    <td tag="image">
+                        <img v-if="party.image" :src="'data:image/jpeg;base64,'+party.image" alt="Party Image">
+                        <img v-else src="img/logo.png" alt="Papla icon">
+                    </td>
+
+                    <td tag="info">
+                        Wer?: {{ party.user }}
+                        <br>
+                        Wo?: {{ party.location }}
+                        <br>
+                        Wann?: {{ getPartyTime(party) }}
+                    </td>
+
+                    <td tag="desc">
+                        {{ party.description }}
+                    </td>
+
+                    <td tag="butt">
+                        <input type="submit" name="Info" value="" style="background-image: url(img/info.png)">
+                        <input type="submit" name="Zusage" value="" style="background-image: url(img/thumb_up.png)">
+                        <input type="submit" name="Absage" value="" style="background-image: url(img/thumb_down.png)">
+                    </td>
+                </tr>
+                <tr tag="spacer"></tr>
+            </template>
             </tbody>
         </table>
     </div>
