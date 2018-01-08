@@ -54,12 +54,14 @@
             <tbody>
             <template v-for="(party, index) in parties">
                 <tr tag="name">
-                    <td colspan=2>{{ party.name }}</td>
+                    <td colspan=2><a :href="'party.html?id='+party.id">{{ party.name }}</a></td>
                 </tr>
                 <tr tag="party">
                     <td tag="image">
-                        <img v-if="party.image" :src="'data:image/jpeg;base64,'+party.image" alt="Party Image">
-                        <img v-else src="img/logo.png" alt="Papla icon">
+                        <a :href="'party.html?id='+party.id">
+                            <img v-if="party.image" :src="'data:image/jpeg;base64,'+party.image" alt="Party Image">
+                            <img v-else src="img/logo.png" alt="Papla icon">
+                        </a>
                     </td>
 
                     <td tag="info">
@@ -75,9 +77,9 @@
                     </td>
 
                     <td tag="butt">
-                        <input type="submit" name="Info" value="" style="background-image: url(img/info.png)">
-                        <input type="submit" name="Zusage" value="" style="background-image: url(img/thumb_up.png)">
-                        <input type="submit" name="Absage" value="" style="background-image: url(img/thumb_down.png)">
+                        <input type="submit" name="info" value="" style="background-image: url(img/info.png)">
+                        <input type="submit" name="confirm" value="" style="background-image: url(img/thumb_up.png)">
+                        <input type="submit" name="deny" value="" style="background-image: url(img/thumb_down.png)">
                     </td>
                 </tr>
                 <tr tag="spacer"></tr>

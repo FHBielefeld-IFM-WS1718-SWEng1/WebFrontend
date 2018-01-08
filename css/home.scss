@@ -82,6 +82,10 @@
 
     tbody > tr[tag=name] > td {
       margin-left: 10%;
+      a {
+        color: black;
+        text-decoration: none;
+      }
     }
 
     tbody > tr[tag=party] {
@@ -122,7 +126,16 @@
           width: 32px;
           height: 32px;
           background-repeat: no-repeat;
+        }
 
+        &[name=info] {
+          background-image: url(../img/info.png);
+        }
+        &[name=confirm] {
+          background-image: url(../img/thumb_up.png);
+        }
+        &[name=deny] {
+          background-image: url(../img/thumb_down.png);
         }
       }
     }
