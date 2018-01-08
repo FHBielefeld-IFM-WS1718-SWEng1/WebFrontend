@@ -116,23 +116,31 @@
                         <a :href="'profile.html?id='+user.id">{{user.name}}</a>
                     </li>
                 </ul>
-                <hr>
-                <label v-if="owner"> Kontaktanfragen </label>
-                <hr>
-                <ul id="list_contactrequests" v-if="owner">
-                </ul>
+                <hr v-if="owner || contactList.length>0">
+                <template v-if="owner">
+                    <label> Kontaktanfragen </label>
+                    <hr>
+                    <ul id="list_contactrequests" v-if="owner">
+                    </ul>
+                </template>
             </span>
         </div>
 
         <div id="events_past" v-if="owner">
             <span>Vergangene Veranstaltungen</span>
             <ul id="list_events_past">
+                <li v-for="(party, index) in eventsPast" :key="index">
+                    <a :href="'party.html?id=' + party.id">{{ party.name }}</a>
+                </li>
             </ul>
         </div>
 
         <div id="events_future" v-if="owner">
             <span>Zukünftige Veranstaltungen</span>
             <ul id="list_events_future">
+                <li v-for="(party, index) in eventsFuture" :key="index">
+                    <a :href="'party.html?id=' + party.id">{{ party.name }}</a>
+                </li>
             </ul>
         </div>
 

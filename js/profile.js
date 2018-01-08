@@ -7,7 +7,9 @@ const contentVue = new Vue({
         gender: 0,
         owner: true,
         contactList: [],
-        searchString: "Tim"
+        searchString: "Tim",
+        eventsPast: [],
+        eventsFuture: []
     },
     methods: {
         updateProfile() {
@@ -38,38 +40,74 @@ const contentVue = new Vue({
         search() {
             popupVue.showPopup('search');
         }
+    },
+    created: function () {
+        let loggedInId = localStorage.getItem("userId");
+        let split = /(id=)(\d+)/g.exec(window.location.href);
+        let userId = (split != null && split.length > 0) ? split[2] : loggedInId;
+        let apiKey = localStorage.getItem("apiKey");
+
+        this.owner = userId === loggedInId;
+        //Nutzerdaten abrufen
+        getRequest("user/" + userId + "?api=" + apiKey, function (data) {
+            if (!data.error) {
+                contentVue.email = data.email;
+                contentVue.name = data.name;
+                contentVue.birthdate = data.birthdate;
+                contentVue.gender = data.gender;
+            }
+        });
+
+        //Kontaktliste abrufen
+        if (this.owner)
+            getRequest("user/contact?api=" + apiKey, function (data) {
+                if (!data.error && data.contacts) {
+                    contentVue.contactList = data.contacts;
+                }
+            });
+
+        //Parties abrufen
+        if (this.owner)
+            getRequest("party?api=" + apiKey, function (data) {
+                if (!data.error && data.parties) {
+                    let timeNow = new Date();
+                    for (let i in data.parties) {
+                        let party = data.parties[i];
+                        let time = new Date(party.endDate ? party.endDate : party.startDate);
+                        //Tabellen auswahl, je nach dem ob das event vor oder nach jetzt ist
+                        if (time < timeNow)
+                            contentVue.eventsPast.push(party);
+                        else
+                            contentVue.eventsFuture.push(party);
+                    }
+                }
+            });
     }
 });
 
-var loggedInId = localStorage.getItem("userId");
-var split = /(id=)(\d+)/g.exec(window.location.href);
-var userId = (split != null && split.length > 0) ? split[2] : loggedInId;
-var apiKey = localStorage.getItem("apiKey");
-contentVue.owner = userId === loggedInId;
-getRequest("user/" + userId + "?api=" + apiKey, function (data) {
-    if (!data.error) {
-        contentVue.email = data.email;
-        contentVue.name = data.name;
-        contentVue.birthdate = data.birthdate;
-        contentVue.gender = data.gender;
+
+if (contentVue.owner) {
+    let apiKey = localStorage.getItem("apiKey");
+    let userList;
+
+    getRequest("user?api=" + apiKey, function (data) {
+        if (!data.error && data.values) {
+            userList = data.values;
+        }
+    });
+
+    function getSearchResults() {
+        return userList.filter(function (obj) {
+            return contentVue.searchString && obj.name.toLowerCase().startsWith(contentVue.searchString.toLowerCase());
+        });
     }
-});
 
-
-var userList;
-
-function getSearchResults() {
-    return userList.filter(function (obj) {
-        return contentVue.searchString && obj.name.toLowerCase().startsWith(contentVue.searchString.toLowerCase());
-    });
+    function addContact(id) {
+        putRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
+            console.log("contact added: " + data);
+        });
+    }
 }
-
-function addContact(id) {
-    putRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
-        console.log("contact added: "+data);
-    });
-}
-
 /*
  * Popups Initialisieren
  */
@@ -82,41 +120,3 @@ const popupVue = new PopupHandler('.popup-container',
         'delete': contentVue.deleteProfile,
         'search_results': getSearchResults, 'search_confirm': addContact
     });
-
-
-getRequest("user/contact?api=" + apiKey, function (data) {
-    if (!data.error && data.contacts) {
-        contentVue.contactList = data.contacts;
-    }
-});
-
-if (contentVue.owner) {
-    var eventsPast = document.getElementById('list_events_past');
-    var eventsFuture = document.getElementById('list_events_future');
-
-    function insertParty(obj) {
-        var time = new Date(obj.endDate ? obj.endDate : obj.startDate);
-        /*Tabellen auswahl, je nach dem ob das event vor oder nach jetzt ist */
-        var table = time < new Date() ? eventsPast : eventsFuture;
-
-        /*Namens Zeile*/
-        entry = document.createElement('li');
-
-        entry.innerHTML = '<a href=\"party.html?id=' + obj.id + '\">' + obj.name + '<\a>';
-        //Zeile anhängen
-        table.appendChild(entry);
-    }
-
-    getRequest("party?api=" + apiKey, function (data) {
-        if (!data.error && data.parties) {
-            for (var i in data.parties)
-                insertParty(data.parties[i]);
-        }
-    });
-
-    getRequest("user?api=" + apiKey, function (data) {
-        if (!data.error && data.values) {
-            userList = data.values;
-        }
-    });
-}
