@@ -13,6 +13,6 @@ const naviVue = new Vue({
         }
     },
     created: function () {
-        naviVue.refreshName();
+        this.refreshName();
     }
 });
