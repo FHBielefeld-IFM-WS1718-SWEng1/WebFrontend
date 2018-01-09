@@ -125,7 +125,7 @@
       max-height: 230px;
       min-height: 50px;
       overflow-y: auto;
-      list-style-type: l; }
+      list-style-type: none; }
     #content #contacts input {
       width: 80%; }
     #content #contacts button {
