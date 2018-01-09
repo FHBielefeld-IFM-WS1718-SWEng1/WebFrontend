@@ -5,6 +5,7 @@ const contentVue = new Vue({
         name: "",
         birthdate: "",
         gender: 0,
+        image: "img/logo.png",
         owner: true,
         contactList: [],
         searchString: "Tim",
@@ -103,10 +104,33 @@ if (contentVue.owner) {
     }
 
     function addContact(id) {
-        putRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
+        pushRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
             console.log("contact added: " + data);
         });
     }
+
+    function selectProfilePicture(evt) {
+        var dateien = evt.target.files;
+        var uploadDatei = dateien[0];
+        console.log("selected file: "+uploadDatei);
+
+        // Ein Objekt um Dateien einzulesen
+        var reader = new FileReader();
+
+        // Wenn der Dateiinhalt ausgelesen wurde...
+        reader.onload = function(theFileData) {
+            contentVue.image = theFileData.target.result; // Ergebnis vom FileReader auslesen
+
+            console.log("image data: "+contentVue.image);
+
+            /*
+            Code für AJAX-Request hier einfügen
+            */
+        }
+        // Die Datei einlesen und in eine Data-URL konvertieren
+        reader.readAsDataURL(uploadDatei);
+    }
+    document.getElementById('uploadButton').addEventListener('change', selectProfilePicture, false);
 }
 /*
  * Popups Initialisieren
