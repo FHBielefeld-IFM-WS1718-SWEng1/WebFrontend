@@ -213,6 +213,7 @@
     }
     .popup-buttons {
       --button-width: 100px;
+      --button-height: 60px;
       padding: 0px;
       margin: 0px;
       li {
@@ -221,9 +222,13 @@
 
         button {
           display: block;
-          height: 60px;
+          height: var(--button-height);
+          min-height: var(--button-height);
+          max-height: var(--button-height);
           width: var(--button-width);
-          line-height: 60px;
+          min-width: var(--button-width);
+          max-width: var(--button-width);
+          line-height: var(--button-height);
           text-transform: uppercase;
           border: none;
           background: #b3b3b3;
@@ -240,16 +245,14 @@
             border-radius: 0px 0px .4em 0px;
           }
 
-          &[class=confirm]
-          {
+          &[class=confirm] {
             background: #99ff99;
             &:hover {
               background: #66ff66;
             }
           }
 
-          &[class=deny]
-          {
+          &[class=deny] {
             background: #8b0000;
             &:hover {
               background: #cc0000;

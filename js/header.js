@@ -5,13 +5,14 @@ const naviVue = new Vue({
     },
     methods: {
         logout() {
-            papla_logout(apiKey);
+            papla_logout(localStorage.getItem("apiKey"));
         },
         refreshName()
         {
             this.name = localStorage.getItem("userName");
         }
+    },
+    created: function () {
+        this.refreshName();
     }
 });
-
-naviVue.refreshName();
