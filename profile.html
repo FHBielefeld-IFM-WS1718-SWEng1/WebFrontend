@@ -86,7 +86,7 @@
                 <option value=2>Weiblich</option>
                 <option value=3>Andere</option>
                 </select>
-                <input v-model="getLocalizedGender()" v-else/>
+                <input v-model="getLocalizedGender()" v-else readonly/>
             </div>
             <span><button @click="updateProfile" v-if="owner">Profil Speichern</button></span>
             <span><button @click="confirmDelete" v-if="owner">Profil Löschen</button></span>
@@ -125,22 +125,15 @@
             </span>
         </div>
 
-        <div id="events_past">
+        <div id="events_past" v-if="owner">
             <span>Vergangene Veranstaltungen</span>
             <ul id="list_events_past">
-                <li>Geburtstagpsarty</li>
-                <li>Hochzeit Meier</li>
-                <li>Sackhüpfen</li>
-                <li>Tetris World Championship</li>
             </ul>
         </div>
 
-        <div id="events_future">
+        <div id="events_future" v-if="owner">
             <span>Zukünftige Veranstaltungen</span>
             <ul id="list_events_future">
-                <li>Saufparty</li>
-                <li>Tims Hammer Party</li>
-                <li>Poke Party</li>
             </ul>
         </div>
 
