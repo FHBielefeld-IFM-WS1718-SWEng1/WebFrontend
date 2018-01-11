@@ -98,30 +98,48 @@ if (contentVue.owner) {
     });
 
     function getSearchResults() {
+        if (!contentVue.searchString)
+            return null;
         return userList.filter(function (obj) {
-            return contentVue.searchString && obj.name.toLowerCase().startsWith(contentVue.searchString.toLowerCase());
+            return obj.name.toLowerCase().startsWith(contentVue.searchString.toLowerCase()) && !nameInContacts(obj);
         });
     }
 
+    function nameInContacts(obj) {
+        let found = false;
+        contentVue.contactList.forEach(function (user) {
+            if (user.id === obj.id) {
+                found = true;
+                return;
+            }
+        });
+        return found;
+    }
+
     function addContact(id) {
-        pushRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
-            console.log("contact added: " + data);
+        postRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
+            if (!data.error)
+                getRequest("user/contact?api=" + apiKey, function (data) {
+                    if (!data.error && data.contacts) {
+                        contentVue.contactList = data.contacts;
+                    }
+                });
         });
     }
 
     function selectProfilePicture(evt) {
         var dateien = evt.target.files;
         var uploadDatei = dateien[0];
-        console.log("selected file: "+uploadDatei);
+        console.log("selected file: " + uploadDatei);
 
         // Ein Objekt um Dateien einzulesen
         var reader = new FileReader();
 
         // Wenn der Dateiinhalt ausgelesen wurde...
-        reader.onload = function(theFileData) {
+        reader.onload = function (theFileData) {
             contentVue.image = theFileData.target.result; // Ergebnis vom FileReader auslesen
 
-            console.log("image data: "+contentVue.image);
+            console.log("image data: " + contentVue.image);
 
             /*
             Code für AJAX-Request hier einfügen
@@ -130,6 +148,7 @@ if (contentVue.owner) {
         // Die Datei einlesen und in eine Data-URL konvertieren
         reader.readAsDataURL(uploadDatei);
     }
+
     document.getElementById('uploadButton').addEventListener('change', selectProfilePicture, false);
 }
 /*

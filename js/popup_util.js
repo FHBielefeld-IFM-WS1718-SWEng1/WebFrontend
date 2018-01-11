@@ -9,7 +9,6 @@ class PopupHandler {
             },
             methods: {
                 callback(type, parameters) {
-                    console.log("callback for "+type+", call "+this.callbackMethods[type]);
                     return this.callbackMethods[type](parameters);
                 },
                 showAny() {
