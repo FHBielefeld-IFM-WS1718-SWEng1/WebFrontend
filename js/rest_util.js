@@ -42,7 +42,7 @@ function putRequest(url, data, listener) {
     xhr.send(data);
 }
 
-function deleteRequest(url, listener) {
+function deleteRequest(url, data, listener) {
     var xhr = new XMLHttpRequest();
 
     xhr.addEventListener("readystatechange", function () {
@@ -53,5 +53,5 @@ function deleteRequest(url, listener) {
     });
     xhr.open("DELETE", URL_BASE+url);
     xhr.setRequestHeader("content-type", "application/json");
-    xhr.send();
+    xhr.send(data);
 }

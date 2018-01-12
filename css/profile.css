@@ -126,10 +126,23 @@
       min-height: 50px;
       overflow-y: auto;
       list-style-type: none; }
+      #content #contacts #list_contacts button {
+        width: 10%;
+        float: right;
+        top: 3px;
+        position: relative;
+        background: #8b0000; }
+        #content #contacts #list_contacts button:hover {
+          background: #cc0000; }
     #content #contacts input {
       width: 80%; }
     #content #contacts button {
-      width: 15%; }
+      width: 15%;
+      height: 4%;
+      border: 1px solid #dfdfdf;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #f9f9f9; }
 
 .popup-container .popup[role=search] {
   margin-top: 20em;
