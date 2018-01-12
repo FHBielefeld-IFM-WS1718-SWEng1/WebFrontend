@@ -1,4 +1,4 @@
-const contentVue=new Vue ({
+const contentVue = new Vue({
     el: '#party_description',
     data: {
         partyname: "Testparty",
@@ -8,8 +8,8 @@ const contentVue=new Vue ({
         beschreibung: "Testbeschreibung"
     },
     methods: {
-        mapsAufrufen(){
-            var link="https://www.google.com/maps?daddr=" + contentVue.ort
+        mapsAufrufen() {
+            var link = "https://www.google.com/maps?daddr=" + contentVue.ort
             window.open(link);
         }
     }
