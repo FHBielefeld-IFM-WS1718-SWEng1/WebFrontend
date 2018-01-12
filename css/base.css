@@ -88,7 +88,7 @@
     width: 100%;
     align-self: start;
     font-size: 18px;
-    /*Ger├ñte mit 320px und 400px oder weniger haben kleineren Text*/
+    /*Geräte mit 320px und 400px oder weniger haben kleineren Text*/
     text-align: left;
     justify-content: center;
     display: flex; }
