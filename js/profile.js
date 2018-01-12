@@ -6,20 +6,41 @@ const contentVue = new Vue({
         birthdate: "",
         gender: 0,
         image: "img/logo.png",
+        imageChanged: false,
+        imagePath: "",
+        userId: -1,
         owner: true,
         contactList: [],
-        searchString: "Tim",
+        searchString: "",
+        contactToDelete: null,
         eventsPast: [],
         eventsFuture: []
     },
     methods: {
         updateProfile() {
-            var json = JSON.stringify({
+            if (!this.imageChanged)
+                this.doUpdate();
+            else { //Wenn das Nutzerbild geändert wurde ist der Vorgang etwas komplizierter
+                postRequest("image/?api=" + localStorage.getItem("apiKey"), JSON.stringify({"data": this.image}), function (data) {
+                    console.log("Image was uploaded: " + JSON.stringify(data));
+                    if (data.filename) {
+                        contentVue.imageChanged = false;
+                        contentVue.imagePath = data.filename;
+                    }
+                    console.log("Updated userdata: " + JSON.stringify(userObject));
+                    contentVue.doUpdate(userObject);
+                });
+            }
+        },
+        doUpdate() {
+            let userObject = {
                 "name": this.name,
                 "birthdate": this.birthdate,
-                "gender": parseInt(this.gender)
-            });
-            putRequest("user/" + userId + "?api=" + apiKey, json, function (data) {
+                "gender": parseInt(this.gender),
+                "profilepicture": this.imagePath
+            };
+            putRequest("user/" + this.userId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(userObject), function (data) {
+                console.log("update performed: " + JSON.stringify(data));
                 if (!data.error && data.name)
                     localStorage.setItem("userName", data.name);
                 naviVue.refreshName();
@@ -29,7 +50,7 @@ const contentVue = new Vue({
             popupVue.showPopup('delete');
         },
         deleteProfile() {
-            deleteRequest("user/" + userId + "?api=" + apiKey, function (data) {
+            deleteRequest("user/" + this.userId + "?api=" + localStorage.getItem("apiKey"), null, function (data) {
                 if (data.message === "erfolg") {
                     papla_logout(apiKey);
                 }
@@ -40,22 +61,46 @@ const contentVue = new Vue({
         },
         search() {
             popupVue.showPopup('search');
+        },
+        confirmDeleteContact(user) {
+            this.contactToDelete = user;
+            popupVue.showPopup('deleteContact');
+        },
+        deleteContact() {
+            if (this.contactToDelete)
+                deleteRequest("user/contact?api=" + localStorage.getItem("apiKey"), JSON.stringify({"id": this.contactToDelete.id}), function (data) {
+                    popupVue.hidePopup('deleteContact');
+                    for (let i = 0; i < contentVue.contactList.length; i++)
+                        if (contentVue.contactList[i].id === contentVue.contactToDelete.id)
+                            contentVue.contactList.splice(i, 1);
+                    contentVue.contactToDelete = null;
+                });
         }
     },
     created: function () {
         let loggedInId = localStorage.getItem("userId");
         let split = /(id=)(\d+)/g.exec(window.location.href);
-        let userId = (split != null && split.length > 0) ? split[2] : loggedInId;
+        this.userId = (split != null && split.length > 0) ? split[2] : loggedInId;
         let apiKey = localStorage.getItem("apiKey");
 
-        this.owner = userId === loggedInId;
+        this.owner = this.userId === loggedInId;
         //Nutzerdaten abrufen
-        getRequest("user/" + userId + "?api=" + apiKey, function (data) {
+        getRequest("user/" + this.userId + "?api=" + apiKey, function (data) {
             if (!data.error) {
+                console.log("userdata: " + JSON.stringify(data));
                 contentVue.email = data.email;
                 contentVue.name = data.name;
                 contentVue.birthdate = data.birthdate;
                 contentVue.gender = data.gender;
+                if (data.profilepicture) {
+                    contentVue.imagePath = data.profilepicture;
+                    console.log("profilepicture: " + data.profilepicture);
+                    getRequest("image/" + data.profilepicture + "?api=" + apiKey, function (data) {
+                        console.log("picturedata: " + JSON.stringify(data));
+                        if (!data.data)
+                            contentVue.image = data.data;
+                    });
+                }
             }
         });
 
@@ -118,12 +163,14 @@ if (contentVue.owner) {
 
     function addContact(id) {
         postRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
-            if (!data.error)
+            if (!data.error) {
+                popupVue.hidePopup('search');
                 getRequest("user/contact?api=" + apiKey, function (data) {
                     if (!data.error && data.contacts) {
                         contentVue.contactList = data.contacts;
                     }
                 });
+            }
         });
     }
 
@@ -137,10 +184,14 @@ if (contentVue.owner) {
 
         // Wenn der Dateiinhalt ausgelesen wurde...
         reader.onload = function (theFileData) {
-            contentVue.image = theFileData.target.result; // Ergebnis vom FileReader auslesen
-
-            console.log("image data: " + contentVue.image);
-
+            if (theFileData.target.result !== contentVue.image) {
+                contentVue.image = theFileData.target.result; // Ergebnis vom FileReader auslesen
+                // console.log("*image data: " + contentVue.image);
+                contentVue.imageChanged = true;
+                console.log("New image!!");
+            }
+            else
+                console.log("Old image!!");
             /*
             Code für AJAX-Request hier einfügen
             */
@@ -157,9 +208,13 @@ if (contentVue.owner) {
 const popupVue = new PopupHandler('.popup-container',
     {
         'delete': false,
-        'search': false
+        'search': false,
+        'deleteContact': false
     },
     {
         'delete': contentVue.deleteProfile,
-        'search_results': getSearchResults, 'search_confirm': addContact
+        'search_results': getSearchResults, 'search_confirm': addContact,
+        'deleteContact': contentVue.deleteContact, 'deleteContact_name': function () {
+            return contentVue.contactToDelete.name;
+        }
     });

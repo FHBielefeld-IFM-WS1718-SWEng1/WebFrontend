@@ -126,10 +126,47 @@
       min-height: 50px;
       overflow-y: auto;
       list-style-type: none; }
+      #content #contacts #list_contacts button {
+        width: 10%;
+        float: right;
+        top: 3px;
+        position: relative;
+        background: #8b0000; }
+        #content #contacts #list_contacts button:hover {
+          background: #cc0000; }
     #content #contacts input {
       width: 80%; }
     #content #contacts button {
-      width: 15%; }
+      width: 15%;
+      height: 4%;
+      border: 1px solid #dfdfdf;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #f9f9f9; }
+
+.popup-container .popup[role=search] {
+  margin-top: 20em;
+  margin-left: 60%;
+  width: fit-content;
+  max-height: none;
+  grid-column: 4; }
+  @media (max-device-width: 700px) {
+    .popup-container .popup[role=search] {
+      margin-left: auto;
+      margin-right: 5%; } }
+  @media (min-device-width: 700px) and (max-device-width: 1024px) {
+    .popup-container .popup[role=search] {
+      margin-left: auto;
+      margin-right: 17%; } }
+  .popup-container .popup[role=search] .popup-buttons {
+    --button-width: 40px;
+    --button-height: 30px;
+    list-style-type: none;
+    text-align: right; }
+    .popup-container .popup[role=search] .popup-buttons li {
+      float: none; }
+      .popup-container .popup[role=search] .popup-buttons li a {
+        padding-right: 15px; }
 
 .popup-container .popup[role=search] {
   margin-top: 20em;

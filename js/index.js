@@ -85,8 +85,7 @@ const rootVue = new Vue({
 });
 
 //Automatisches redirect
-if("apiKey" in localStorage && "userId" in localStorage && "userName" in localStorage)
-{
+if ("apiKey" in localStorage && "userId" in localStorage && "userName" in localStorage) {
     str = window.location.href;
     str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
     window.location.replace(str);
