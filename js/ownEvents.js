@@ -12,8 +12,9 @@ const contentVue = new Vue({
     },
     created: function () {
         let apiKey = localStorage.getItem("apiKey");
+        console.log("api: "+apiKey);
         let dateNow = new Date();
-        getRequest("party?api=" + apiKey, function (data) {
+        getRequest("party?api=" + apiKey + "&creator=true", function (data) {
             if (!data.error && data.parties) {
                 for (let i in data.parties) {
                     let party = data.parties[i];

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet">
+    <link href="css/party_EV.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="js/rest_util.js"></script>
+    <script src="js/login_util.js"></script>
+    <script src="js/home.js" defer></script>
+    <script src="js/party_ev.js"></script>
+
+    <title>Papla - Dein Partyplaner!</title>
+</head>
+
+<body class="container">
+<header class="header">
+    <div id="stripes"></div>
+    <div id="navi">
+        <ul>
+            <li><a href="profile.html">{{name}}</a></li>
+            <li>|</li>
+            <li>
+                <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
+                                                                                               alt="Benachrichtigungen">
+                </button>
+            </li>
+            <li>
+                <button @click="logout()">Abmelden<img src="img/login_icon.png" alt="Abmelden"></button>
+            </li>
+        </ul>
+    </div>
+
+    <div id="logo"><img src="img/logo.png" alt="Papla icon"></div>
+</header>
+
+<nav class="navigation">
+    <div id="bar">
+        <a id="bar_home" href="">Home</a>
+        <a id="bar_profil" href="profile.html">Profil</a>
+        <a id="bar_eigene" href="ownEvent.html">Eigene Veranstaltungen</a> <!--Änderung Namen auf Englisch--->
+    </div>
+</nav>
+
+<main class="main">
+
+    <fieldset id="Field">
+        <div>
+            <img id="Profile_Pic" src="img/logo.png">
+        </div>
+        <div id="samp_Arrea">
+            <samp class="samp_Bsp"> Was?: Sauf Party </samp>
+            <input type="button" name="Weiter" value="" style="background-image: url(img/pencil.png)">
+            <p></p>
+
+            <samp class="samp_Bsp"> Wer?: Malte </samp>
+            <input type="button" name="Weiter" value="" style="background-image: url(img/pencil.png)">
+            <p></p>
+
+            <samp class="samp_Bsp"> Wo?: Bierbude </samp>
+            <input type="button" name="Weiter" value="" style="background-image: url(img/pencil.png)">
+            <p></p>
+
+            <samp class="samp_Bsp"> Wann?: 30.02.1043 </samp>
+            <samp class="samp_Bsp"> 19 Uhr </samp>
+            <input type="button" name="Weiter" value="" style="background-image: url(img/pencil.png)">
+            <p></p>
+        </div>
+        <fieldset id="Sec_Description">
+            <legend>Beschreibung</legend>
+            <textarea id="TextArea" name="Txt_Area" cols="50" rows="10"> Hier deinen Text eingeben...</textarea>
+        </fieldset>
+        <input id="butt_shift" type="button" name="Weiter" value="" style="background-image: url(img/pencil.png);">
+        <p></p>
+    </fieldset>
+
+    <fieldset>
+        <div id="Gallery">
+            <img class="Gallery_Pics" src="img/logo.png">
+            <img class="Gallery_Pics" src="img/logo.png">
+            <img class="Gallery_Pics" src="img/logo.png">
+            <form action="Party_Gallerie.html">
+                <input type="submit" name="Gallery" value="Gallerie öffnen">
+            </form>
+        </div>
+    </fieldset>
+
+    <!------------------------------------------TABS START------------------------------------------------------------>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Kommentare')" id="defaultOpen">Kommentare</button>
+        <button class="tablinks" onclick="openTab(event, 'Aufgabenliste')" id="OpenAufgabenliste">Aufgabenliste</button>
+        <button class="tablinks" onclick="openTab(event, 'Gaesteliste')" id="OpenGaeste">Gästeliste</button>
+        <button class="tablinks" onclick="openTab(event, 'ToDoListe')" id="OpenToDo">ToDo-Liste</button>
+        <button class="tablinks" onclick="openTab(event, 'Abstimmungen')" id="OpenAbstimmung">Abstimmungen</button>
+        <button class="tablinks" onclick="openTab(event, 'Bewertung')" id="OpenBewertung">Bewertung</button>
+    </div>
+    <!-------------------------------------------TABS ENDE------------------------------------------------------------>
+
+    <!------------------------------------------KOMMENTARE START------------------------------------------------------------>
+    <div id="Kommentare" class="tabcontent">
+        <textarea id="myTextArea" name="Txt_Area" cols="112" rows="5">Hier deinen Text eingeben...</textarea>
+
+        <div id="Sec_Weiter_Butt">
+            <input type="button" name="Weiter" value="" style=" background-image: url(img/shift.png)">
+        </div>
+
+        <div id="logo_inside">
+            <img src="img/logo.png">
+            <div class="Report" style="margin-top: -10%; margin-left: 15%">
+                <label for="vorname">Angela</label><br>
+                <samp class="samp_Report">Beliebige Beiträgeder Person...</samp><br>
+                <samp class="samp_Report"> Beliebiger Beispieltext </samp>
+                <div id="buttons">
+                    <input id="Ret_Button" type="submit" name="zurück" value=""
+                           style="background-image: url(img/return.png)">
+                    <input id="Butt_trash" type="submit" name="trash" value=""
+                           style="background-image: url(img/trash.png)">
+                </div>
+            </div>
+        </div>
+
+        <hr style="width: 90%; margin-left: 2%; margin-top: 5%">
+
+        <div id="logo_inside">
+            <img src="img/logo.png">
+            <div class="Report" style="margin-top: -10%; margin-left: 15%">
+                <label for="vorname">Christian</label><br>
+                <samp class="samp_Report">Beliebige Beiträgeder Person...</samp><br>
+                <samp class="samp_Report"> Beliebiger Beispieltext </samp>
+                <div id="buttons">
+                    <input id="Ret_Button" type="submit" name="zurück" value=""
+                           style="background-image: url(img/return.png)">
+                    <input id="Butt_trash" type="submit" name="trash" value=""
+                           style="background-image: url(img/trash.png)">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-------------------------------------------KOMMENTARE ENDE------------------------------------------------------------>
+
+    <!-------------------------------------------AUFGABENLISTE START------------------------------------------------------------>
+    <div id="Aufgabenliste" class="tabcontent">
+        <div id="Aufgaben_samp">
+            <label for="vorname">Aufgaben:</label>
+            <p></p>
+            <samp class="samp_Report">Getränke</samp>
+            <p></p>
+            <samp class="samp_Report"> Kuchen </samp>
+            <p></p>
+            <samp class="samp_Report">Skat Spiel </samp>
+            <p></p>
+            <samp class="samp_Report"> Kaffee </samp>
+            <p></p>
+            <samp class="samp_Report"> Bastelsachen </samp>
+            <p></p>
+            <samp class="samp_Report"> Musikbox </samp>
+        </div>
+
+        <div id="Responsible">
+            <label class="Resp_Header" for="vorname">Verantwortlicher:</label>
+            <p></p>
+            <samp class="samp_Report">Edmund</samp>
+            <p></p>
+            <samp class="samp_Report"> Ursula </samp>
+            <p></p>
+            <samp class="samp_Report">Angela </samp>
+            <p></p>
+            <samp class="samp_Report"> Martin </samp>
+            <p></p>
+            <samp class="samp_Report"> Sarah </samp>
+            <p></p>
+            <samp class="samp_Report" style="color: blue"> wird gesucht </samp>
+            <input type="button" name="Meldung" value="" style="background-repeat: no-repeat; border-color: #0000cd; background-image: url(finger.jpg);
+                            background-position: center; width: 15px; height:25px">
+        </div>
+
+        <div id="Pencil_Butt">
+            <input type="button" name="Change_1" value="" style="background-image: url(img/pencil.png)">
+            <p></p>
+            <input type="button" name="Change_2" value="" style="background-image: url(img/pencil.png)">
+            <p></p>
+            <input type="button" name="Change_3" value="" style="background-image: url(img/pencil.png)">
+            <p></p>
+            <input type="button" name="Change_4" value="" style="background-image: url(img/pencil.png)">
+            <p></p>
+            <input type="button" name="Change_5" value="" style="background-image: url(img/pencil.png)">
+            <p></p>
+            <input type="button" name="Change_6" value="" style="background-image: url(img/pencil.png)">
+        </div>
+
+        <div id="Status">
+            <center><label for="vorname">Status:</label>
+                <p></p>
+                <input type="checkbox" name="cp_1">
+                <p></p>
+                <input type="checkbox" name="cp_2">
+                <p></p>
+                <input type="checkbox" name="cp_3" checked="checked">
+                <p></p>
+                <input type="checkbox" name="cp_4">
+                <p></p>
+                <input type="checkbox" name="cp_5" checked="checked">
+                <p></p>
+                <input type="checkbox" name="cp_6">
+            </center>
+        </div>
+
+        <div id="Trash_Butt">
+            <input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)">
+            <p></p>
+            <input type="button" name="Trash_2" value="" style="background-image: url(img/trash.png)">
+            <p></p>
+            <input type="button" name="Trash_3" value="" style="background-image: url(img/trash.png)">
+            <p></p>
+            <input type="button" name="Trash_4" value="" style="background-image: url(img/trash.png)">
+            <p></p>
+            <input type="button" name="Trash_5" value="" style="background-image: url(img/trash.png)">
+            <p></p>
+            <input type="button" name="Trash_6" value="" style="background-image: url(img/trash.png)">
+        </div>
+
+        <div id="Butt_Add">
+            <input type="button" name="Add_Someone" value="+">
+        </div>
+    </div>
+    <!-------------------------------------------AUFGABENLISTE ENDE------------------------------------------------------------->
+
+    <!-------------------------------------------GÄSTELISTE START------------------------------------------------------------>
+    <div id="Gaesteliste" class="tabcontent">
+
+        <div id="Gaesteliste_Main">
+            <label id="L1" for="Gaeste">Gäeste</label>
+            <label id="L2" for="Absagen">Absagen</label>
+            <label id="L3" for="Ausstehend">Ausstehend</label>
+            <hr>
+            <div id="Gaeste" class="samp_Report">
+                <samp>Edmund</samp>
+                <p></p>
+                <samp> Ursula </samp>
+                <p></p>
+                <samp>Angela </samp>
+                <p></p>
+                <samp> Martin </samp>
+                <p></p>
+                <samp> Sarah </samp>
+                <p></p>
+                <samp> Gregor </samp>
+                <p></p>
+                <samp> Christian </samp>
+                <p></p>
+                <samp> Frauke </samp>
+                <p></p>
+            </div>
+
+            <div id="Ab_Zusage">
+                <input type="button" name="AZ_1" value="A+">
+                <p></p>
+                <input type="button" name="AZ_2" value="A-">
+                <p></p>
+                <input type="button" name="AZ_3" value="A+">
+                <p></p>
+                <input type="button" name="AZ_4" value="A+">
+                <p></p>
+                <input type="button" name="AZ_5" value="A+">
+                <p></p>
+                <input type="button" name="AZ_6" value="A+">
+                <p></p>
+                <input type="button" name="AZ_7" value="A+">
+                <p></p>
+                <input type="button" name="AZ_8" value="A-">
+            </div>
+
+            <div id="Ausstehend">
+                <samp class="samp_Report">Cem</samp>
+                <p></p>
+                <samp class="samp_Report"> Claudia </samp>
+                <p></p>
+            </div>
+
+            <div id="TRASH">
+                <input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)">
+                <p></p>
+                <input type="button" name="Trash_2" value="" style="background-image: url(img/trash.png)">
+            </div>
+
+            <div id="CheckIn">
+                <input type="submit" name="check_In" value="Mit Einchecken beginnen" onClick="ChangeObj3()">
+            </div>
+            <div id="AddUser_Butt">
+                <input type="button" name="AddUser" value="" style="background-image: url(img/User_Add.png)">
+            </div>
+        </div>
+
+        <!---------------------------------------Gaesteliste_Checkin---------------------------------------------------------------->
+        <div id="Gaesteliste_Checkin" style="visibility: hidden">
+            <label for="Gaeste">Gäeste</label>
+            <hr>
+            <div id="Guests">
+                <samp class="samp_Report">Edmund</samp>
+                <p></p>
+                <samp class="samp_Report"> Ursula </samp>
+                <p></p>
+                <samp class="samp_Report">Angela </samp>
+                <p></p>
+                <samp class="samp_Report"> Martin </samp>
+                <p></p>
+                <samp class="samp_Report"> Sarah </samp>
+                <p></p>
+                <samp class="samp_Report"> Gregor </samp>
+                <p></p>
+                <samp class="samp_Report"> Christian </samp>
+                <p></p>
+                <samp class="samp_Report"> Frauke </samp>
+                <p></p>
+            </div>
+            <div id="Check">
+                <input type="checkbox" name="checked_1"> Eingecheckt<p></p>
+                <input type="checkbox" name="checked_2"> Eingecheckt<p></p>
+                <input type="checkbox" name="checked_3" checked="checked"> Eingecheckt<p></p>
+                <input type="checkbox" name="checked_4"> Eingecheckt<p></p>
+                <input type="checkbox" name="checked_5" checked="checked">Eingecheckt<p></p>
+                <input type="checkbox" name="checked_6"> Eingecheckt<p></p>
+                <input type="checkbox" name="checked_7"> Eingecheckt<p></p>
+                <input type="checkbox" name="checked_8"> Eingecheckt<p></p>
+            </div>
+
+            <section id="ToQR_Code" style="margin-top: -41%; margin-left: 75%; margin-bottom: 18%">
+                <textarea name="Beginn_Checkin" cols="25" rows="10">QR-Code vor die Kammera halten...</textarea>
+                <p></p>
+                <input type="button" name="Mit_QR_Code" value="Mit QR-Code Einchecken"
+                       style="background-position: center; width: 180px; height:30px; margin-left: 5%">
+            </section>
+        </div>
+    </div>
+
+    <!---------------------------------------Gaesteliste_Checkin---------------------------------------------------------------->
+    <!-------------------------------------------GÄSTELISTE ENDE------------------------------------------------------------->
+
+    <!--------------------------------------------ToDoLISTE START---------------------------------------------------------->
+    <div id="ToDoListe" class="tabcontent">
+        <div id="Kostenpunk_hinzu_Butt">
+            <button>Kostenpunkt hinzufügen</button>
+        </div>
+        <hr>
+        <label for="Aufgabe" style="margin-left: 2%">Aufgabe</label>
+        <label for="Kosten" style="margin-left: 30%">Kosten €</label>
+        <hr>
+        <div id="Task">
+            <samp class="samp_Report">Getränke</samp>
+            <p></p>
+            <samp class="samp_Report"> Lokation mieten </samp>
+            <p></p>
+            <samp class="samp_Report">Cathering </samp>
+            <p></p>
+            <samp class="samp_Report"> Musikanlage </samp>
+            <p></p>
+            <samp class="samp_Report"> Türsteher </samp>
+            <p></p>
+            <samp class="samp_Report"> Insgesammt </samp>
+            <p></p>
+        </div>
+
+        <div id="Costs">
+            <samp class="samp_Report">50</samp>
+            <p></p>
+            <samp class="samp_Report">84 </samp>
+            <p></p>
+            <samp class="samp_Report">67 </samp>
+            <p></p>
+            <samp class="samp_Report"> 50 </samp>
+            <p></p>
+            <samp class="samp_Report"> 94 </samp>
+            <p></p>
+            <samp class="samp_Report"> 943 </samp>
+            <p></p>
+        </div>
+        <div id="Do_Check">
+            <input type="checkbox" name="check_1" checked="checked">
+            <p></p>
+            <input type="checkbox" name="check_2">
+            <p></p>
+            <input type="checkbox" name="check_3" checked="checked">
+            <p></p>
+            <input type="checkbox" name="check_4">
+            <p></p>
+            <input type="checkbox" name="check_5" checked="checked">
+            <p></p>
+            <input type="checkbox" name="check_6">
+            <p></p>
+        </div>
+
+        <div id="delete">
+            <input type="button" name="del_1" value="" style="background-image: url(img/trash_mini.png)">
+            <p></p>
+            <input type="button" name="del_2" value="" style="background-image: url(img/trash_mini.png)">
+            <p></p>
+            <input type="button" name="del_3" value="" style="background-image: url(img/trash_mini.png)">
+            <p></p>
+            <input type="button" name="del_4" value="" style="background-image: url(img/trash_mini.png)">
+            <p></p>
+            <input type="button" name="del_5" value="" style="background-image: url(img/trash_mini.png)">
+            <p></p>
+            <input type="button" name="del_6" value="" style="background-image: url(img/trash_mini.png)">
+        </div>
+
+    </div>
+    <!--------------------------------------------ToDoLISTE ENDE---------------------------------------------------------->
+
+    <!-------------------------------------------ABSTIMMUNGEN START------------------------------------------------------------>
+    <div id="Abstimmungen" class="tabcontent">
+
+        <div id="Abstimmung_Allgemein">
+            <div>
+                <form action="">
+                    <input type="submit" name="Neue_Abstimmung" value="Neue Abstimmung Erstellen"
+                           onclick="ToggleObj_2()" style="width: 870px; height: 40px; margin-bottom: 1%">
+                </form>
+            </div>
+            <div>
+                <fieldset>
+                    <samp class="samp_Report"> Welche Pizzen sollen gekauft werden?</samp>
+                    <!--vorher ToggleObj_2()-->
+                    <input class="Voting" onclick="ToggleObj_2()" type="submit" name="Abstimmung"
+                           value="Abstimmung ansehen" style="width: 200px; height: 30px; float: right">
+                </fieldset>
+                <hr>
+                <fieldset>
+                    <samp class="samp_Report"> Welche Musik soll gespielt werden?</samp>
+                    <input id="Butt_Verschiebung" class="Voting" type="submit" name="Abstimmung"
+                           value="Abstimmung ansehen" style="width: 200px; height: 30px; float: right">
+                </fieldset>
+                <hr>
+                <fieldset>
+                    <samp class="samp_Report"> Soll Tim ein Eimer Wasser über den Kopf bekommen?</samp>
+                    <input class="Voting" type="submit" name="Abstimmung" value="Abstimmung ansehen"
+                           style="width: 200px; height: 30px; float: right">
+                </fieldset>
+                <hr>
+                <fieldset>
+                    <samp class="samp_Report"> Welche Getränke sollen angeboten werden?</samp>
+                    <input class="Voting" type="submit" name="Abstimmung" value="Abstimmung ansehen"
+                           style="width: 200px; height: 30px; float: right">
+                </fieldset>
+                <hr>
+                <fieldset>
+                    <samp class="samp_Report"> Wer hat den Keks geklaut?</samp>
+                    <input class="Voting" type="submit" name="Abstimmung" value="Abstimmung ansehen"
+                           style="width: 200px; height: 30px; float: right">
+                </fieldset>
+            </div>
+        </div>
+
+
+        <!--------------------------------------------------------------ANDERER BEREICH START-------------------------------------------------------->
+        <div id="Abstimmungen_Erstellen" class="Inhalt_Abstimmemn_Erstellen" style="visibility:hidden">
+            <div id="btnReturn_2">
+                <input type="submit" name="Return" value="" style="background-repeat: no-repeat;
+                                    background-image: url(img/return_mini.png);background-position: center; height: 30px; width: 40px;">
+            </div>
+            <div id="btnAbstimmungEinsehen">
+                <!--vorher ToggleObject()-->
+                <button onclick="ToggleObj_2()">Abstimmung ansehen</button>
+            </div>
+            <hr>
+            <div id="Head">
+                <b>Frage?</b>
+                <input type="text" id="Frage" name="Frage" value="Frage hier eingeben">
+                <div id="Head_Button">
+                    <button onclick="" style="background-image: url(img/pencil.png)"></button>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 2%"><label>Optionen:</label></div>
+            <hr>
+
+            <div id="Options">
+                <samp class="samp_Report"> Option 1 </samp>
+                <p></p>
+                <samp class="samp_Report"> Option 2 </samp>
+                <p></p>
+                <samp class="samp_Report"> Option 3 </samp>
+                <p></p>
+                <samp class="samp_Report"> Option 4 </samp>
+                <p></p>
+                <samp class="samp_Report"> Option 5 </samp>
+                <p></p>
+                <samp class="samp_Report"> Option 6 </samp>
+                <p></p>
+            </div>
+
+            <div id="Info_Change">
+                <input type="button" name="IC_1" value="" style="background-image: url(img/pencil.png)">
+                <p></p>
+                <input type="button" name="IC_2" value="" style="background-image: url(img/pencil.png)">
+                <p></p>
+                <input type="button" name="IC_3" value="" style="background-image: url(img/pencil.png)">
+                <p></p>
+                <input type="button" name="IC_4" value="" style="background-image: url(img/pencil.png)">
+                <p></p>
+                <input type="button" name="IC_5" value="" style="background-image: url(img/pencil.png)">
+                <p></p>
+                <input type="button" name="IC_6" value="" style="background-image: url(img/pencil.png)">
+            </div>
+        </div>
+
+        <div id="Abstimmungen_Ansehen" class="Inhalt_Abstimmemn_Ansehen">
+
+            <div id="btnReturn">
+                <input type="submit" name="Return" value="" style="background-repeat: no-repeat;
+                                   background-image: url(img/return.png);background-position: center; height: 30px; width: 40px;"></button>
+            </div>
+            <hr>
+            <div id="Radio_Abstimmung">
+                <h3><b>Frage?</b> Welche Pizza soll bestelt werden?</h3>
+                <form>
+                    <input type="radio" name="food" value="option1" checked> Salami<br>
+                    <input type="radio" name="food" value="option2"> Margherita<br>
+                    <input type="radio" name="food" value="option3"> Schinken <br>
+                    <input type="radio" name="food" value="option4"> Thunfisch<br>
+                    <input type="radio" name="food" value="option5"> Hawai
+                </form>
+
+                <div id="btnAbstimmen">
+                    <button onclick="DeleteObject()" style="height: 30px; width: 200px;">Abstimmen</button>
+                </div>
+
+            </div>
+
+            <div id="PieDiagramm">
+
+
+                <h3>Bisheriges Ergebnis</h3>
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            </div>
+        </div>
+
+    </div>
+
+    <!--------------------------------------------------------------ANDERER BEREICH ENDE-------------------------------------------------------->
+
+
+    </div> <!---Ende Abstimmungen---->
+
+</main>
+</body>
+</html>

@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/base.css" rel="stylesheet">
+    <link href="css/ownEvents.css" rel="stylesheet">
     <link href="css/home.css" rel="stylesheet">
     <script src="https://unpkg.com/vue"></script>
     <script src="js/rest_util.js"></script>
     <script src="js/login_util.js"></script>
     <script src="js/header.js" defer></script>
-    <script src="js/home.js" defer></script>
+    <script src="js/ownEvents.js" defer></script>
     <title>Papla - Dein Partyplaner!</title>
 </head>
 
@@ -23,13 +24,9 @@
             <li><a href="profile.html">{{name}}</a></li>
             <li>|</li>
             <li>
-                <div class="popup">
-                    <button @click="showNotifications = !showNotifications">Benachrichtigungen<img
-                            src="img/bell_icon.png" alt="Benachrichtigungen"></button>
-
-                    <span class="popuptext" id="myPopup">Sauf Party <br><br> Es wurde eine Abstimmung erstellt <br><br>
-                    <input class="tooltip" type="submit" name="Jetzt_ansehen" value="Jetzt ansehen"></span>
-                </div>
+                <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
+                                                                                               alt="Benachrichtigungen">
+                </button>
             </li>
             <li>
                 <button @click="logout()">Abmelden<img src="img/login_icon.png" alt="Abmelden"></button>
@@ -48,10 +45,18 @@
     </div>
 </nav>
 
+
 <main class="main">
     <div id="content">
         <table id="party_table">
             <tbody>
+
+            <tr tag="button">
+                <form action="party_EV.html">
+                    <input id="Button_New_Event" type="submit" name="NewEvent" value="Neue Veranstalltung erstellen">
+                </form>
+            </tr>
+
             <template v-for="(party, index) in parties">
                 <tr tag="name">
                     <td colspan=2><a :href="'party.html?id='+party.id">{{ party.name }}</a></td>
@@ -77,9 +82,9 @@
                     </td>
 
                     <td tag="butt">
-                        <input type="submit" name="info" value="" style="background-image: url(img/info.png)">
-                        <input type="submit" name="confirm" value="" style="background-image: url(img/thumb_up.png)">
-                        <input type="submit" name="deny" value="" style="background-image: url(img/thumb_down.png)">
+                        <input type="submit" name="Edit" value="" style="background-image: url(img/pencil.png)">
+                        <input id="deleteDep" type="submit" name="Trash" value=""
+                               style="background-image: url(img/trash.png)" onclick="delHeader('tb1'); deleteRow(this)">
                     </td>
                 </tr>
                 <tr tag="spacer"></tr>

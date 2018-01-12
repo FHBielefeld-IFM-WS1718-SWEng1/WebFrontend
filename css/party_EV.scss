@@ -1,0 +1,367 @@
+/*Bereich zur erstellung der eigenen Veranstalltung*/
+.main{
+
+  #Field{
+    margin-top: 3%;
+    #Profile_Pic{
+      margin-left: 1%;
+      margin-top: 1%;
+      width: 20%;
+      height: 20%;
+    }
+    #samp_Arrea{
+      margin-left: 25%;
+      margin-top: -20%;
+      input{
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 25px;
+        height:25px;
+      }
+    }
+    #Sec_Description{
+      text-align:center;
+      margin-top: -22%;
+      margin-left: 53%;
+      width: 40%;
+      legend{
+        height: 50px;
+      }
+      #TextArea{
+        text-align:left;
+        margin-top: -4%;
+      }
+    }
+
+    #butt_shift{
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 25px;
+      height:25px;
+      margin-left: 96%;
+    }
+  }
+
+  #Gallery{
+    margin-bottom: 2%;
+    .Gallery_Pics{
+      margin-left: 1%;
+      margin-top: 1%;
+      width: 10%;
+      height: 10%;
+    }
+    form{
+      margin-top: -10%;
+      margin-left: 85%;
+      input{
+        width: 100px;
+        height:70px;
+      }
+    }
+  }
+
+  /* Style the tab */
+
+  div.tab {
+    margin-top: 1%;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #4389a2; /*#f1f1f1;*/
+    /* Style the buttons inside the tab */
+    button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+      font-size: 17px;
+      &:hover {
+        background-color: #ddd;
+      }
+      &.active {
+        background-color:#00ff80;
+      }
+    }
+  }
+
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+
+  .topright {
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
+    &:hover {
+      color: red;
+    }
+  }
+
+  .btn {
+    /*  border: none; Remove borders */
+    color: yellow;
+    /* Add a text color */
+    padding: 14px 28px;
+    /* Add some padding */
+    cursor: pointer;
+    /* Add a pointer cursor on mouse-over */
+  }
+
+  .Nr1 {
+    background-color: #4CAF50;
+    &:hover {
+      background-color: #46a049;
+    }
+  }
+
+  /* Green */
+
+  #Sec_Weiter_Butt{
+    margin-top: -10%;
+    margin-left: 50%;
+    input{
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 45px;
+      height:45px;
+      margin-left: 90%;
+    }
+  }
+  #logo_inside{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    img{
+      margin-left: 1%;
+      width: 10%;
+      height: 10%;
+    }
+    #Report{
+      margin-top: -10%;
+      margin-left: 15%;
+    }
+    #buttons{
+      margin-left: 90%;
+      margin-top: -8%;
+      #Ret_Button{
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 35px;
+        height:35px;
+      }
+      #Butt_trash{
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 35px;
+        height:35px;
+      }
+    }
+  }
+  #secPic{
+    margin-left: 20%;
+    width: 10%;
+    height: 10%;
+  }
+
+  #Responsible{
+    margin-top: -31%;
+    margin-left: 30%;
+  }
+
+  #Pencil_Butt{
+    margin-top: -26.5%;
+    margin-left: 50%;
+    input{
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 20px;
+      height:20px;
+    }
+  }
+
+  #Status{
+    margin-top: -31.2%;
+    margin-left: 20%;
+  }
+
+  #Trash_Butt{
+    margin-top: -26%;
+    margin-left: 80%;
+    input{
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 20px;
+      height:20px;
+    }
+  }
+
+  #Butt_Add{
+    input{
+      margin-left: 95%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 30px;
+      height:30px;
+    }
+  }
+
+  #Gaesteliste_Main{
+    #L1{
+      padding-left: 2%;
+    }
+    #L2{
+      margin-left: 15%;
+    }
+    #L3{
+      margin-left: 30%;
+    }
+  }
+
+    .samp_Report{
+      margin-left: 2%;
+    }
+
+  #Ab_Zusage{
+    margin-top: -37%;
+    margin-left: 27%;
+    input{
+
+      background-position: left;
+      width: 27px;
+      height:21px;
+    }
+  }
+
+  #Ausstehend{
+    margin-top: -36.3%;
+    margin-left: 65%;
+  }
+
+  #TRASH{
+    margin-top: -9%;
+    margin-left: 90%;
+    input{
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 20px;
+      height:21px;
+    }
+  }
+
+  #CheckIn{
+    margin-top: 30%;
+    margin-left: 70%;
+    input{
+      background-position: center;
+      width: 200px;
+      height:35px;
+    }
+  }
+
+  #AddUser_Butt{
+    margin-top: -4%;
+    margin-left: 95%;
+    margin-bottom: 5%;
+    input{
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 35px;
+      height:35px;
+    }
+  }
+
+  #Gaesteliste_Checkin{
+    margin-top: -51%;/*-45%*/
+    margin-bottom: -5%;
+    label{
+      padding-left: 2%;
+    }
+    #Guests{
+      margin-top: 1%;
+      margin-bottom: 5%;
+    }
+  }
+  #Check{
+    margin-top: -40.5%;
+    margin-left: 30%;
+    margin-bottom: 5%;
+  }
+
+  /*-------------------------------------------------------------------------------*/
+
+  #Kostenpunk_hinzu_Butt{
+    margin-top: 1%;
+    margin-left: 2%;
+    button{
+      height: 50px;
+      width: 845px;
+    }
+  }
+  #Costs{
+   margin-top: -28%;
+   margin-left: 42%;
+  }
+  #Do_Check{
+    margin-top: -28%;
+    margin-left: 70%;
+  }
+  #delete{
+    margin-top: -28%;
+    margin-left: 90%;
+    input{
+      width: 20px;
+    }
+  }
+
+  #btnReturn_2{
+    margin-top: -42%;
+    input{
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 30px;
+      width: 40px;
+    }
+  }
+  #btnAbstimmungEinsehen{
+    margin-top: -3.5%;
+    margin-left: 77%;
+    button{
+      height: 30px;
+      width: 200px;
+    }
+  }
+  #Head{
+    margin-bottom: 2%;
+    #Head_Button{
+      margin-top: -3%;
+      margin-left: 27%;
+      button{
+        height: 25px;
+        width: 25px;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+  #Info_Change{
+    margin-top: -28%;
+    input{
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 20px;
+      height: 15px;
+      margin-left: 90%;
+    }
+  }
+
+
+}
+
+
+
+
+

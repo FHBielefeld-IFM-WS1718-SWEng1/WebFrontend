@@ -19,14 +19,16 @@
     <div id="stripes"></div>
     <div id="navi">
         <ul>
-            <li>{{name}}</li>
+            <li><a href="profile.html">{{name}}</a></li>
             <li>|</li>
             <li>
                 <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
                                                                                                alt="Benachrichtigungen">
                 </button>
             </li>
-            <li><a @click="" href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
+            <li>
+                <button @click="logout()">Abmelden<img src="img/login_icon.png" alt="Abmelden"></button>
+            </li>
         </ul>
     </div>
 
@@ -37,7 +39,7 @@
     <div id="bar">
         <a id="bar_home" href="home.html">Home</a>
         <a id="bar_profil" href="profile.html">Profil</a>
-        <a id="bar_eigene" href="eigeneVeranstaltungen.html">Eigene Veranstaltungen</a>
+        <a id="bar_eigene" href="ownEvents.html">Eigene Veranstaltungen</a>
     </div>
 </nav>
 

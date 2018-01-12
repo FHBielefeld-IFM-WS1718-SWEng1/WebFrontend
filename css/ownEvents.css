@@ -1,0 +1,58 @@
+@charset "UTF-8";
+#Button_New_Event {
+  margin-top: 1%;
+  width: 100%;
+  height: 40px; }
+
+#content {
+  grid-area: main;
+  padding-left: 3%;
+  padding-right: 3%; }
+  #content table {
+    border-collapse: collapse;
+    align-content: center;
+    width: 100%;
+    margin-top: 5%;
+    /* My ├änderung*/ }
+    #content table tbody > tr[tag=spacer] {
+      height: 20px;
+      /*vorher 10*/
+      border: none; }
+    #content table tbody > tr[tag=name] > td {
+      margin-left: 10%; }
+    #content table tbody > tr[tag=personalEvent] {
+      border-collapse: collapse;
+      height: 20%;
+      border-bottom: 2px solid var(--purple); }
+      #content table tbody > tr[tag=personalEvent] td[tag=image] {
+        width: 10%; }
+        #content table tbody > tr[tag=personalEvent] td[tag=image] img {
+          width: 60px; }
+          @media (max-device-width: 450px) {
+            #content table tbody > tr[tag=personalEvent] td[tag=image] img {
+              width: 50px; } }
+      #content table tbody > tr[tag=personalEvent] td[tag=info] {
+        /*Abstufung der Zellenbreite, je nach Display, da Infos wichtiger sind als Beschreibung*/
+        width: 50%; }
+        @media (min-device-width: 400px) {
+          #content table tbody > tr[tag=personalEvent] td[tag=info] {
+            width: 40%; } }
+        @media (min-device-width: 520px) {
+          #content table tbody > tr[tag=personalEvent] td[tag=info] {
+            width: 30%; } }
+        @media (min-device-width: 700px) {
+          #content table tbody > tr[tag=personalEvent] td[tag=info] {
+            width: 20%; } }
+      #content table tbody > tr[tag=personalEvent] td[tag=desc] {
+        width: 50%;
+        /*vorher 60%*/
+        text-align: center;
+        white-space: pre-line;
+        /*My ├änderung*/ }
+      #content table tbody > tr[tag=personalEvent] td[tag=butt] form input {
+        background-position: center;
+        width: 32px;
+        height: 32px;
+        background-repeat: no-repeat; }
+
+/*# sourceMappingURL=ownEvents.csss.map */
