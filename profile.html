@@ -71,7 +71,8 @@
     </div>
     <div class="popup" role="alert" v-if="show['deleteContact']">
         <p class="title">Kontakt Entfernen</p>
-        <p class="desc">Bist du dir sicher, dass du {{callback('deleteContact_name')}} aus deiner Kontaktliste entfernen möchtest?</p>
+        <p class="desc">Bist du dir sicher, dass du {{callback('deleteContact_name')}} aus deiner Kontaktliste entfernen
+            möchtest?</p>
         <ul class="popup-buttons" style="--button-width: 200px">
             <li>
                 <button pos="left" class="confirm" @click="callback('deleteContact')">Ja</button>
