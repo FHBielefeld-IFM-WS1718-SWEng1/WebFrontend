@@ -14,7 +14,7 @@ const contentVue = new Vue({
         searchString: "",
         contactToDelete: null,
         eventsPast: [],
-        eventsFuture: []om
+        eventsFuture: []
     },
     methods: {
         updateProfile() {
