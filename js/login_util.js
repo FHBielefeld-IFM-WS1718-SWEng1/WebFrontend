@@ -23,7 +23,7 @@ function papla_logout(apiKey)
     str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/index.html");
     window.location.replace(str);
 
-    deleteRequest("logout?api="+apiKey,
+    deleteRequest("logout?api="+apiKey, null,
         function (data) {
             if(data.key) {
                 console.log("Invalidated API Key: " + data.key);

@@ -69,6 +69,18 @@
             </li>
         </ul>
     </div>
+    <div class="popup" role="alert" v-if="show['deleteContact']">
+        <p class="title">Kontakt Entfernen</p>
+        <p class="desc">Bist du dir sicher, dass du {{callback('deleteContact_name')}} aus deiner Kontaktliste entfernen möchtest?</p>
+        <ul class="popup-buttons" style="--button-width: 200px">
+            <li>
+                <button pos="left" class="confirm" @click="callback('deleteContact')">Ja</button>
+            </li>
+            <li>
+                <button pos="right" class="deny" @click="show['deleteContact'] = false">Nein</button>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <main class="main">
@@ -120,6 +132,7 @@
                 <ul id="list_contacts">
                     <li v-for="(user, index) in contactList" :key="index">
                         <a :href="'profile.html?id='+user.id">{{user.name}}</a>
+                        <button @click="confirmDeleteContact(user)" v-if="owner">X</button>
                     </li>
                 </ul>
                 <hr v-if="owner || contactList.length>0">
