@@ -136,56 +136,48 @@
 
     <!-------------------------------------------AUFGABENLISTE START------------------------------------------------------------>
     <div id="Aufgabenliste" class="tabcontent">
-        <div id="Aufgaben_samp">
-            <label for="vorname">Aufgaben:</label><p></p>
-            <samp class="samp_Report">Getränke</samp><p></p>
-            <samp class="samp_Report"> Kuchen </samp> <p></p>
-            <samp class="samp_Report">Skat Spiel </samp> <p></p>
-            <samp class="samp_Report"> Kaffee </samp> <p></p>
-            <samp class="samp_Report"> Bastelsachen </samp> <p></p>
-            <samp class="samp_Report"> Musikbox </samp>
-        </div>
+        <table id="PartyAufg">
+            <tbody>
+            <colgroup>
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+            </colgroup>
 
-        <div id="Responsible">
-            <label class="Resp_Header" for="vorname">Verantwortlicher:</label><p></p>
-            <samp class="samp_Report">Edmund</samp><p></p>
-            <samp class="samp_Report"> Ursula </samp> <p></p>
-            <samp class="samp_Report">Angela </samp> <p></p>
-            <samp class="samp_Report"> Martin </samp> <p></p>
-            <samp class="samp_Report"> Sarah </samp> <p></p>
-            <samp class="samp_Report" style="color: blue"> wird gesucht </samp>
-            <input type="button" name="Meldung" value="" style="background-repeat: no-repeat; border-color: #0000cd; background-image: url(finger.jpg);
-                            background-position: center; width: 15px; height:25px">
-        </div>
+            <tr>
+                <th>Aufgaben</th>
+                <th>Verantwortlicher</th>
+                <th>Status</th>
+                <th>Berbeiten</th>
+                <th>Löschen</th>
+            </tr>
 
-        <div id="Pencil_Butt">
-            <input type="button" name="Change_1" value="" style="background-image: url(img/pencil.png)"><p></p>
-            <input type="button" name="Change_2" value="" style="background-image: url(img/pencil.png)"><p></p>
-            <input type="button" name="Change_3" value="" style="background-image: url(img/pencil.png)"><p></p>
-            <input type="button" name="Change_4" value="" style="background-image: url(img/pencil.png)"><p></p>
-            <input type="button" name="Change_5" value="" style="background-image: url(img/pencil.png)"><p></p>
-            <input type="button" name="Change_6" value="" style="background-image: url(img/pencil.png)">
-        </div>
+            <tr tag="Section">
+                <td>Getränke</td>
+                <td>Edmund </td>
+                <td tag="checksBox"><input type="checkbox" name="cp_1"> </td>
+                <td tag="checks_Buttons"><input type="button" name="Change_1" value="" style="background-image: url(img/pencil.png)"></td>
+                <td tag="checks_Buttons"><input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)"> </td>
 
-       <div id="Status">
-            <center><label for="vorname">Status:</label><p></p>
-                <input type="checkbox" name="cp_1" ><p></p>
-                <input type="checkbox" name="cp_2" ><p></p>
-                <input type="checkbox" name="cp_3" checked="checked"><p></p>
-                <input type="checkbox" name="cp_4" ><p></p>
-                <input type="checkbox" name="cp_5" checked="checked"><p></p>
-                <input type="checkbox" name="cp_6" >
-            </center>
-        </div>
-
-         <div id="Trash_Butt">
-            <input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)"><p></p>
-            <input type="button" name="Trash_2" value="" style="background-image: url(img/trash.png)"><p></p>
-            <input type="button" name="Trash_3" value="" style="background-image: url(img/trash.png)"><p></p>
-            <input type="button" name="Trash_4" value="" style="background-image: url(img/trash.png)"><p></p>
-            <input type="button" name="Trash_5" value="" style="background-image: url(img/trash.png)"><p></p>
-            <input type="button" name="Trash_6" value="" style="background-image: url(img/trash.png)">
-        </div>
+           </tr>
+            <tr tag="Section">
+                <td>Kuchen</td>
+                <td>Ursula</td>
+                <td tag="checksBox"><input type="checkbox" name="cp_2"> </td>
+                <td tag="checks_Buttons"><input type="button" name="Change_2" value="" style="background-image: url(img/pencil.png)"></td>
+                <td tag="checks_Buttons"><input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)"> </td>
+            </tr>
+            <tr tag="Section">
+                <td>Skat Spiel </td>
+                <td>Angela </td>
+                <td tag="checksBox"><input type="checkbox" name="cp_3"> </td>
+                <td tag="checks_Buttons"><input type="button" name="Change_3" value="" style="background-image: url(img/pencil.png)"></td>
+                <td tag="checks_Buttons"><input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)"> </td>
+            </tr>
+            </tbody>
+        </table>
 
         <div id="Butt_Add">
             <input type="button" name="Add_Someone" value="+">
@@ -195,46 +187,46 @@
 
     <!-------------------------------------------GÄSTELISTE START------------------------------------------------------------>
     <div id="Gaesteliste" class="tabcontent">
-
         <div id="Gaesteliste_Main">
-            <label  id="L1" for="Gaeste">Gäeste</label>
-            <label  id="L2" for="Absagen">Absagen</label>
-            <label  id="L3" for="Ausstehend">Ausstehend</label>
-            <hr>
-            <div id="Gaeste" class="samp_Report">
-                <samp>Edmund</samp><p></p>
-                <samp> Ursula </samp> <p></p>
-                <samp>Angela </samp> <p></p>
-                <samp> Martin </samp> <p></p>
-                <samp> Sarah </samp> <p></p>
-                <samp> Gregor </samp> <p></p>
-                <samp> Christian </samp> <p></p>
-                <samp > Frauke </samp> <p></p>
-            </div>
+        <table id="PartyAufg">
+            <tbody>
+            <colgroup>
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+                <col width="20%">
+            </colgroup>
 
-           <div id="Ab_Zusage">
-                <input type="button" name="AZ_1" value="A+"><p></p>
-                <input type="button" name="AZ_2" value="A-"><p></p>
-                <input type="button" name="AZ_3" value="A+"><p></p>
-                <input type="button" name="AZ_4" value="A+"><p></p>
-                <input type="button" name="AZ_5" value="A+"><p></p>
-                <input type="button" name="AZ_6" value="A+"><p></p>
-                <input type="button" name="AZ_7" value="A+"><p></p>
-                <input type="button" name="AZ_8" value="A-">
-            </div>
+            <tr>
+                <th> Gäeste </th>
+                <th> Zusagen /Absagen </th>
+                <th> Ausstehend</th>
+                <th>Löschen</th>
+            </tr>
 
-            <div id="Ausstehend">
-                <samp class="samp_Report">Cem</samp><p></p>
-                <samp class="samp_Report"> Claudia </samp> <p></p>
-            </div>
-
-            <div id="TRASH">
-                <input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)"><p></p>
-                <input type="button" name="Trash_2" value="" style="background-image: url(img/trash.png)">
-            </div>
+            <tr tag="Section">
+                <td> Edmund</td>
+                <td tag="checks_Buttons"><input type="button" name="AZ_1" value="A+"></td>
+                <td> Cem </td>
+                <td tag="checks_Buttons"><input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)"> </td>
+            </tr>
+            <tr tag="Section">
+                <td> Ursula</td>
+                <td tag="checks_Buttons"><input type="button" name="AZ_1" value="A+"></td>
+                <td> Claudia </td>
+                <td tag="checks_Buttons"><input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)"> </td>
+            </tr>
+            <tr tag="Section">
+                <td> Angela</td>
+                <td tag="checks_Buttons"><input type="button" name="AZ_1" value="A+"></td>
+                <td>  </td>
+                <td tag="checks_Buttons"><input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)"> </td>
+            </tr>
+            </tbody>
+        </table>
 
             <div id="CheckIn">
-                <input type="submit" name="check_In" value="Mit Einchecken beginnen"  onClick="ChangeObj3()" >
+                <input type="submit" name="check_In" value="Mit Einchecken beginnen" onClick="ChangeObj3()">
             </div>
             <div id="AddUser_Butt">
             <input type="button" name="AddUser" value="" style="background-image: url(img/User_Add.png)">

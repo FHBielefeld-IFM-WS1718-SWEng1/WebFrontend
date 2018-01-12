@@ -149,6 +149,7 @@
       width: 20px;
       height: 20px; }
   .main #Butt_Add input {
+    margin-top: 3%;
     margin-left: 95%;
     background-repeat: no-repeat;
     background-position: center;
@@ -181,14 +182,15 @@
       width: 20px;
       height: 21px; }
   .main #CheckIn {
-    margin-top: 30%;
+    margin-top: 3%;
+    margin-bottom: 20%;
     margin-left: 70%; }
     .main #CheckIn input {
       background-position: center;
       width: 200px;
       height: 35px; }
   .main #AddUser_Butt {
-    margin-top: -4%;
+    margin-top: -25%;
     margin-left: 95%;
     margin-bottom: 5%; }
     .main #AddUser_Butt input {
@@ -197,8 +199,7 @@
       width: 35px;
       height: 35px; }
   .main #Gaesteliste_Checkin {
-    margin-top: -51%;
-    /*-45%*/
+    margin-top: -30%;
     margin-bottom: -5%; }
     .main #Gaesteliste_Checkin label {
       padding-left: 2%; }
@@ -257,5 +258,25 @@
       width: 20px;
       height: 15px;
       margin-left: 90%; }
+  .main table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%; }
+    .main table tbody > tr[tag=Section] td[tag=checksBox] input {
+      margin-left: 40%;
+      width: 20px;
+      height: 20px; }
+    .main table tbody > tr[tag=Section] td[tag=checks_Buttons] input {
+      margin-left: 40%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 30px;
+      height: 30px; }
+  .main td, .main th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px; }
+  .main tr:nth-child(even) {
+    background-color: #dddddd; }
 
 /*# sourceMappingURL=party_EV.css.map */
