@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/base.css" rel="stylesheet">
+    <link href="css/help.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="js/rest_util.js"></script>
+    <script src="js/login_util.js"></script>
+    <script src="js/header.js" defer></script>
+    <title>Papla - Dein Partyplaner!</title>
+</head>
+<body class="container">
+<header class="header">
+    <div id="stripes"></div>
+    <div id="navi">
+        <ul>
+            <li>{{name}}</li>
+            <li>|</li>
+            <li>
+                <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
+                                                                                               alt="Benachrichtigungen">
+                </button>
+            </li>
+            <li><a @click="" href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
+        </ul>
+    </div>
+
+    <div id="logo"><img src="img/logo.png" alt="Papla icon"></div>
+</header>
+
+<nav class="navigation">
+    <div id="bar">
+        <a id="bar_home" href="home.html">Home</a>
+        <a id="bar_profil" href="profile.html">Profil</a>
+        <a id="bar_eigene" href="ownEvents.html">Eigene Veranstaltungen</a>
+    </div>
+</nav>
+
+<main class="main">
+    <div id="content">
+        <br>
+       <td><b>Kontaktdaten</b></td>
+        <br><br><br>
+        <td>Andre Matutat <br>
+            Limbreede 10    <br>
+            32289 Rödinghausen</td><br><br><br>
+        <td>Telefon: 015161418956 <br>
+            E-Mail: AMatutat@fh-bielefeld.de</td> <br><br>
+
+
+
+        <br> <br> <br> <br>
+    </div>
+
+</main>
+
+<div class="left">
+</div>
+<div class="right">
+</div>
+
+<footer class="footer">
+    <ul>
+        <li><a href="kontakt.html">Kontakt</a></li>
+        <li><a href="hilfe.html">Hilfe</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+    </ul>
+</footer>
+
+
+</body>
+</html>
