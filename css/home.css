@@ -71,6 +71,9 @@
       border: none; }
     #content table tbody > tr[tag=name] > td {
       margin-left: 10%; }
+      #content table tbody > tr[tag=name] > td a {
+        color: black;
+        text-decoration: none; }
     #content table tbody > tr[tag=party] {
       border-collapse: collapse;
       height: 20%;
@@ -105,5 +108,11 @@
         width: 32px;
         height: 32px;
         background-repeat: no-repeat; }
+      #content table tbody > tr[tag=party] td[tag=butt][name=info] {
+        background-image: url(../img/info.png); }
+      #content table tbody > tr[tag=party] td[tag=butt][name=confirm] {
+        background-image: url(../img/thumb_up.png); }
+      #content table tbody > tr[tag=party] td[tag=butt][name=deny] {
+        background-image: url(../img/thumb_down.png); }
 
 /*# sourceMappingURL=home.css.map */

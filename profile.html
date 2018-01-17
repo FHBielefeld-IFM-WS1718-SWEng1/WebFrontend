@@ -21,14 +21,16 @@
     <div id="stripes"></div>
     <div id="navi">
         <ul>
-            <li>{{name}}</li>
+            <li><a href="profile.html">{{name}}</a></li>
             <li>|</li>
             <li>
                 <button @click="showNotifications = !showNotifications">Benachrichtigungen<img src="img/bell_icon.png"
                                                                                                alt="Benachrichtigungen">
                 </button>
             </li>
-            <li><a @click="" href="index.html">Abmelden<img src="img/login_icon.png" alt="Abmelden"></a></li>
+            <li>
+                <button @click="logout()">Abmelden<img src="img/login_icon.png" alt="Abmelden"></button>
+            </li>
         </ul>
     </div>
 
@@ -39,20 +41,44 @@
     <div id="bar">
         <a id="bar_home" href="home.html">Home</a>
         <a id="bar_profil" href="profile.html">Profil</a>
-        <a id="bar_eigene" href="ownEvent.html">Eigene Veranstaltungen</a>
+        <a id="bar_eigene" href="ownEvents.html">Eigene Veranstaltungen</a>
     </div>
 </nav>
 
-<div class="popup-container" role="alert" v-if="show['delete']">
+<div class="popup-container" v-if="showAny()">
     <div class="popup" role="alert" v-if="show['delete']">
         <p class="title">Profil Löschen</p>
-        <p class="desc">Bist du dir sicher, dass du dein Profil löschen möchtest? Dieser Vorgang kann nicht rückgängig gemacht werden und wird dich automatisch ausloggen.</p>
+        <p class="desc">Bist du dir sicher, dass du dein Profil löschen möchtest? Dieser Vorgang kann nicht rückgängig
+            gemacht werden und wird dich automatisch ausloggen.</p>
         <ul class="popup-buttons" style="--button-width: 200px">
             <li>
-                <button pos="left" class="confirm" @click="confirm('delete')">Ja</button>
+                <button pos="left" class="confirm" @click="callback('delete')">Ja</button>
             </li>
             <li>
                 <button pos="right" class="deny" @click="show['delete'] = false">Nein</button>
+            </li>
+        </ul>
+    </div>
+    <div class="popup" role="search" v-if="show['search']">
+        <ul class="popup-buttons" id="searchresults">
+            <li v-for="(user, index) in callback('search_results')" :key="index">
+                <span style="display:inline-flex; margin: 3px 0px 3px 40px;">
+                        <a :href="'profile.html?id='+user.id">{{user.name}}</a>
+                        <button class="confirm" @click="callback('search_confirm', user.id)">+</button>
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="popup" role="alert" v-if="show['deleteContact']">
+        <p class="title">Kontakt Entfernen</p>
+        <p class="desc">Bist du dir sicher, dass du {{callback('deleteContact_name')}} aus deiner Kontaktliste entfernen
+            möchtest?</p>
+        <ul class="popup-buttons" style="--button-width: 200px">
+            <li>
+                <button pos="left" class="confirm" @click="callback('deleteContact')">Ja</button>
+            </li>
+            <li>
+                <button pos="right" class="deny" @click="show['deleteContact'] = false">Nein</button>
             </li>
         </ul>
     </div>
@@ -62,7 +88,13 @@
     <div id="content">
 
         <div id="picture">
-            <img src="img/logo.png">
+            <div id="imageFrame">
+                <span></span><img :src="image">
+            </div>
+            <span v-if="owner">
+                <input type="file" id="uploadButton" style="display: none"/>
+                <button onclick="document.getElementById('uploadButton').click();">Profilbild Ändern</button>
+            </span>
         </div>
 
         <div id="user_data">
@@ -96,44 +128,39 @@
             <span>
                 <label> Kontakte </label>
                 <hr>
-                <input id="Suche" type="text" value="Suche" v-if="owner"/>
-                <button value="add" v-if="owner">+</button>
+                <input id="Suche" type="text" v-model="searchString" v-if="owner"/>
+                <button value="add" @click="search" v-if="owner">+</button>
                 <ul id="list_contacts">
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
-                    <li>Tim Meier</li>
+                    <li v-for="(user, index) in contactList" :key="index">
+                        <a :href="'profile.html?id='+user.id">{{user.name}}</a>
+                        <button @click="confirmDeleteContact(user)" v-if="owner">X</button>
+                    </li>
                 </ul>
-                <label v-if="owner"> Kontaktanfragen </label>
-                <ul id="list_contactrequests" v-if="owner">
-                </ul>
+                <hr v-if="owner || contactList.length>0">
+                <template v-if="owner">
+                    <label> Kontaktanfragen </label>
+                    <hr>
+                    <ul id="list_contactrequests" v-if="owner">
+                    </ul>
+                </template>
             </span>
         </div>
 
         <div id="events_past" v-if="owner">
             <span>Vergangene Veranstaltungen</span>
             <ul id="list_events_past">
+                <li v-for="(party, index) in eventsPast" :key="index">
+                    <a :href="'party.html?id=' + party.id">{{ party.name }}</a>
+                </li>
             </ul>
         </div>
 
         <div id="events_future" v-if="owner">
             <span>Zukünftige Veranstaltungen</span>
             <ul id="list_events_future">
+                <li v-for="(party, index) in eventsFuture" :key="index">
+                    <a :href="'party.html?id=' + party.id">{{ party.name }}</a>
+                </li>
             </ul>
         </div>
 

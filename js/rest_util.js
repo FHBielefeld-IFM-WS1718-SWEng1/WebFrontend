@@ -9,7 +9,7 @@ function getRequest(url, listener) {
             listener(obj);
         }
     });
-    xhr.open("GET", URL_BASE+url);
+    xhr.open("GET", URL_BASE + url);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.send();
 }
@@ -23,7 +23,7 @@ function postRequest(url, data, listener) {
             listener(obj);
         }
     });
-    xhr.open("POST", URL_BASE+url);
+    xhr.open("POST", URL_BASE + url);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.send(data);
 }
@@ -37,12 +37,12 @@ function putRequest(url, data, listener) {
             listener(obj);
         }
     });
-    xhr.open("PUT", URL_BASE+url);
+    xhr.open("PUT", URL_BASE + url);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.send(data);
 }
 
-function deleteRequest(url, listener) {
+function deleteRequest(url, data, listener) {
     var xhr = new XMLHttpRequest();
 
     xhr.addEventListener("readystatechange", function () {
@@ -51,7 +51,7 @@ function deleteRequest(url, listener) {
             listener(obj);
         }
     });
-    xhr.open("DELETE", URL_BASE+url);
+    xhr.open("DELETE", URL_BASE + url);
     xhr.setRequestHeader("content-type", "application/json");
-    xhr.send();
+    xhr.send(data);
 }
