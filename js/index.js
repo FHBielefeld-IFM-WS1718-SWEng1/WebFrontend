@@ -11,46 +11,62 @@ Vue.component('login', {
     methods: {
         login() {
             if (this.$root.register) {
-                console.log("Register new user", this.username, this.email, this.pw, this.pw_check);
-                if (this.pw !== this.pw_check) {
-                    console.log("passwörter stimmen nicht überein");
-                    this.$root.setInfo("Passwörter stimmen nicht überein.", true);
+                mail=this.email;
+                console.log("Register new user", this.username, mail, this.pw, this.pw_check);
+                if((tmail).match(REGEXEMAIL)){
+                    if (this.pw !== this.pw_check) {
+                        console.log("passwörter stimmen nicht überein");
+                        this.$root.setInfo("Passwörter stimmen nicht überein.", true);
+                    }
+                    else {
+                        const rooty = this.$root;
+                        postRequest("register",
+                            JSON.stringify({"name": this.username, "email": mail, "password": this.pw}),
+                            function (data) {
+                                console.log("Register return, " + data);
+                                if (data.error) {
+                                    if (data.error === "Email must be unique")
+                                        rooty.setInfo("Diese E-Mail ist bereits registriert.", true);
+                                    else
+                                        rooty.setInfo("Fehler bei der Registrierung<br>Bitte Support kontaktieren.", true);
+                                }
+                                else {
+                                    rooty.setInfo("Registrierung erfolgreich!<br>Sie können sich jetzt einloggen.", false);
+                                    rooty.switchToLogin();
+                                }
+                            });
+                    }
                 }
-                else {
-                    const rooty = this.$root;
-                    postRequest("register",
-                        JSON.stringify({"name": this.username, "email": this.email, "password": this.pw}),
-                        function (data) {
-                            console.log("Register return, " + data);
-                            if (data.error) {
-                                if (data.error === "Email must be unique")
-                                    rooty.setInfo("Diese E-Mail ist bereits registriert.", true);
-                                else
-                                    rooty.setInfo("Fehler bei der Registrierung<br>Bitte Support kontaktieren.", true);
-                            }
-                            else {
-                                rooty.setInfo("Registrierung erfolgreich!<br>Sie können sich jetzt einloggen.", false);
-                                rooty.switchToLogin();
-                            }
-                        });
+                else{
+                    rooty.setInfo("Falsches E-Mail Adressen Format",true);
                 }
             }
             else {
                 console.log("Login existing user", this.email, this.pw);
                 const rooty = this.$root;
-                papla_login(this.email, this.pw, function (success) {
-                    if (!success)
-                        rooty.setInfo("Die Login Daten sind ungültig", true);
-                    else {
-                        str = window.location.href;
-                        str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
-                        window.location.replace(str);
-                    }
-                });
-            }
-        }
-    }
-});
+                mail=this.email;
+                  if (mail.toString().match(REGEXEMAIL)){
+                      papla_login(mail, this.pw, function (success) {
+                          if (!success)
+                              rooty.setInfo("Die Login Daten sind ungültig "+this.email+" "+mail, true);
+                          else {
+                              str = window.location.href;
+                              str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
+                              window.location.replace(str);
+                             }
+                         }
+                      );
+                 }
+                 else {
+                      rooty.setInfo("Falsches E-Mail Adressen Format", true);
+                  }
+
+
+}
+}
+}
+})
+;
 
 const rootVue = new Vue({
     el: '.container',
@@ -107,3 +123,5 @@ function importScript(url) {
     script.src = url;
     document.head.appendChild(script);
 }
+
+const REGEXEMAIL =/([\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+@[\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+\.[\w][\w]+)/g;
