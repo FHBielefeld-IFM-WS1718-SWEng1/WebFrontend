@@ -60,6 +60,7 @@ const contentVue = new Vue({
             return this.gender === 1 ? "Männlich" : this.gender === 2 ? "Weiblich" : this.gender === 3 ? "Andere" : "Keine Angabe";
         },
         search() {
+            if(contentVue.searchString!="")
             popupVue.showPopup('search');
         },
         confirmDeleteContact(user) {
@@ -162,17 +163,18 @@ if (contentVue.owner) {
     }
 
     function addContact(id) {
-        postRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
-            if (!data.error) {
-                popupVue.hidePopup('search');
-                getRequest("user/contact?api=" + apiKey, function (data) {
-                    if (!data.error && data.contacts) {
-                        contentVue.contactList = data.contacts;
-                    }
-                });
-            }
-        });
-    }
+            postRequest("user/contact?api=" + apiKey, JSON.stringify({'userid': id}), function (data) {
+                if (!data.error) {
+                    popupVue.hidePopup('search');
+                    getRequest("user/contact?api=" + apiKey, function (data) {
+                        if (!data.error && data.contacts) {
+                            contentVue.contactList = data.contacts;
+                        }
+                    });
+                }
+            });
+        }
+
 
     function selectProfilePicture(evt) {
         var dateien = evt.target.files;
