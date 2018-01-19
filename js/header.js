@@ -7,8 +7,7 @@ const naviVue = new Vue({
         logout() {
             papla_logout(localStorage.getItem("apiKey"));
         },
-        refreshName()
-        {
+        refreshName() {
             this.name = localStorage.getItem("userName");
         }
     },
