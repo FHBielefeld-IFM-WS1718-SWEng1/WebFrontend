@@ -1,53 +1,119 @@
-const contentVue = new Vue({
-    el: '#party_description',
-    data: {
-        partyname: "",
-        gastgeber: "",
-        ort: "",
-        startzeit: "",
-        endzeit: "",
-        beschreibung: "",
-        owner: false
-
-    },
-    methods: {
-        mapsAufrufen() {
-            var link = "https://www.google.com/maps?daddr=" + contentVue.ort
-            window.open(link);
-        }
-    }
-});
 var options = {
     year: "numeric", month: "short",
     day: "numeric", hour: "2-digit", minute: "2-digit"
 };
 
-var owner = false;
+const contentVue = new Vue({
+    el: '#content',
+    data: {
+        partyId: -1,
+        partyname: "",
+        description: "",
+        gastgeber: "",
+        ort: "",
+        startDatum: "",
+        startZeit: "",
+        endDatum: "",
+        endZeit: "",
+        image: "img/logo.png",
+        imageChanged: false,
+        imagePath: "",
 
-var apiKey = localStorage.getItem("apiKey");
-var split = /(id=)(\d+)/g.exec(window.location.href);
-var partyId = (split != null && split.length > 0) ? split[2] : loggedInId;
-getRequest("party/" + partyId + "?api=" + apiKey, function (data) {
-    if (!data.error) {
-        contentVue.partyname = data.name;
-        contentVue.beschreibung = data.description;
-        contentVue.gastgeber = data.ersteller.name;
-        contentVue.ort = data.location;
-        if (data.startDate != null) {
-            var date = new Date(data.startDate);
-            contentVue.startzeit = date.toLocaleDateString("de-de", options);
+        owner: true,
+        isCreation: true
+    },
+    methods: {
+        updateParty() {
+            if (!this.imageChanged)
+                this.doUpdate();
+            else { //Wenn das Nutzerbild geändert wurde ist der Vorgang etwas komplizierter
+                let imageTruncated = this.image.substring(this.image.indexOf("base64")+7);
+                postRequest("image/?api=" + localStorage.getItem("apiKey"), JSON.stringify({"data": imageTruncated}), function (data) {
+                    if (data.filename) {
+                        contentVue.imageChanged = false;
+                        contentVue.imagePath = data.filename;
+                    }
+                    contentVue.doUpdate();
+                });
+            }
+        },
+        doUpdate() {
+            let partyObject = {
+                "name": this.name,
+                "description": this.description,
+                "startDate": this.startDatum + "T" + this.startZeit + "Z",
+                "endDate": this.endDatum + "T" + this.endZeit + "Z",
+                "picture": this.imagePath
+            };
+            putRequest("party/" + this.partyId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(partyObject), function (data) {
+            console.log("udpated: "+JSON.stringify(data));
+            });
+        },
+        mapsAufrufen() {
+            var link = "https://www.google.com/maps?daddr=" + this.ort;
+            window.open(link);
         }
-        if (data.endDate != null) {
-            date = new Date(data.endDate);
-            contentVue.endzeit = date.toLocaleDateString("de-de", options)
-        }
-        if (data.ersteller.id == localStorage.getItem("userId")) {
-            contentVue.owner = true;
-        }
-        else {
-            contentVue.owner = false;
-        }
-        contentVue.ort = this.owner;
+    },
+    created: function () {
+        let split = /(id=)(\d+)/g.exec(window.location.href);
+        let apiKey = localStorage.getItem("apiKey");
+        this.partyId = (split != null && split.length > 0) ? split[2] : -1;
+        this.gastgeber = localStorage.getItem("userName");
+        if (this.partyId !== -1) //Existierende Party
+            getRequest("party/" + this.partyId + "?api=" + apiKey, function (data) {
+                if (!data.error) {
+                    contentVue.isCreation = false;
+                    contentVue.partyname = data.name;
+                    contentVue.description = data.description;
+                    contentVue.gastgeber = data.ersteller.name;
+
+                    contentVue.ort = data.location;
+                    if (data.startDate) {
+                        let splitTime = data.startDate.split("T");
+                        contentVue.startDatum = splitTime[0];
+                        contentVue.startZeit = splitTime[1].substring(0, splitTime[1].length - 1);
+                    }
+                    if (data.endDate) {
+                        let splitTime = data.startDate.split("T");
+                        contentVue.endDatum = splitTime[0];
+                        contentVue.endZeit = splitTime[1].substring(0, splitTime[1].length - 1);
+                    }
+
+                    if (data.picture) {
+                        contentVue.imagePath = data.picture;
+                        getRequest("image/" + data.picture + "?api=" + apiKey, function (data) {
+                            if (data.data) {
+                                contentVue.image = "data:image/png;base64," + data.data;
+                            }
+                        });
+                    }
+
+                    //Parties die angefangen haben können nicht geändert werden
+                    if (data.ersteller.id !== parseInt(localStorage.getItem("userId")) || new Date(data.startDate) < new Date())
+                        contentVue.owner = false;
+                }
+            });
+    }
+});
+
+if (contentVue.owner) {
+    function selectProfilePicture(evt) {
+        var dateien = evt.target.files;
+        var uploadDatei = dateien[0];
+
+        // Ein Objekt um Dateien einzulesen
+        var reader = new FileReader();
+
+        // Wenn der Dateiinhalt ausgelesen wurde...
+        reader.onload = function (theFileData) {
+            if (theFileData.target.result !== contentVue.image) {
+                contentVue.image = theFileData.target.result; // Ergebnis vom FileReader auslesen
+                contentVue.imageChanged = true;
+            }
+        };
+        // Die Datei einlesen und in eine Data-URL konvertieren
+        reader.readAsDataURL(uploadDatei);
     }
 
-});
+    document.getElementById('uploadButton').addEventListener('change', selectProfilePicture, false);
+}

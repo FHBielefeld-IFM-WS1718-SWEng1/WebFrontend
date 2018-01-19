@@ -16,16 +16,18 @@ function papla_login(email, password, callback) {
 function papla_logout(apiKey) {
     deleteRequest("logout?api=" + apiKey, null,
         function (data) {
-            if (data.status) {
-                localStorage.removeItem("apiKey");
-                localStorage.removeItem("userId");
-                localStorage.removeItem("userName");
-                let str = window.location.href;
-                str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/index.html");
-                window.location.replace(str);
-            }
-            else
+            if (!data.status)
                 console.log("CRITICAL ERROR ON LOGOUT");
+            clearStorage();
         }
     );
+}
+
+function clearStorage() {
+    localStorage.removeItem("apiKey");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
+    let str = window.location.href;
+    str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/index.html");
+    window.location.replace(str);
 }

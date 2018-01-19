@@ -9,7 +9,7 @@ const contentVue = new Vue({
         imageChanged: false,
         imagePath: "",
         userId: -1,
-        owner: true,
+        canEdit: true,
         contactList: [],
         searchString: "",
         contactToDelete: null,
@@ -21,14 +21,14 @@ const contentVue = new Vue({
             if (!this.imageChanged)
                 this.doUpdate();
             else { //Wenn das Nutzerbild geändert wurde ist der Vorgang etwas komplizierter
-                postRequest("image/?api=" + localStorage.getItem("apiKey"), JSON.stringify({"data": this.image}), function (data) {
+                let imageTruncated = this.image.substring(this.image.indexOf("base64")+7);
+                postRequest("image/?api=" + localStorage.getItem("apiKey"), JSON.stringify({"data": imageTruncated}), function (data) {
                     console.log("Image was uploaded: " + JSON.stringify(data));
                     if (data.filename) {
                         contentVue.imageChanged = false;
                         contentVue.imagePath = data.filename;
                     }
-                    console.log("Updated userdata: " + JSON.stringify(userObject));
-                    contentVue.doUpdate(userObject);
+                    contentVue.doUpdate();
                 });
             }
         },
@@ -40,7 +40,6 @@ const contentVue = new Vue({
                 "profilepicture": this.imagePath
             };
             putRequest("user/" + this.userId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(userObject), function (data) {
-                console.log("update performed: " + JSON.stringify(data));
                 if (!data.error && data.name)
                     localStorage.setItem("userName", data.name);
                 naviVue.refreshName();
@@ -86,6 +85,8 @@ const contentVue = new Vue({
         this.owner = this.userId === loggedInId;
         //Nutzerdaten abrufen
         getRequest("user/" + this.userId + "?api=" + apiKey, function (data) {
+            if(data.error === "kein gültiger api schlüssel")
+                clearStorage();
             if (!data.error) {
                 console.log("userdata: " + JSON.stringify(data));
                 contentVue.email = data.email;
@@ -94,11 +95,9 @@ const contentVue = new Vue({
                 contentVue.gender = data.gender;
                 if (data.profilepicture) {
                     contentVue.imagePath = data.profilepicture;
-                    console.log("profilepicture: " + data.profilepicture);
                     getRequest("image/" + data.profilepicture + "?api=" + apiKey, function (data) {
-                        console.log("picturedata: " + JSON.stringify(data));
-                        if (!data.data)
-                            contentVue.image = data.data;
+                        if (data.data)
+                            contentVue.image = "data:image/png;base64,"+data.data;
                     });
                 }
             }
@@ -175,26 +174,19 @@ if (contentVue.owner) {
     }
 
     function selectProfilePicture(evt) {
-        var dateien = evt.target.files;
-        var uploadDatei = dateien[0];
+        let dateien = evt.target.files;
+        let uploadDatei = dateien[0];
         console.log("selected file: " + uploadDatei);
 
         // Ein Objekt um Dateien einzulesen
-        var reader = new FileReader();
+        let reader = new FileReader();
 
         // Wenn der Dateiinhalt ausgelesen wurde...
         reader.onload = function (theFileData) {
             if (theFileData.target.result !== contentVue.image) {
                 contentVue.image = theFileData.target.result; // Ergebnis vom FileReader auslesen
-                // console.log("*image data: " + contentVue.image);
                 contentVue.imageChanged = true;
-                console.log("New image!!");
             }
-            else
-                console.log("Old image!!");
-            /*
-            Code für AJAX-Request hier einfügen
-            */
         }
         // Die Datei einlesen und in eine Data-URL konvertieren
         reader.readAsDataURL(uploadDatei);

@@ -11,9 +11,9 @@ Vue.component('login', {
     methods: {
         login() {
             if (this.$root.register) {
-                mail=this.email;
+                mail = this.email;
                 console.log("Register new user", this.username, mail, this.pw, this.pw_check);
-                if((tmail).match(REGEXEMAIL)){
+                if ((tmail).match(REGEXEMAIL)) {
                     if (this.pw !== this.pw_check) {
                         console.log("passwörter stimmen nicht überein");
                         this.$root.setInfo("Passwörter stimmen nicht überein.", true);
@@ -37,34 +37,34 @@ Vue.component('login', {
                             });
                     }
                 }
-                else{
-                    rooty.setInfo("Falsches E-Mail Adressen Format",true);
+                else {
+                    rooty.setInfo("Falsches E-Mail Adressen Format", true);
                 }
             }
             else {
                 console.log("Login existing user", this.email, this.pw);
                 const rooty = this.$root;
-                mail=this.email;
-                  if (mail.toString().match(REGEXEMAIL)){
-                      papla_login(mail, this.pw, function (success) {
-                          if (!success)
-                              rooty.setInfo("Die Login Daten sind ungültig "+this.email+" "+mail, true);
-                          else {
-                              str = window.location.href;
-                              str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
-                              window.location.replace(str);
-                             }
-                         }
-                      );
-                 }
-                 else {
-                      rooty.setInfo("Falsches E-Mail Adressen Format", true);
-                  }
+                mail = this.email;
+                if (mail.toString().match(REGEXEMAIL)) {
+                    papla_login(mail, this.pw, function (success) {
+                            if (!success)
+                                rooty.setInfo("Die Login Daten sind ungültig " + this.email + " " + mail, true);
+                            else {
+                                str = window.location.href;
+                                str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
+                                window.location.replace(str);
+                            }
+                        }
+                    );
+                }
+                else {
+                    rooty.setInfo("Falsches E-Mail Adressen Format", true);
+                }
 
 
-}
-}
-}
+            }
+        }
+    }
 })
 ;
 
@@ -124,4 +124,4 @@ function importScript(url) {
     document.head.appendChild(script);
 }
 
-const REGEXEMAIL =/([\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+@[\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+\.[\w][\w]+)/g;
+const REGEXEMAIL = /([\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+@[\w\.\-\/\_\\!#$%&'*+=?^_`{|}~\[\]]+\.[\w][\w]+)/g;
