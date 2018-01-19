@@ -54,71 +54,111 @@
             <img src="img/logo.png"/>
         </div>
 
-
         <table id="party_description">
-            <template v-if="owner">
-                <tr>
-                    <td class="identifier"><label>Was?</label></td>
-                    <td><input v-model="partyname"/></td>
-                    <td><img src="img/pencil.png" width="20px"></td>
-                    <td></td>
-                    <td rowspan="5"><textarea v-model="beschreibung" rows="9"
-                                              cols="55">Dies ist ein Beispieltext</textarea></td>
-                    <td><img src="img/pencil.png" width="20px"></td>
-                </tr>
-                <tr>
-                    <td class="identifier"><label>Wer?</label></td>
-                    <td><input v-model="gastgeber"/></td>
-                    <td><img src="img/pencil.png" width="20px"></td>
-                </tr>
-                <tr>
-                    <td class="identifier"><label>Wo?</label></td>
-                    <td><input v-model="ort" name="daddr"/></td>
-                    <td><img src="img/pencil.png" width="20px"></td>
-                    <td>
-                        <button @click="mapsAufrufen()"><img src="img/maps_icon.png" width="20px"></button>
-                    </td>
+            <tr>
+                <td class="identifier"><label>Was?</label></td>
+                <td>
+                    <input v-model="partyname" placeholder="Name" v-bind:readonly="!owner"/>
+                </td>
+                <td><img src="img/pencil.png" width="20px"></td>
+                <td></td>
+                <td rowspan="5"><textarea v-model="beschreibung" rows="9"
+                                          cols="55" v-bind:readonly="!owner">Dies ist ein Beispieltext</textarea></td>
+                <td><img src="img/pencil.png" width="20px"></td>
+            </tr>
+            <tr>
+                <td class="identifier"><label>Wer?</label></td>
+                <td><input v-model="gastgeber"/></td>
+                <td><img src="img/pencil.png" width="20px"></td>
+            </tr>
+            <tr>
+                <td class="identifier"><label>Wo?</label></td>
+                <td><input v-model="ort" name="daddr" v-bind:readonly="!owner"/></td>
+                <td><img src="img/pencil.png" width="20px"></td>
+                <td>
+                    <button @click="mapsAufrufen()"><img src="img/maps_icon.png" width="20px"></button>
+                </td>
 
-                </tr>
-                <tr>
-                    <td class="identifier"><label>Start?</label></td>
-                    <td><input v-model="startzeit"/></td>
-                    <td><img src="img/pencil.png" width="20px"></td>
-                </tr>
-                <tr>
-                    <td class="identifier"><label>Ende?</label></td>
-                    <td><input v-model="endzeit"/></td>
-                    <td><img src="img/pencil.png" width="20px"></td>
-                </tr>
-            </template>
-            <template v-else>
-                <tr>
-                    <td class="identifier"><label>Was?</label></td>
-                    <td><input v-model="partyname" readonly/></td>
-                    <td></td>
-                    <td rowspan="4"><textarea v-model="beschreibung" rows="9"
-                                              cols="55" readonly>Dies ist ein Beispieltext</textarea></td>
-                </tr>
-                <tr>
-                    <td class="identifier"><label>Wer?</label></td>
-                    <td><input v-model="gastgeber" readonly/></td>
-                </tr>
-                <tr>
-                    <td class="identifier"><label>Wo?</label></td>
-                    <td><input v-model="ort" name="daddr" readonly/></td>
-                    <td>
-                        <button @click="mapsAufrufen()"><img src="img/maps_icon.png" width="20px"></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="identifier"><label>Start?</label></td>
-                    <td><input v-model="startzeit" readonly/></td>
-                </tr>
-                <tr>
-                    <td class="identifier"><label>Ende?</label></td>
-                    <td><input v-model="endzeit" readonly/></td>
-                </tr>
-            </template>
+            </tr>
+            <tr>
+                <td class="identifier"><label>Start?</label></td>
+                <td><input type="datetime-local" v-model="startzeit" v-bind:readonly="!owner"/></td>
+                <td><img src="img/pencil.png" width="20px"></td>
+            </tr>
+            <tr>
+                <td class="identifier"><label>Ende?</label></td>
+                <td><input type="datetime-local" v-model="endzeit" v-bind:readonly="!owner"/></td>
+                <td><img src="img/pencil.png" width="20px"></td>
+            </tr>
+
+
+            <!--
+                        <template v-if="owner">
+                            <tr>
+                                <td class="identifier"><label>Was?</label></td>
+                                <td>
+                                    <input v-model="partyname" placeholder="Name" v-bind:readonly="!owner"/>
+                                </td>
+                                <td><img src="img/pencil.png" width="20px"></td>
+                                <td></td>
+                                <td rowspan="5"><textarea v-model="beschreibung" rows="9"
+                                                          cols="55">Dies ist ein Beispieltext</textarea></td>
+                                <td><img src="img/pencil.png" width="20px"></td>
+                            </tr>
+                            <tr>
+                                <td class="identifier"><label>Wer?</label></td>
+                                <td><input v-model="gastgeber"/></td>
+                                <td><img src="img/pencil.png" width="20px"></td>
+                            </tr>
+                            <tr>
+                                <td class="identifier"><label>Wo?</label></td>
+                                <td><input v-model="ort" name="daddr"/></td>
+                                <td><img src="img/pencil.png" width="20px"></td>
+                                <td>
+                                    <button @click="mapsAufrufen()"><img src="img/maps_icon.png" width="20px"></button>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="identifier"><label>Start?</label></td>
+                                <td><input v-model="startzeit"/></td>
+                                <td><img src="img/pencil.png" width="20px"></td>
+                            </tr>
+                            <tr>
+                                <td class="identifier"><label>Ende?</label></td>
+                                <td><input v-model="endzeit"/></td>
+                                <td><img src="img/pencil.png" width="20px"></td>
+                            </tr>
+                        </template>
+                        <template v-else>
+                            <tr>
+                                <td class="identifier"><label>Was?</label></td>
+                                <td><input v-model="partyname" readonly/></td>
+                                <td></td>
+                                <td rowspan="4"><textarea v-model="beschreibung" rows="9"
+                                                          cols="55" readonly>Dies ist ein Beispieltext</textarea></td>
+                            </tr>
+                            <tr>
+                                <td class="identifier"><label>Wer?</label></td>
+                                <td><input v-model="gastgeber" readonly/></td>
+                            </tr>
+                            <tr>
+                                <td class="identifier"><label>Wo?</label></td>
+                                <td><input v-model="ort" name="daddr" readonly/></td>
+                                <td>
+                                    <button @click="mapsAufrufen()"><img src="img/maps_icon.png" width="20px"></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="identifier"><label>Start?</label></td>
+                                <td><input v-model="startzeit" readonly/></td>
+                            </tr>
+                            <tr>
+                                <td class="identifier"><label>Ende?</label></td>
+                                <td><input v-model="endzeit" readonly/></td>
+                            </tr>
+                        </template>
+                        -->
         </table>
     </div>
 </main>
