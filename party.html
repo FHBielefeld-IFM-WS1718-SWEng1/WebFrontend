@@ -63,26 +63,26 @@
 
         <div id="party_data">
             <div tag="segment">
-                <label>Was?</label><br>
+                <label>Was?</label>
                 <input v-model="partyname" placeholder="Name der Party" v-bind:readonly="!owner"/>
             </div>
             <div tag="segment">
-                <label>Wer?</label><br>
+                <label>Wer?</label>
                 <input v-model="gastgeber" readonly/>
             </div>
             <div tag="segment">
-                <label>Wo?</label><br>
+                <label>Wo?</label>
                 <input v-model="ort" placeholder="Veranstaltungsort" v-bind:readonly="!owner"/>
                 <button tag="maps" v-if="!isCreation" @click="mapsAufrufen()"><img src="img/maps_icon.png" width="20px">
                 </button>
             </div>
             <div tag="segment">
-                <label>Start?</label><br>
+                <label>Start?</label>
                 <input type="date" v-model="startDatum" v-bind:readonly="!owner"/>
                 <input type="time" v-model="startZeit" v-bind:readonly="!owner"/>
             </div>
             <div tag="segment" v-if="owner || endDatum">
-                <label>Ende?</label><br>
+                <label>Ende?</label>
                 <input type="date" v-model="endDatum" v-bind:readonly="!owner"/>
                 <input type="time" v-model="endZeit" v-bind:readonly="!owner"/>
             </div>
@@ -98,6 +98,163 @@
             <textarea v-model="description"
                       v-bind:readonly="!owner"></textarea>
         </div>
+
+        <!------------------------------------------TABS START------------------------------------------------------------>
+        <div class="tab">
+            <ul>
+                <li>
+                    <button class="tablinks" onclick="openTab(event, 'Kommentare')" id="defaultOpen">Kommentare</button>
+                </li>
+                <li>
+                    <button class="tablinks" onclick="openTab(event, 'Aufgabenliste')" id="OpenAufgabenliste">
+                        Aufgabenliste
+                    </button>
+                </li>
+                <li>
+                    <button class="tablinks" onclick="openTab(event, 'Gaesteliste')" id="OpenGaeste">Gästeliste</button>
+                </li>
+                <li>
+                    <button class="tablinks" onclick="openTab(event, 'ToDoListe')" id="OpenToDo">ToDo-Liste</button>
+                </li>
+                <li>
+                    <button class="tablinks" onclick="openTab(event, 'Abstimmungen')" id="OpenAbstimmung">Abstimmungen
+                    </button>
+                </li>
+                <li>
+                    <button class="tablinks" onclick="openTab(event, 'Bewertung')" id="OpenBewertung">Bewertung</button>
+                </li>
+            </ul>
+        </div>
+        <!-------------------------------------------TABS ENDE------------------------------------------------------------>
+
+        <!-------------------------------------------AUFGABENLISTE START------------------------------------------------------------>
+        <table id="Aufgabenliste" class="tabcontent">
+            <tbody>
+            <tr tag="header">
+                <td style="width: 35%;">Aufgaben:</td>
+                <td style="width: 35%;">Verantwortlicher:</td>
+                <td style="width: 15%;">Status:</td>
+                <td v-if="owner" style="width: 15%;"></td>
+            </tr>
+            <template v-for="(task, index) in tasks">
+                <tr tag="data">
+                    <td>{{task.text}}</td>
+                    <td>{{task.User.name}}</td>
+                    <td><input type="checkbox" @click="updateTask(task, $event)" v-bind:checked="task.status===1"
+                               :readonly="canUpdateTask(task)"></td>
+                    <td v-if="owner">
+                        <button @click="deleteTask(task, index)">X</button>
+                    </td>
+                </tr>
+            </template>
+            <tr v-if="owner && !addingTask">
+                <td>
+                    <button @click="addingTask = true">+</button>
+                </td>
+            </tr>
+            <tr v-if="addingTask">
+                <td><input id="addTaskName" placeholder="Aufgabe"></td>
+                <td>
+                    <select id="addTaskUser" name="Nutzer"/>
+                    <option v-for="(user, index) in addTaskUsers" :value="user.user_id">{{user.user_name}}</option>
+                    </select>
+                </td>
+                <td>
+                    <button @click="addTask()">Speichern</button>
+                </td>
+                <td>
+                    <button @click="addingTask = false">Abbrechen</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!--
+         <div id="Aufgaben_samp">
+             <label for="vorname"></label>
+             <p></p>
+             <samp class="samp_Report">Getränke</samp>
+             <p></p>
+             <samp class="samp_Report"> Kuchen </samp>
+             <p></p>
+             <samp class="samp_Report">Skat Spiel </samp>
+             <p></p>
+             <samp class="samp_Report"> Kaffee </samp>
+             <p></p>
+             <samp class="samp_Report"> Bastelsachen </samp>
+             <p></p>
+             <samp class="samp_Report"> Musikbox </samp>
+         </div>
+
+         <div id="Responsible">
+             <label class="Resp_Header" for="vorname">Verantwortlicher:</label>
+             <p></p>
+             <samp class="samp_Report">Edmund</samp>
+             <p></p>
+             <samp class="samp_Report"> Ursula </samp>
+             <p></p>
+             <samp class="samp_Report">Angela </samp>
+             <p></p>
+             <samp class="samp_Report"> Martin </samp>
+             <p></p>
+             <samp class="samp_Report"> Sarah </samp>
+             <p></p>
+             <samp class="samp_Report" style="color: blue"> wird gesucht </samp>
+             <input type="button" name="Meldung" value="" style="background-repeat: no-repeat; border-color: #0000cd; background-image: url(finger.jpg);
+                         background-position: center; width: 15px; height:25px">
+         </div>
+
+         <div id="Pencil_Butt">
+             <input type="button" name="Change_1" value="" style="background-image: url(img/pencil.png)">
+             <p></p>
+             <input type="button" name="Change_2" value="" style="background-image: url(img/pencil.png)">
+             <p></p>
+             <input type="button" name="Change_3" value="" style="background-image: url(img/pencil.png)">
+             <p></p>
+             <input type="button" name="Change_4" value="" style="background-image: url(img/pencil.png)">
+             <p></p>
+             <input type="button" name="Change_5" value="" style="background-image: url(img/pencil.png)">
+             <p></p>
+             <input type="button" name="Change_6" value="" style="background-image: url(img/pencil.png)">
+         </div>
+
+         <div id="Status">
+             <center><label for="vorname">Status:</label>
+                 <p></p>
+                 <input type="checkbox" name="cp_1">
+                 <p></p>
+                 <input type="checkbox" name="cp_2">
+                 <p></p>
+                 <input type="checkbox" name="cp_3" checked="checked">
+                 <p></p>
+                 <input type="checkbox" name="cp_4">
+                 <p></p>
+                 <input type="checkbox" name="cp_5" checked="checked">
+                 <p></p>
+                 <input type="checkbox" name="cp_6">
+             </center>
+         </div>
+
+         <div id="Trash_Butt">
+             <input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)">
+             <p></p>
+             <input type="button" name="Trash_2" value="" style="background-image: url(img/trash.png)">
+             <p></p>
+             <input type="button" name="Trash_3" value="" style="background-image: url(img/trash.png)">
+             <p></p>
+             <input type="button" name="Trash_4" value="" style="background-image: url(img/trash.png)">
+             <p></p>
+             <input type="button" name="Trash_5" value="" style="background-image: url(img/trash.png)">
+             <p></p>
+             <input type="button" name="Trash_6" value="" style="background-image: url(img/trash.png)">
+         </div>
+
+         <div id="Butt_Add">
+             <input type="button" name="Add_Someone" value="+">
+         </div>
+     </div>-->
+        <!-------------------------------------------AUFGABENLISTE ENDE------------------------------------------------------------->
+
+
         <!--
                         <td rowspan="5">
         -->
