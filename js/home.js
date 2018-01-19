@@ -14,6 +14,8 @@ const contentVue = new Vue({
         let apiKey = localStorage.getItem("apiKey");
         let dateNow = new Date();
         getRequest("party?api=" + apiKey, function (data) {
+            if(data.error === "kein gültiger api schlüssel")
+                clearStorage();
             if (!data.error && data.parties) {
                 for (let i in data.parties) {
                     let party = data.parties[i];

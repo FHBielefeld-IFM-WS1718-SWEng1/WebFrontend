@@ -86,6 +86,8 @@ const contentVue = new Vue({
         this.owner = this.userId === loggedInId;
         //Nutzerdaten abrufen
         getRequest("user/" + this.userId + "?api=" + apiKey, function (data) {
+            if(data.error === "kein gültiger api schlüssel")
+                clearStorage();
             if (!data.error) {
                 console.log("userdata: " + JSON.stringify(data));
                 contentVue.email = data.email;
