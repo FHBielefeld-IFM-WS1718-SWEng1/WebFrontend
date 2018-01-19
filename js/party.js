@@ -18,7 +18,10 @@ const contentVue = new Vue({
         image: "img/logo.png",
         imageChanged: false,
         imagePath: "",
+        guests: null,
+        tasks: null,
 
+        addTask: false,
         owner: true,
         isCreation: true
     },
@@ -56,7 +59,7 @@ const contentVue = new Vue({
     },
     created: function () {
         let split = /(id=)(\d+)/g.exec(window.location.href);
-        let apiKey = localStorage.getItem("apiKey");
+        const apiKey = localStorage.getItem("apiKey");
         this.partyId = (split != null && split.length > 0) ? split[2] : -1;
         this.gastgeber = localStorage.getItem("userName");
         if (this.partyId !== -1) //Existierende Party
@@ -78,6 +81,10 @@ const contentVue = new Vue({
                         contentVue.endDatum = splitTime[0];
                         contentVue.endZeit = splitTime[1].substring(0, splitTime[1].length - 1);
                     }
+
+                    contentVue.guests = data.guests;
+
+                    contentVue.tasks = data.tasks;
 
                     if (data.picture) {
                         contentVue.imagePath = data.picture;
