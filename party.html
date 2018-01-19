@@ -140,29 +140,30 @@
                 <tr tag="data">
                     <td>{{task.text}}</td>
                     <td>{{task.User.name}}</td>
-                    <td><input type="checkbox" v-bind:checked="task.status===1"></td>
+                    <td><input type="checkbox" @click="updateTask(task, $event)" v-bind:checked="task.status===1"
+                               :readonly="canUpdateTask(task)"></td>
                     <td v-if="owner">
-                        <button @click="">X</button>
+                        <button @click="deleteTask(task, index)">X</button>
                     </td>
                 </tr>
             </template>
-            <tr v-if="owner && !addTask">
+            <tr v-if="owner && !addingTask">
                 <td>
-                    <button @click="addTask = true">+</button>
+                    <button @click="addingTask = true">+</button>
                 </td>
             </tr>
-            <tr v-if="addTask">
-                <td><input placeholder="Aufgabe"></td>
+            <tr v-if="addingTask">
+                <td><input id="addTaskName" placeholder="Aufgabe"></td>
                 <td>
-                    <select name="Nutzer"/>
-                    <option v-for="(user, index) in guests">{{user.User.name}}</option>
+                    <select id="addTaskUser" name="Nutzer"/>
+                    <option v-for="(user, index) in addTaskUsers" :value="user.user_id">{{user.user_name}}</option>
                     </select>
                 </td>
                 <td>
-                    <button @click="">Speichern</button>
+                    <button @click="addTask()">Speichern</button>
                 </td>
                 <td>
-                    <button @click="addTask = false">Abbrechen</button>
+                    <button @click="addingTask = false">Abbrechen</button>
                 </td>
             </tr>
             </tbody>

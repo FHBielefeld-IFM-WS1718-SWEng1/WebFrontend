@@ -18,10 +18,11 @@ const contentVue = new Vue({
         image: "img/logo.png",
         imageChanged: false,
         imagePath: "",
-        guests: null,
-        tasks: null,
+        guests: [],
+        tasks: [],
 
-        addTask: false,
+        addingTask: false,
+        addTaskUsers: [],
         owner: true,
         isCreation: true
     },
@@ -30,7 +31,7 @@ const contentVue = new Vue({
             if (!this.imageChanged)
                 this.doUpdate();
             else { //Wenn das Nutzerbild geändert wurde ist der Vorgang etwas komplizierter
-                let imageTruncated = this.image.substring(this.image.indexOf("base64")+7);
+                let imageTruncated = this.image.substring(this.image.indexOf("base64") + 7);
                 postRequest("image/?api=" + localStorage.getItem("apiKey"), JSON.stringify({"data": imageTruncated}), function (data) {
                     if (data.filename) {
                         contentVue.imageChanged = false;
@@ -49,12 +50,45 @@ const contentVue = new Vue({
                 "picture": this.imagePath
             };
             putRequest("party/" + this.partyId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(partyObject), function (data) {
-            console.log("udpated: "+JSON.stringify(data));
             });
         },
         mapsAufrufen() {
             var link = "https://www.google.com/maps?daddr=" + this.ort;
             window.open(link);
+        },
+        addTask() {
+            let selection = document.getElementById("addTaskUser");
+            let message = JSON.stringify({
+                "user_id": selection.options[selection.selectedIndex].value,
+                "party_id": contentVue.partyId,
+                "text": document.getElementById("addTaskName").value,
+                "status": 0
+            });
+            const apiKey = localStorage.getItem("apiKey");
+            postRequest("party/task?api=" + apiKey, message, function (data) {
+                if (!data.error) {
+                    getRequest("party/" + contentVue.partyId + "?api=" + apiKey, function (data) {
+                        if (data.tasks)
+                            contentVue.tasks = data.tasks;
+                    });
+                }
+                contentVue.addingTask = false;
+            });
+        },
+        canUpdateTask(task) {
+            return this.owner || task.user_id === parseInt(localStorage.getItem("userId"));
+        },
+        updateTask(task, event) {
+            task.status = event.target.checked ? 1 : 0;
+            putRequest("party/task?api=" + localStorage.getItem("apiKey"), JSON.stringify(task), function (data) {
+            });
+        },
+        deleteTask(task, arrayIndex) {
+            const c_arrayIndex = arrayIndex;
+            deleteRequest("party/task?api=" + localStorage.getItem("apiKey"), JSON.stringify({"id": task.id}), function (data) {
+                if (!data.error)
+                    contentVue.tasks.splice(c_arrayIndex, 1);
+            });
         }
     },
     created: function () {
@@ -65,6 +99,10 @@ const contentVue = new Vue({
         if (this.partyId !== -1) //Existierende Party
             getRequest("party/" + this.partyId + "?api=" + apiKey, function (data) {
                 if (!data.error) {
+                    //Parties die angefangen haben können nicht geändert werden
+                    if (data.ersteller.id !== parseInt(localStorage.getItem("userId")) || new Date(data.startDate) < new Date())
+                        contentVue.owner = false;
+
                     contentVue.isCreation = false;
                     contentVue.partyname = data.name;
                     contentVue.description = data.description;
@@ -83,11 +121,10 @@ const contentVue = new Vue({
                     }
 
                     contentVue.guests = data.guests;
-
                     contentVue.tasks = data.tasks;
 
                     if (data.picture) {
-                        contentVue.imagePath = data.picture;
+                        contentVue.userimagePath = data.picture;
                         getRequest("image/" + data.picture + "?api=" + apiKey, function (data) {
                             if (data.data) {
                                 contentVue.image = "data:image/png;base64," + data.data;
@@ -95,9 +132,18 @@ const contentVue = new Vue({
                         });
                     }
 
-                    //Parties die angefangen haben können nicht geändert werden
-                    if (data.ersteller.id !== parseInt(localStorage.getItem("userId")) || new Date(data.startDate) < new Date())
-                        contentVue.owner = false;
+                    if (contentVue.owner) {
+                        contentVue.addTaskUsers.push({
+                            "user_id": parseInt(localStorage.getItem("userId")),
+                            "user_name": localStorage.getItem("userName")
+                        });
+                        for (let iGuest = 0; iGuest < contentVue.guests.length; iGuest++)
+                            contentVue.addTaskUsers.push({
+                                "user_id": contentVue.guests[iGuest].user_id,
+                                "user_name": contentVue.guests[iGuest].User.name
+                            });
+
+                    }
                 }
             });
     }
