@@ -21,7 +21,7 @@ const contentVue = new Vue({
             if (!this.imageChanged)
                 this.doUpdate();
             else { //Wenn das Nutzerbild geändert wurde ist der Vorgang etwas komplizierter
-                let imageTruncated = this.image.substring(this.image.indexOf("base64")+7);
+                let imageTruncated = this.image.substring(this.image.indexOf("base64") + 7);
                 postRequest("image/?api=" + localStorage.getItem("apiKey"), JSON.stringify({"data": imageTruncated}), function (data) {
                     console.log("Image was uploaded: " + JSON.stringify(data));
                     if (data.filename) {
@@ -59,7 +59,8 @@ const contentVue = new Vue({
             return this.gender === 1 ? "Männlich" : this.gender === 2 ? "Weiblich" : this.gender === 3 ? "Andere" : "Keine Angabe";
         },
         search() {
-            popupVue.showPopup('search');
+            if (getSearchResults().length > 0)
+                popupVue.showPopup('search');
         },
         confirmDeleteContact(user) {
             this.contactToDelete = user;
@@ -85,7 +86,7 @@ const contentVue = new Vue({
         this.owner = this.userId === loggedInId;
         //Nutzerdaten abrufen
         getRequest("user/" + this.userId + "?api=" + apiKey, function (data) {
-            if(data.error === "kein gültiger api schlüssel")
+            if (data.error === "kein gültiger api schlüssel")
                 clearStorage();
             if (!data.error) {
                 console.log("userdata: " + JSON.stringify(data));
@@ -97,7 +98,7 @@ const contentVue = new Vue({
                     contentVue.imagePath = data.profilepicture;
                     getRequest("image/" + data.profilepicture + "?api=" + apiKey, function (data) {
                         if (data.data)
-                            contentVue.image = "data:image/png;base64,"+data.data;
+                            contentVue.image = "data:image/png;base64," + data.data;
                     });
                 }
             }
@@ -145,7 +146,7 @@ if (contentVue.owner) {
         if (!contentVue.searchString)
             return null;
         return userList.filter(function (obj) {
-            return obj.name.toLowerCase().startsWith(contentVue.searchString.toLowerCase()) && !nameInContacts(obj);
+            return obj.email !== contentVue.email && obj.name.toLowerCase().startsWith(contentVue.searchString.toLowerCase()) && !nameInContacts(obj);
         });
     }
 

@@ -129,8 +129,7 @@
       #content #contacts #list_contacts button {
         width: 10%;
         float: right;
-        top: 3px;
-        position: relative;
+        margin-top: 3px;
         background: #8b0000; }
         #content #contacts #list_contacts button:hover {
           background: #cc0000; }
