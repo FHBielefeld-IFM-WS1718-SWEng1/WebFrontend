@@ -18,7 +18,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 20% 10% 30% 35%;
-  grid-template-rows: 50% 10% 40%; }
+  grid-template-rows: 50% 5% 45%; }
   #content #picture {
     grid-row: 1;
     grid-column: 1;
@@ -95,16 +95,24 @@
         display: inline-block;
         list-style-type: none; }
         #content .tab ul li button {
+          padding: 12px 5px;
+          border-color: var(--blue);
+          border-style: solid;
+          border-radius: 8px;
+          box-sizing: border-box;
           display: inline-block;
-          width: 100%; }
+          width: 100%;
+          background-color: var(--lightblue); }
+          #content .tab ul li button.inactive {
+            background-color: var(--lightgrey); }
   #content .tabcontent {
     grid-row: 3;
     grid-column: 1 / 5;
     margin: 0 5%;
     width: 90%; }
-  #content #Aufgabenliste {
-    border-collapse: collapse; }
-    #content #Aufgabenliste input {
+    #content .tabcontent.inactive {
+      display: none; }
+    #content .tabcontent input {
       width: 65%;
       padding: 8px 12px;
       display: inline-block;
@@ -113,24 +121,26 @@
       box-sizing: border-box;
       font-size: 14px;
       background-color: #f9f9f9; }
-    #content #Aufgabenliste tr[tag=header] {
+  #content table.tabcontent {
+    border-collapse: collapse; }
+    #content table.tabcontent tr[tag=header] {
       margin-bottom: 2%; }
-      #content #Aufgabenliste tr[tag=header] td {
+      #content table.tabcontent tr[tag=header] td {
         border-bottom: 2px solid dimgrey;
         padding: 0; }
-    #content #Aufgabenliste tr[tag=data] {
+    #content table.tabcontent tr[tag=data] {
       font-size: 14px; }
-      #content #Aufgabenliste tr[tag=data] td input[type=checkbox] {
+      #content table.tabcontent tr[tag=data] td input[type=checkbox] {
         transform: scale(1.5);
         margin-left: 4%; }
-      #content #Aufgabenliste tr[tag=data] td button {
+      #content table.tabcontent tr[tag=data] td button[tag=delete] {
         border: 1px solid #dfdfdf;
         border-radius: 4px;
         box-sizing: border-box;
         position: relative;
         margin-left: 20%;
         background: #8b0000; }
-        #content #Aufgabenliste tr[tag=data] td button:hover {
+        #content table.tabcontent tr[tag=data] td button[tag=delete]:hover {
           background: #cc0000; }
 
 /*# sourceMappingURL=party.css.map */

@@ -56,6 +56,19 @@ const contentVue = new Vue({
             var link = "https://www.google.com/maps?daddr=" + this.ort;
             window.open(link);
         },
+        changeTab(event, tab) {
+            let tabcontent = document.getElementsByClassName("tabcontent");
+            for (let i = 0; i < tabcontent.length; i++)
+                if (!tabcontent[i].className.includes("inactive"))
+                    tabcontent[i].className += " inactive";
+            let tablinks = document.getElementsByClassName("tablinks");
+            for (let i = 0; i < tablinks.length; i++)
+                if (!tablinks[i].className.includes("inactive"))
+                    tablinks[i].className += " inactive";
+            event.target.className = event.target.className.replace(" inactive", "");
+            let tabElement = document.getElementById(tab);
+            tabElement.className = tabElement.className.replace(" inactive", "");
+        },
         addTask() {
             let selection = document.getElementById("addTaskUser");
             let message = JSON.stringify({
@@ -79,6 +92,10 @@ const contentVue = new Vue({
             return this.owner || task.user_id === parseInt(localStorage.getItem("userId"));
         },
         updateTask(task, event) {
+            if (!this.canUpdateTask(task)) {
+                event.target.checked = !event.target.checked;
+                return;
+            }
             task.status = event.target.checked ? 1 : 0;
             putRequest("party/task?api=" + localStorage.getItem("apiKey"), JSON.stringify(task), function (data) {
             });

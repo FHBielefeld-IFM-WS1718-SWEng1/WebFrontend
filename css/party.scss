@@ -19,7 +19,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 20% 10% 30% 35%;
-  grid-template-rows: 50% 10% 40%;
+  grid-template-rows: 50% 5% 45%;
 
   #picture {
     grid-row: 1;
@@ -125,8 +125,17 @@
         display: inline-block;
         list-style-type: none;
         button {
+          padding: 12px 5px;
+          border-color: var(--blue);
+          border-style: solid;
+          border-radius: 8px;
+          box-sizing: border-box;
           display: inline-block;
           width: 100%;
+          background-color: var(--lightblue);
+          &.inactive {
+            background-color: var(--lightgrey);
+          }
         }
       }
     }
@@ -137,9 +146,9 @@
     grid-column: 1 / 5;
     margin: 0 5%;
     width: 90%;
-  }
-  #Aufgabenliste {
-    border-collapse: collapse;
+    &.inactive {
+      display: none;
+    }
 
     input {
       width: 65%;
@@ -151,6 +160,10 @@
       font-size: 14px;
       background-color: #f9f9f9;
     }
+  }
+
+  table.tabcontent {
+    border-collapse: collapse;
 
     tr[tag=header] {
       margin-bottom: 2%;
@@ -167,7 +180,7 @@
           margin-left: 4%;
         }
 
-        button {
+        button[tag=delete] {
           border: 1px solid #dfdfdf;
           border-radius: 4px;
           box-sizing: border-box;
@@ -181,4 +194,5 @@
       }
     }
   }
+
 }
