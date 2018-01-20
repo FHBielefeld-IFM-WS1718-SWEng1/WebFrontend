@@ -3,7 +3,6 @@ function papla_login(email, password, callback) {
         JSON.stringify({"email": email, "password": password}),
         function (data) {
             if (data.key) {
-                console.log("Received API Key: " + data.key);
                 localStorage.setItem("apiKey", data.key);
                 localStorage.setItem("userId", data.id);
                 localStorage.setItem("userName", data.name);

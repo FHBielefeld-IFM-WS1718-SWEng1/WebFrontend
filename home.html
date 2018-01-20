@@ -78,7 +78,7 @@
 
                     <td tag="butt">
                         <button title="Einladung Annehmen" v-if="party.status===0" name="confirm" @click="updatePartyStatus(party, 1, index)"><img src="img/thumb_up.png" alt="Papla icon"></button>
-                        <button title="Einladung Ablehnen" name="deny" @click="updatePartyStatus(party, 2, index)"><img src="img/thumb_down.png" alt="Papla icon"></button>
+                        <button title="Einladung Ablehnen" v-if="party.status!==-1" name="deny" @click="updatePartyStatus(party, 2, index)"><img src="img/thumb_down.png" alt="Papla icon"></button>
                     </td>
                 </tr>
                 <tr tag="spacer"></tr>

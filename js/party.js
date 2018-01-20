@@ -22,6 +22,8 @@ const contentVue = new Vue({
         tasks: [],
 
         addingTask: false,
+        contactList: [],
+        invitePlanningList: [],
         addTaskUsers: [],
         owner: true,
         isCreation: true
@@ -43,18 +45,42 @@ const contentVue = new Vue({
         },
         doUpdate() {
             let partyObject = {
-                "name": this.name,
+                "name": this.partyname,
                 "description": this.description,
+                "location": this.ort,
                 "startDate": this.startDatum + "T" + this.startZeit + "Z",
                 "endDate": this.endDatum + "T" + this.endZeit + "Z",
                 "picture": this.imagePath
             };
-            putRequest("party/" + this.partyId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(partyObject), function (data) {
+            console.log("sending data: " + JSON.stringify(partyObject));
+            if (this.isCreation)
+                postRequest("party?api=" + localStorage.getItem("apiKey"), JSON.stringify(partyObject), function (data) {
+                    if (data.id) {
+                        let str = window.location.href;
+                        str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/party.html?id=" + data.id);
+                        window.location.replace(str);
+                    }
+                });
+            else
+                putRequest("party/" + this.partyId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(partyObject), function (data) {
+                    console.log("party upgedated: " + JSON.stringify(data));
+                });
+        },
+        confirmDelete() {
+            popupVue.showPopup('delete');
+        },
+        deleteParty() {
+            deleteRequest("party/" + this.partyId + "?api=" + localStorage.getItem("apiKey"), null, function (data) {
+                popupVue.hidePopup('delete');
+                if (data.message === "erfolgreich") {
+                    let str = window.location.href;
+                    str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
+                    window.location.replace(str);
+                }
             });
         },
         mapsAufrufen() {
-            var link = "https://www.google.com/maps?daddr=" + this.ort;
-            window.open(link);
+            window.open("https://www.google.com/maps?daddr=" + this.ort);
         },
         changeTab(event, tab) {
             let tabcontent = document.getElementsByClassName("tabcontent");
@@ -68,6 +94,9 @@ const contentVue = new Vue({
             event.target.className = event.target.className.replace(" inactive", "");
             let tabElement = document.getElementById(tab);
             tabElement.className = tabElement.className.replace(" inactive", "");
+        },
+        showAddGuests() {
+            popupVue.showPopup('addGuests');
         },
         addTask() {
             let selection = document.getElementById("addTaskUser");
@@ -159,7 +188,16 @@ const contentVue = new Vue({
                                 "user_id": contentVue.guests[iGuest].user_id,
                                 "user_name": contentVue.guests[iGuest].User.name
                             });
-
+                        getRequest("user/contact?api=" + apiKey, function (data) {
+                            if (data.contacts)
+                                for (let i = 0; i < data.contacts.length; i++) {
+                                    contentVue.contactList.push({"name": data.contacts[i].name, "visible": true});
+                                    contentVue.invitePlanningList.push({
+                                        "name": data.contacts[i].name,
+                                        "visible": false
+                                    });
+                                }
+                        });
                     }
                 }
             });
@@ -167,7 +205,7 @@ const contentVue = new Vue({
 });
 
 if (contentVue.owner) {
-    function selectProfilePicture(evt) {
+    function selectPartyPicture(evt) {
         var dateien = evt.target.files;
         var uploadDatei = dateien[0];
 
@@ -185,5 +223,20 @@ if (contentVue.owner) {
         reader.readAsDataURL(uploadDatei);
     }
 
-    document.getElementById('uploadButton').addEventListener('change', selectProfilePicture, false);
+    document.getElementById('uploadButton').addEventListener('change', selectPartyPicture, false);
 }
+
+const popupVue = new PopupHandler('.popup-container',
+    {
+        'delete': false,
+        'addGuests': false,
+    },
+    {
+        'delete': contentVue.deleteParty,
+        'contactList': function () {
+            return contentVue.contactList;
+        },
+        'planningList': function () {
+            return contentVue.invitePlanningList;
+        }
+    });

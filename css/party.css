@@ -22,12 +22,40 @@
   #content #picture {
     grid-row: 1;
     grid-column: 1;
-    margin-top: 5%;
-    margin-left: 0%; }
-    #content #picture img {
-      width: 150px; }
+    margin-top: 8%;
+    margin-left: 3%; }
+    #content #picture #imageFrame {
+      width: 150px;
+      height: 150px;
+      white-space: nowrap;
+      text-align: center; }
       @media (max-device-width: 930px) {
-        #content #picture img {
+        #content #picture #imageFrame {
+          width: 100px;
+          height: 100px; } }
+      #content #picture #imageFrame span {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle; }
+      #content #picture #imageFrame img {
+        vertical-align: middle;
+        max-width: 150px;
+        max-height: 150px; }
+        @media (max-device-width: 930px) {
+          #content #picture #imageFrame img {
+            max-width: 100px;
+            max-height: 100px; } }
+    #content #picture button {
+      margin-top: 1%;
+      width: 150px;
+      padding: 8px 12px;
+      display: inline-block;
+      border: 1px solid #dfdfdf;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #f9f9f9; }
+      @media (max-device-width: 930px) {
+        #content #picture button {
           width: 100px; } }
   #content #party_data {
     grid-row: 1;
@@ -82,8 +110,13 @@
     grid-row: 1;
     grid-column: 4 / 5; }
     #content #party_description textarea {
-      width: 90%;
-      height: 50%; }
+      width: 100%;
+      height: 50%;
+      border: 1px solid #dfdfdf;
+      border-radius: 4px;
+      box-sizing: border-box;
+      resize: none;
+      background-color: #f9f9f9; }
   #content .tab {
     grid-row: 2;
     grid-column: 1 / 5; }
