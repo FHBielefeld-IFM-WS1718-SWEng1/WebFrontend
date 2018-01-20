@@ -58,7 +58,7 @@
                 <tr tag="party">
                     <td tag="image">
                         <a :href="'party.html?id='+party.id">
-                            <img v-if="party.image" :src="'data:image/jpeg;base64,'+party.image" alt="Party Image">
+                            <img v-if="party.image" :src="'data:image/png;base64,'+party.image" alt="Party Image">
                             <img v-else src="img/logo.png" alt="Papla icon">
                         </a>
                     </td>
@@ -68,17 +68,11 @@
                         <br>
                         Wo?: {{ party.location }}
                         <br>
-                        Wann?: {{ getPartyTime(party) }}
+                        Wann?: {{ party.time }}
                     </td>
 
                     <td tag="desc">
                         {{ party.description }}
-                    </td>
-
-                    <td tag="butt">
-                        <input type="submit" name="Edit" value="" style="background-image: url(img/pencil.png)">
-                        <input id="deleteDep" type="submit" name="Trash" value=""
-                               style="background-image: url(img/trash.png)" onclick="delHeader('tb1'); deleteRow(this)">
                     </td>
                 </tr>
                 <tr tag="spacer"></tr>

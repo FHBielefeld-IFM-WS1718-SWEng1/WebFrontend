@@ -68,7 +68,7 @@ const contentVue = new Vue({
         },
         deleteContact() {
             if (this.contactToDelete)
-                deleteRequest("user/contact?api=" + localStorage.getItem("apiKey"), JSON.stringify({"id": this.contactToDelete.id}), function (data) {
+                deleteRequest("user/contact?api=" + localStorage.getItem("apiKey"), JSON.stringify({"userid": this.contactToDelete.id}), function (data) {
                     popupVue.hidePopup('deleteContact');
                     for (let i = 0; i < contentVue.contactList.length; i++)
                         if (contentVue.contactList[i].id === contentVue.contactToDelete.id)

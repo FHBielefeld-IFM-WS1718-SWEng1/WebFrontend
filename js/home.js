@@ -40,6 +40,7 @@ const contentVue = new Vue({
                         const partyObject = {
                             "id": party.id,
                             "name": party.name,
+                            "user": party.user.name,
                             "location": party.location,
                             "time": new Date(party.startDate).toLocaleDateString('de-DE', this.timeOptions),
                             "description": party.description,
@@ -53,7 +54,6 @@ const contentVue = new Vue({
                             });
                         getRequest("party/" + party.id + "?api=" + apiKey, function (data) {
                             if (!data.error) {
-                                partyObject.user = data.ersteller.name;
                                 for (let iGuest = 0; iGuest < data.guests.length; iGuest++)
                                     if (data.guests[iGuest].user_id === userId)
                                         partyObject.status = data.guests[iGuest].status;
