@@ -139,6 +139,20 @@
         text-decoration: none;
         padding-left: 2%; }
 
+.userHoverable .userTooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: var(--lightgrey);
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1; }
+  .userHoverable .userTooltip img {
+    width: 100px;
+    height: 100px; }
+.userHoverable:hover .userTooltip {
+  visibility: visible; }
+
 .popup-container {
   grid-column-start: left;
   grid-column-end: right;

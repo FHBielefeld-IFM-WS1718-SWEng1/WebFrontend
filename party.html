@@ -59,23 +59,50 @@
             </li>
         </ul>
     </div>
-    <div class="popup" role="alert" v-if="show['addGuests']">
+    <div id="addGuestsPopup" class="popup" role="alert" v-if="show['addGuests']">
         <p class="title">Gäste Einladen</p>
-        <ul class="popup-buttons" style="--button-width: 200px">
-            <li v-for="(user, index) in callback('contactList')" :key="index" v-if="user.visible">
-                <span style="display:inline-flex; margin: 3px 0px 3px 40px;">
-                    <a :tag="JSON.stringify(user)" :href="'profile.html?id='+user.id">{{user.name}}</a>
-                    <button class="confirm"
-                            @click="user.visisble = false; callback('planningList')[index].visible.true">+</button>
+        <label>Kontakte</label>
+        <hr>
+        <ul class="popup-buttons userlist">
+            <li v-for="(user, index) in callback('contactList')" :key="index">
+                <span style="display:inline; margin: 3px 0px 3px 40px;">
+                    <label class="userHoverable">{{user.name}}
+                        <span class="userTooltip"><img :src="user.image"/></span>
+                    </label>
+                    <button @click="callback('shiftList', user, index, true)">+</button>
                 </span>
             </li>
         </ul>
-        <ul class="popup-buttons" style="--button-width: 200px">
-            <li v-for="(user, index) in callback('planningList')" :key="index" v-if="user.visible">
-                <span style="display:inline-flex; margin: 3px 0px 3px 40px;">
-                    <a :href="'profile.html?id='+user.id">{{user.name}}</a>
-                    <button class="confirm" @click="user.visisble = false; callback('contactList')[index].visible.true">-</button>
+        <label>Einzuladen</label>
+        <hr>
+        <ul class="popup-buttons userlist">
+            <li v-for="(user, index) in callback('planningList')" :key="index">
+                <span style="display:inline; margin: 3px 0px 3px 40px;">
+                    <label class="userHoverable">{{user.name}}
+                        <span class="userTooltip"><img :src="user.image"/></span>
+                    </label>
+                    <button @click="callback('shiftList', user, index, false)">-</button>
                 </span>
+            </li>
+        </ul>
+        <ul class="popup-buttons" style="--button-width: auto; --button-height: 30px; float: right;">
+            <li>
+                <button class="confirm" style="text-transform: none;" @click="callback('addGuests')">Einladungen
+                    Absenden
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="popup" role="alert" v-if="show['deleteGuest']">
+        <p class="title">Gast Entfernen</p>
+        <p class="desc">Bist du dir sicher, dass du {{callback('deleteGuest_name')}} von der Party Ausladen
+            möchtest?</p>
+        <ul class="popup-buttons" style="--button-width: 200px">
+            <li>
+                <button pos="left" class="confirm" @click="callback('deleteGuest')">Ja</button>
+            </li>
+            <li>
+                <button pos="right" class="deny" @click="show['deleteGuest'] = false">Nein</button>
             </li>
         </ul>
     </div>
@@ -211,35 +238,53 @@
         <table id="Gaesteliste" class="tabcontent" v-if="!isCreation">
             <tbody>
             <tr tag="header">
-                <td style="width: 33%;">Gäste:</td>
-                <td style="width: 33%;">Absagen:</td>
-                <td style="width: 33%;">Ausstehend:</td>
+                <td style="width: 30%;">Gäste:</td>
+                <td style="width: 3%;"/>
+                <td style="width: 30%;">Absagen:</td>
+                <td style="width: 3%;"/>
+                <td style="width: 30%;">Ausstehend:</td>
+                <td style="width: 3%;"/>
             </tr>
             <template v-for="(user, index) in guests">
                 <tr tag="data">
-                    <td v-if="user.status===1">
-                        <a :href="'profile.html?id='+user.user_id">{{user.User.name}}</a>
-                        <button @click="confirmDeleteContact(user)" v-if="owner">X</button>
-                    </td>
-                    <td v-else></td>
+                    <template v-if="user.status===1">
+                        <td><a :href="'profile.html?id='+user.user_id">{{user.User.name}}</a></td>
+                        <td>
+                            <button @click="confirmDeleteGuest(user)" v-if="owner">X</button>
+                        </td>
+                    </template>
+                    <template v-else>
+                        <td></td>
+                        <td></td>
+                    </template>
 
-                    <td v-if="user.status===2">
-                        <a :href="'profile.html?id='+user.user_id">{{user.User.name}}</a>
-                        <button @click="confirmDeleteContact(user)" v-if="owner">X</button>
-                    </td>
-                    <td v-else></td>
+                    <template v-if="user.status===2">
+                        <td><a :href="'profile.html?id='+user.user_id">{{user.User.name}}</a></td>
+                        <td>
+                            <button @click="confirmDeleteGuest(user)" v-if="owner">X</button>
+                        </td>
+                    </template>
+                    <template v-else>
+                        <td></td>
+                        <td></td>
+                    </template>
 
-                    <td v-if="user.status===0">
-                        <a :href="'profile.html?id='+user.user_id">{{user.User.name}}</a>
-                        <button @click="confirmDeleteContact(user)" v-if="owner">X</button>
-                    </td>
-                    <td v-else></td>
+                    <template v-if="user.status===0">
+                        <td><a :href="'profile.html?id='+user.user_id">{{user.User.name}}</a></td>
+                        <td>
+                            <button @click="confirmDeleteGuest(user)" v-if="owner">X</button>
+                        </td>
+                    </template>
+                    <template v-else>
+                        <td></td>
+                        <td></td>
+                    </template>
                 </tr>
             </template>
 
             <tr>
                 <td>
-                    <button value="+" @click="showAddGuests"/>
+                    <button @click="showAddGuests">+</button>
                 </td>
             </tr>
 

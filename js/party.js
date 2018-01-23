@@ -24,6 +24,7 @@ const contentVue = new Vue({
             addingTask: false,
             contactList: [],
             invitePlanningList: [],
+            guestToDelete: null,
             addTaskUsers: [],
             owner: true,
             isCreation: true
@@ -45,8 +46,7 @@ const contentVue = new Vue({
                         contentVue.doUpdate();
                     });
                 }
-            }
-            ,
+            },
             doUpdate() {
                 let partyObject = {
                     "name": this.partyname,
@@ -70,12 +70,10 @@ const contentVue = new Vue({
                     putRequest("party/" + this.partyId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(partyObject), function (data) {
                         console.log("party upgedated: " + JSON.stringify(data));
                     });
-            }
-            ,
+            },
             confirmDelete() {
                 popupVue.showPopup('delete');
-            }
-            ,
+            },
             deleteParty() {
                 deleteRequest("party/" + this.partyId + "?api=" + localStorage.getItem("apiKey"), null, function (data) {
                     popupVue.hidePopup('delete');
@@ -85,12 +83,10 @@ const contentVue = new Vue({
                         window.location.replace(str);
                     }
                 });
-            }
-            ,
+            },
             mapsAufrufen() {
                 window.open("https://www.google.com/maps?daddr=" + this.ort);
-            }
-            ,
+            },
             changeTab(event, tab) {
                 let tabcontent = document.getElementsByClassName("tabcontent");
                 for (let i = 0; i < tabcontent.length; i++)
@@ -103,12 +99,48 @@ const contentVue = new Vue({
                 event.target.className = event.target.className.replace(" inactive", "");
                 let tabElement = document.getElementById(tab);
                 tabElement.className = tabElement.className.replace(" inactive", "");
-            }
-            ,
+            },
             showAddGuests() {
                 popupVue.showPopup('addGuests');
-            }
-            ,
+            },
+            addGuests() {
+                while (this.invitePlanningList.length > 0) {
+                    let user = this.invitePlanningList.pop();
+                    let guestobj = JSON.stringify({"userid": user.id, "partyid": this.partyId});
+                    postRequest("party/guest?api=" + localStorage.getItem("apiKey"), guestobj, function (data) {
+                        getRequest("party/" + contentVue.partyId + "?api=" + localStorage.getItem("apiKey"), function (data) {
+                            if (data.guests)
+                                contentVue.guests = data.guests;
+                        });
+                    });
+                }
+            },
+            confirmDeleteGuest(user) {
+                this.guestToDelete = user;
+                popupVue.showPopup('deleteGuest');
+            },
+            deleteGuest() {
+                if (this.guestToDelete)
+                    deleteRequest("party/guest?api=" + localStorage.getItem("apiKey"), JSON.stringify({"id": this.guestToDelete.id}), function (data) {
+                        popupVue.hidePopup('deleteGuest');
+                        for (let i = 0; i < contentVue.guests.length; i++)
+                            if (contentVue.guests[i].user_id === contentVue.guestToDelete.user_id)
+                                contentVue.guests.splice(i, 1);
+                        contentVue.contactToDelete = null;
+                    });
+            },
+            buildTaskUserList() {
+                this.addTaskUsers.length = 0;
+                this.addTaskUsers.push({
+                    "user_id": parseInt(localStorage.getItem("userId")),
+                    "user_name": localStorage.getItem("userName")
+                });
+                for (let iGuest = 0; iGuest < this.guests.length; iGuest++)
+                    this.addTaskUsers.push({
+                        "user_id": this.guests[iGuest].user_id,
+                        "user_name": this.guests[iGuest].User.name
+                    });
+            },
             addTask() {
                 let selection = document.getElementById("addTaskUser");
                 let message = JSON.stringify({
@@ -123,12 +155,10 @@ const contentVue = new Vue({
                         contentVue.tasks.push(data);
                     contentVue.addingTask = false;
                 });
-            }
-            ,
+            },
             canUpdateTask(task) {
                 return this.owner || task.user_id === parseInt(localStorage.getItem("userId"));
-            }
-            ,
+            },
             updateTask(task, event) {
                 if (!this.canUpdateTask(task)) {
                     event.target.checked = !event.target.checked;
@@ -137,8 +167,7 @@ const contentVue = new Vue({
                 task.status = event.target.checked ? 1 : 0;
                 putRequest("party/task?api=" + localStorage.getItem("apiKey"), JSON.stringify(task), function (data) {
                 });
-            }
-            ,
+            },
             deleteTask(task, arrayIndex) {
                 const c_arrayIndex = arrayIndex;
                 deleteRequest("party/task?api=" + localStorage.getItem("apiKey"), JSON.stringify({"id": task.id}), function (data) {
@@ -193,25 +222,36 @@ const contentVue = new Vue({
                         }
 
                         if (contentVue.owner) {
-                            contentVue.addTaskUsers.push({
-                                "user_id": parseInt(localStorage.getItem("userId")),
-                                "user_name": localStorage.getItem("userName")
-                            });
-                            for (let iGuest = 0; iGuest < contentVue.guests.length; iGuest++)
-                                contentVue.addTaskUsers.push({
-                                    "user_id": contentVue.guests[iGuest].user_id,
-                                    "user_name": contentVue.guests[iGuest].User.name
-                                });
+                            contentVue.buildTaskUserList();
+
                             getRequest("user/contact?api=" + apiKey, function (data) {
-                                if (data.contacts)
-                                    for (let i = 0; i < data.contacts.length; i++) {
-                                        contentVue.contactList.push({"name": data.contacts[i].name, "visible": true});
-                                        contentVue.invitePlanningList.push({
-                                            "name": data.contacts[i].name,
-                                            "visible": false
-                                        });
-                                    }
-                            });
+                                    if (data.contacts)
+                                        for (let i = 0; i < data.contacts.length; i++) {
+                                            let isGuest = false;
+                                            for (let j = 0; j < contentVue.guests.length; j++)
+                                                if (contentVue.guests[j].user_id === data.contacts[i].id) {
+                                                    isGuest = true;
+                                                    break;
+                                                }
+                                            if (isGuest)
+                                                continue;
+                                            let contactObject = {
+                                                "image": "img/logo.png",
+                                                "index": i,
+                                                "id": data.contacts[i].id,
+                                                "name": data.contacts[i].name
+                                            };
+                                            if (!data.contacts[i].profilePicture)
+                                                contentVue.contactList.push(contactObject);
+                                            else
+                                                getRequest("image/" + data.contacts[i].profilePicture + "?api=" + apiKey, function (data) {
+                                                    if (data.data)
+                                                        contactObject.image = "data:image/png;base64," + data.data;
+                                                    contentVue.contactList.push(contactObject);
+                                                });
+                                        }
+                                }
+                            );
                         }
                     }
                 });
@@ -245,6 +285,7 @@ const popupVue = new PopupHandler('.popup-container',
     {
         'delete': false,
         'addGuests': false,
+        'deleteGuest': false
     },
     {
         'delete': contentVue.deleteParty,
@@ -253,5 +294,22 @@ const popupVue = new PopupHandler('.popup-container',
         },
         'planningList': function () {
             return contentVue.invitePlanningList;
+        },
+        'shiftList': function (args) {
+            let user = args[0];
+            let vueIndex = args[1];
+            let toPlanning = args[2];
+            if (toPlanning) {
+                contentVue.invitePlanningList.splice(user.index, 0, user);
+                contentVue.contactList.splice(vueIndex, 1);
+            }
+            else {
+                contentVue.contactList.splice(user.index, 0, user);
+                contentVue.invitePlanningList.splice(vueIndex, 1);
+            }
+        },
+        'addGuests': contentVue.addGuests,
+        'deleteGuest': contentVue.deleteGuest, 'deleteGuest_name': function () {
+            return contentVue.guestToDelete.User.name;
         }
     });

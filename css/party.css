@@ -10,6 +10,32 @@
   margin-top: 8px;
   overflow-y: scroll; }
 
+#addGuestsPopup {
+  max-height: unset;
+  max-width: 300px; }
+  #addGuestsPopup label {
+    margin-left: 5%; }
+  #addGuestsPopup .userlist {
+    --button-width: 25px;
+    --button-height: 20px;
+    height: 150px;
+    overflow-y: scroll;
+    text-align: right;
+    list-style-position: inside; }
+    #addGuestsPopup .userlist li {
+      width: 100%; }
+      #addGuestsPopup .userlist li label {
+        margin-left: 2%;
+        margin-right: 2%;
+        display: inline-block;
+        white-space: nowrap;
+        width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: -7px; }
+      #addGuestsPopup .userlist li button {
+        display: initial; }
+
 #content {
   grid-area: main;
   padding-left: 3%;
