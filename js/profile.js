@@ -37,7 +37,7 @@ const contentVue = new Vue({
                 "name": this.name,
                 "birthdate": this.birthdate,
                 "gender": parseInt(this.gender),
-                "profilepicture": this.imagePath
+                "profilePicture": this.imagePath
             };
             putRequest("user/" + this.userId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(userObject), function (data) {
                 if (!data.error && data.name)
@@ -94,9 +94,9 @@ const contentVue = new Vue({
                 contentVue.name = data.name;
                 contentVue.birthdate = data.birthdate;
                 contentVue.gender = data.gender;
-                if (data.profilepicture) {
-                    contentVue.imagePath = data.profilepicture;
-                    getRequest("image/" + data.profilepicture + "?api=" + apiKey, function (data) {
+                if (data.profilePicture) {
+                    contentVue.imagePath = data.profilePicture;
+                    getRequest("image/" + data.profilePicture + "?api=" + apiKey, function (data) {
                         if (data.data)
                             contentVue.image = "data:image/png;base64," + data.data;
                     });

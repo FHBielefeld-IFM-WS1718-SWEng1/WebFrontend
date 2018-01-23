@@ -156,6 +156,14 @@
       overflow-y: auto;
       list-style-type: none;
 
+      a {
+        display: inline-block;
+        white-space: nowrap;
+        width: 86%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: -7px;
+      }
       button {
         width: 10%;
         float: right;
