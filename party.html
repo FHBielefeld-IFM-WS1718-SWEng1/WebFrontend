@@ -194,6 +194,15 @@
         </div>
         <!-------------------------------------------TABS ENDE------------------------------------------------------------>
 
+        <!-------------------------------------------KOMMENTARE START------------------------------------------------------------>
+        <div id="Kommentare" class="tabcontent inactive" v-if="!isCreation">
+            <textarea v-model="tempComment" placeholder="Hier deinen Kommentar eingeben..."></textarea>
+            <div v-for="(comment, index) in comment">
+
+            </div>
+        </div>
+        <!-------------------------------------------KOMMENTARE ENDE------------------------------------------------------------>
+
         <!-------------------------------------------AUFGABENLISTE START------------------------------------------------------------>
         <table id="Aufgabenliste" class="tabcontent inactive" v-if="!isCreation">
             <tbody>

@@ -24,6 +24,9 @@ const contentVue = new Vue({
             ratingSelected: null,
             ratingAverage: null,
             ratingTotal: 0,
+            comments: [],
+            tempComment: "",
+            tempReply: "",
 
             addingTask: false,
             contactList: [],
@@ -226,6 +229,7 @@ const contentVue = new Vue({
 
                         contentVue.guests = data.guests;
                         contentVue.tasks = data.tasks;
+                        contentVue.comments = data.comments;
 
                         //Rating zulassen, wenn die Party vorbei ist
                         // if (new Date(!data.endDate ? data.startDate : data.endDate) < now)
