@@ -166,6 +166,7 @@
 
         <!------------------------------------------TABS START------------------------------------------------------------>
         <div class="tab" v-if="!isCreation">
+            <hr>
             <ul>
                 <li>
                     <button class="tablinks inactive" @click="changeTab($event, 'Kommentare')">Kommentare</button>
@@ -189,6 +190,7 @@
                     <button class="tablinks inactive" @click="changeTab($event, 'Bewertung')">Bewertung</button>
                 </li>
             </ul>
+            <hr>
         </div>
         <!-------------------------------------------TABS ENDE------------------------------------------------------------>
 
@@ -292,6 +294,30 @@
         </table>
         <!-------------------------------------------GÄSTELISTE ENDE------------------------------------------------------------->
 
+        <!-------------------------------------------BEWERTUNG START------------------------------------------------------------>
+        <div id="Bewertung" class="tabcontent inactive" v-if="!isCreation">
+            <template v-if="enableRating">
+                <p v-if="ratingAverage">Diese Party hat eine Gesamtwertung von {{ratingAverage*10}}%!<br>Du hast diese
+                    Party {{ratingSelected?"bereits bewertet.":"noch nicht bewertet. Gib jetzt deine Bewertung ab!"}}
+                </p>
+                <p v-else>Diese Party hat noch keine Bewertungen. Sei der Erste, der sie bewertet!</p>
+                <div class="rating">
+                    <template v-for="i in [ 5, 4, 3, 2, 1 ]">
+                        <input type="radio" :value="(i*2).toString()" v-model="ratingSelected" @click="clickRating(i*2)"
+                               :id="'star' + i" :disabled="allowRating"/><label :for="'star' + i" class="starFull"><img
+                            src="img/rating.png" :title="i+' Sterne'"/></label>
+                        <input type="radio" :value="(i*2-1).toString()" v-model="ratingSelected"
+                               @click="clickRating(i*2-1)" :id="'star' + (i-1) + '_5'" :disabled="allowRating"/><label
+                            :for="'star' + (i-1) + '_5'" class="starHalf"><img src="img/ratingHalf.png"
+                                                                               :title="(i-1)+'.5 Sterne'"/></label>
+                    </template>
+                </div>
+            </template>
+            <template v-else>
+                <p>Du kannst diese Party erst bewerten, nachdem sie stattgefunden hat!</p>
+            </template>
+        </div>
+        <!-------------------------------------------BEWERTUNG ENDE------------------------------------------------------------->
 
     </div>
 </main>

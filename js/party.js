@@ -20,6 +20,10 @@ const contentVue = new Vue({
             imagePath: "",
             guests: [],
             tasks: [],
+            enableRating: false,
+            ratingSelected: null,
+            ratingAverage: null,
+            ratingTotal: 0,
 
             addingTask: false,
             contactList: [],
@@ -57,7 +61,6 @@ const contentVue = new Vue({
                 };
                 if (this.endDatum && this.endZeit)
                     partyObject["endDate"] = this.endDatum + "T" + this.endZeit + "Z";
-                console.log("sending data: " + JSON.stringify(partyObject));
                 if (this.isCreation)
                     postRequest("party?api=" + localStorage.getItem("apiKey"), JSON.stringify(partyObject), function (data) {
                         if (data.id) {
@@ -68,7 +71,6 @@ const contentVue = new Vue({
                     });
                 else
                     putRequest("party/" + this.partyId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(partyObject), function (data) {
-                        console.log("party upgedated: " + JSON.stringify(data));
                     });
             },
             confirmDelete() {
@@ -174,12 +176,24 @@ const contentVue = new Vue({
                     if (!data.error)
                         contentVue.tasks.splice(c_arrayIndex, 1);
                 });
+            },
+            clickRating(rating) {
+                postRequest("party/rating?api=" + localStorage.getItem("apiKey"), JSON.stringify({"partyid": this.partyId, "rating": rating}), function (data) {
+                });
+                let newAverage = (this.ratingAverage * this.ratingTotal + rating) / (this.ratingTotal + 1);
+                this.ratingAverage = Number(Math.round(newAverage + 'e2') + 'e-2');
+            }
+        },
+        computed: {
+            allowRating() {
+                return this.ratingSelected != null;
             }
         },
         created: function () {
-            let now = new Date().toISOString().split('T');
-            this.startDatum = now[0];
-            this.startZeit = now[1].substring(0, 5) + ":00.000";
+            const now = new Date();
+            let nowString = now.toISOString().split('T');
+            this.startDatum = nowString[0];
+            this.startZeit = nowString[1].substring(0, 5) + ":00.000";
 
             let split = /(id=)(\d+)/g.exec(window.location.href);
             const apiKey = localStorage.getItem("apiKey");
@@ -189,7 +203,8 @@ const contentVue = new Vue({
                 getRequest("party/" + this.partyId + "?api=" + apiKey, function (data) {
                     if (!data.error) {
                         //Parties die angefangen haben können nicht geändert werden
-                        if (data.ersteller.id !== parseInt(localStorage.getItem("userId")))
+                        let myUserId = parseInt(localStorage.getItem("userId"));
+                        if (data.ersteller.id !== myUserId)
                             contentVue.owner = false;
 
                         contentVue.isCreation = false;
@@ -212,6 +227,17 @@ const contentVue = new Vue({
                         contentVue.guests = data.guests;
                         contentVue.tasks = data.tasks;
 
+                        //Rating zulassen, wenn die Party vorbei ist
+                        // if (new Date(!data.endDate ? data.startDate : data.endDate) < now)
+                        contentVue.enableRating = true;
+                        if (data.ratingAverage)
+                            contentVue.ratingAverage = Number(Math.round(data.ratingAverage + 'e2') + 'e-2');
+                        contentVue.ratingTotal = data.ratings.length;
+                        for (let iRating = 0; iRating < contentVue.ratingTotal; iRating++)
+                            if (data.ratings[iRating].user_id === myUserId)
+                                contentVue.ratingSelected = data.ratings[iRating].value.toString();
+
+
                         if (data.picture) {
                             contentVue.userimagePath = data.picture;
                             getRequest("image/" + data.picture + "?api=" + apiKey, function (data) {
@@ -223,35 +249,33 @@ const contentVue = new Vue({
 
                         if (contentVue.owner) {
                             contentVue.buildTaskUserList();
-
                             getRequest("user/contact?api=" + apiKey, function (data) {
-                                    if (data.contacts)
-                                        for (let i = 0; i < data.contacts.length; i++) {
-                                            let isGuest = false;
-                                            for (let j = 0; j < contentVue.guests.length; j++)
-                                                if (contentVue.guests[j].user_id === data.contacts[i].id) {
-                                                    isGuest = true;
-                                                    break;
-                                                }
-                                            if (isGuest)
-                                                continue;
-                                            let contactObject = {
-                                                "image": "img/logo.png",
-                                                "index": i,
-                                                "id": data.contacts[i].id,
-                                                "name": data.contacts[i].name
-                                            };
-                                            if (!data.contacts[i].profilePicture)
+                                if (data.contacts)
+                                    for (let i = 0; i < data.contacts.length; i++) {
+                                        let isGuest = false;
+                                        for (let j = 0; j < contentVue.guests.length; j++)
+                                            if (contentVue.guests[j].user_id === data.contacts[i].id) {
+                                                isGuest = true;
+                                                break;
+                                            }
+                                        if (isGuest)
+                                            continue;
+                                        let contactObject = {
+                                            "image": "img/logo.png",
+                                            "index": i,
+                                            "id": data.contacts[i].id,
+                                            "name": data.contacts[i].name
+                                        };
+                                        if (!data.contacts[i].profilePicture)
+                                            contentVue.contactList.push(contactObject);
+                                        else
+                                            getRequest("image/" + data.contacts[i].profilePicture + "?api=" + apiKey, function (data) {
+                                                if (data.data)
+                                                    contactObject.image = "data:image/png;base64," + data.data;
                                                 contentVue.contactList.push(contactObject);
-                                            else
-                                                getRequest("image/" + data.contacts[i].profilePicture + "?api=" + apiKey, function (data) {
-                                                    if (data.data)
-                                                        contactObject.image = "data:image/png;base64," + data.data;
-                                                    contentVue.contactList.push(contactObject);
-                                                });
-                                        }
-                                }
-                            );
+                                            });
+                                    }
+                            });
                         }
                     }
                 });

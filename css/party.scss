@@ -54,7 +54,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 20% 10% 30% 35%;
-  grid-template-rows: 50% 5% 45%;
+  grid-template-rows: 45% 10% 45%;
 
   #picture {
     grid-row: 1;
@@ -176,7 +176,7 @@
 
     textarea {
       width: 100%;
-      height: 50%;
+      height: 75%;
       border: 1px solid #dfdfdf;
       border-radius: 4px;
       box-sizing: border-box;
@@ -193,10 +193,17 @@
       margin: 0;
       padding: 0;
       li {
-        width: 16%;
+        width: 15%;
         display: inline-block;
         list-style-type: none;
         button {
+          @media (max-device-width: 850px) {
+            font-size: 10px;
+          }
+          @media (max-device-width: 600px) {
+            font-size: 8px;
+            padding: 0;
+          }
           padding: 12px 5px;
           border-color: var(--blue);
           border-style: solid;
@@ -232,6 +239,10 @@
       font-size: 14px;
       background-color: #f9f9f9;
     }
+
+    @media (max-device-width: 850px) {
+      font-size: 12px;
+    }
   }
 
   table.tabcontent {
@@ -263,8 +274,65 @@
             background: #cc0000;
           }
         }
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      @media (max-device-width: 850px) {
+        font-size: 10px;
       }
     }
   }
 
+  --averageRating: 100%;
+
+  #Bewertung {
+    p {
+      width: 50%;
+    }
+
+    .rating {
+      display: inline-block;
+      margin: -13% 0 0;
+      border: none;
+      padding: 0;
+
+      input {
+        display: none;
+      }
+      label {
+        filter: grayscale(100%);
+        width: 10%;
+        float: right;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      label:before {
+        margin: 5px;
+        display: inline-block;
+      }
+
+      .starHalf {
+        margin-right: -5%;
+        position: relative;
+        width: 5%;
+      }
+      //https://codepen.io/jamesbarnett/pen/vlpkh
+
+      input:checked ~ label {
+        filter: none;
+      }
+      input:not(:disabled) {
+        &:not(:checked) + label:hover,
+        &:not(:checked) + label:hover ~ label {
+          filter: brightness(75%);
+        }
+      }
+
+    }
+
+  }
 }
