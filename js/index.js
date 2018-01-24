@@ -13,7 +13,7 @@ Vue.component('login', {
             if (this.$root.register) {
                 mail = this.email;
                 console.log("Register new user", this.username, mail, this.pw, this.pw_check);
-                if ((tmail).match(REGEXEMAIL)) {
+                if ((mail).match(REGEXEMAIL)) {
                     if (this.pw !== this.pw_check) {
                         console.log("passwörter stimmen nicht überein");
                         this.$root.setInfo("Passwörter stimmen nicht überein.", true);

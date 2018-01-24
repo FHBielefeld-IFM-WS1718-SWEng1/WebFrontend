@@ -126,11 +126,17 @@
       min-height: 50px;
       overflow-y: auto;
       list-style-type: none; }
+      #content #contacts #list_contacts a {
+        display: inline-block;
+        white-space: nowrap;
+        width: 86%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: -7px; }
       #content #contacts #list_contacts button {
         width: 10%;
         float: right;
-        top: 3px;
-        position: relative;
+        margin-top: 3px;
         background: #8b0000; }
         #content #contacts #list_contacts button:hover {
           background: #cc0000; }

@@ -9,7 +9,9 @@
     <link href="css/party.css" rel="stylesheet">
     <script src="https://unpkg.com/vue"></script>
     <script src="js/rest_util.js"></script>
+    <script src="js/login_util.js"></script>
     <script src="js/header.js" defer></script>
+    <script src="js/popup_util.js" defer></script>
     <script src="js/party.js" defer></script>
     <title>Papla - Dein Partyplaner!</title>
 </head>
@@ -43,6 +45,69 @@
     </div>
 </nav>
 
+<div class="popup-container" v-if="showAny()">
+    <div class="popup" role="alert" v-if="show['delete']">
+        <p class="title">Party Absagen</p>
+        <p class="desc">Bist du dir sicher, dass du diese Party absagen möchtest? Dieser Vorgang kann nicht rückgängig
+            gemacht werden.</p>
+        <ul class="popup-buttons" style="--button-width: 200px">
+            <li>
+                <button pos="left" class="confirm" @click="callback('delete')">Ja</button>
+            </li>
+            <li>
+                <button pos="right" class="deny" @click="show['delete'] = false">Nein</button>
+            </li>
+        </ul>
+    </div>
+    <div id="addGuestsPopup" class="popup" role="alert" v-if="show['addGuests']">
+        <p class="title">Gäste Einladen</p>
+        <label>Kontakte</label>
+        <hr>
+        <ul class="popup-buttons userlist">
+            <li v-for="(user, index) in callback('contactList')" :key="index">
+                <span style="display:inline; margin: 3px 0px 3px 40px;">
+                    <label class="userHoverable">{{user.name}}
+                        <span class="userTooltip"><img :src="user.image"/></span>
+                    </label>
+                    <button @click="callback('shiftList', user, index, true)">+</button>
+                </span>
+            </li>
+        </ul>
+        <label>Einzuladen</label>
+        <hr>
+        <ul class="popup-buttons userlist">
+            <li v-for="(user, index) in callback('planningList')" :key="index">
+                <span style="display:inline; margin: 3px 0px 3px 40px;">
+                    <label class="userHoverable">{{user.name}}
+                        <span class="userTooltip"><img :src="user.image"/></span>
+                    </label>
+                    <button @click="callback('shiftList', user, index, false)">-</button>
+                </span>
+            </li>
+        </ul>
+        <ul class="popup-buttons" style="--button-width: auto; --button-height: 30px; float: right;">
+            <li>
+                <button class="confirm" style="text-transform: none;" @click="callback('addGuests')">Einladungen
+                    Absenden
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="popup" role="alert" v-if="show['deleteGuest']">
+        <p class="title">Gast Entfernen</p>
+        <p class="desc">Bist du dir sicher, dass du {{callback('deleteGuest_name')}} von der Party Ausladen
+            möchtest?</p>
+        <ul class="popup-buttons" style="--button-width: 200px">
+            <li>
+                <button pos="left" class="confirm" @click="callback('deleteGuest')">Ja</button>
+            </li>
+            <li>
+                <button pos="right" class="deny" @click="show['deleteGuest'] = false">Nein</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <div class="left">
 </div>
 <div class="right">
@@ -57,7 +122,7 @@
             </div>
             <span v-if="owner">
                 <input type="file" id="uploadButton" style="display: none"/>
-                <button onclick="document.getElementById('uploadButton').click();">Profilbild Ändern</button>
+                <button onclick="document.getElementById('uploadButton').click();">Partybild Ändern</button>
             </span>
         </div>
 
@@ -88,47 +153,58 @@
             </div>
             <div tag="segment" v-if="owner">
                 <span><button @click="updateParty">Party {{isCreation ? "Starten!" : "Speichern"}}</button></span>
-                <span><button @click="" v-if="!isCreation">Party Absagen</button></span>
+                <span><button @click="confirmDelete" v-if="!isCreation">Party Absagen</button></span>
             </div>
         </div>
 
 
         <div id="party_description">
             <label>Details</label><br>
-            <textarea v-model="description"
+            <textarea v-model="description" placeholder="Gib hier eine Beschreibung deiner Party an!"
                       v-bind:readonly="!owner"></textarea>
         </div>
 
         <!------------------------------------------TABS START------------------------------------------------------------>
-        <div class="tab">
+        <div class="tab" v-if="!isCreation">
+            <hr>
             <ul>
                 <li>
-                    <button class="tablinks" onclick="openTab(event, 'Kommentare')" id="defaultOpen">Kommentare</button>
+                    <button class="tablinks inactive" @click="changeTab($event, 'Kommentare')">Kommentare</button>
                 </li>
                 <li>
-                    <button class="tablinks" onclick="openTab(event, 'Aufgabenliste')" id="OpenAufgabenliste">
+                    <button class="tablinks inactive" @click="changeTab($event, 'Aufgabenliste')">
                         Aufgabenliste
                     </button>
                 </li>
                 <li>
-                    <button class="tablinks" onclick="openTab(event, 'Gaesteliste')" id="OpenGaeste">Gästeliste</button>
+                    <button class="tablinks" @click="changeTab($event, 'Gaesteliste')">Gästeliste</button>
                 </li>
                 <li>
-                    <button class="tablinks" onclick="openTab(event, 'ToDoListe')" id="OpenToDo">ToDo-Liste</button>
+                    <button class="tablinks inactive" @click="changeTab($event, 'ToDoListe')">ToDo-Liste</button>
                 </li>
                 <li>
-                    <button class="tablinks" onclick="openTab(event, 'Abstimmungen')" id="OpenAbstimmung">Abstimmungen
+                    <button class="tablinks inactive" @click="changeTab($event, 'Abstimmungen')">Abstimmungen
                     </button>
                 </li>
                 <li>
-                    <button class="tablinks" onclick="openTab(event, 'Bewertung')" id="OpenBewertung">Bewertung</button>
+                    <button class="tablinks inactive" @click="changeTab($event, 'Bewertung')">Bewertung</button>
                 </li>
             </ul>
+            <hr>
         </div>
         <!-------------------------------------------TABS ENDE------------------------------------------------------------>
 
+        <!-------------------------------------------KOMMENTARE START------------------------------------------------------------>
+        <div id="Kommentare" class="tabcontent inactive" v-if="!isCreation">
+            <textarea v-model="tempComment" placeholder="Hier deinen Kommentar eingeben..."></textarea>
+            <div v-for="(comment, index) in comments">
+                <p>{{comment.text}}</p>
+            </div>
+        </div>
+        <!-------------------------------------------KOMMENTARE ENDE------------------------------------------------------------>
+
         <!-------------------------------------------AUFGABENLISTE START------------------------------------------------------------>
-        <table id="Aufgabenliste" class="tabcontent">
+        <table id="Aufgabenliste" class="tabcontent inactive" v-if="!isCreation">
             <tbody>
             <tr tag="header">
                 <td style="width: 35%;">Aufgaben:</td>
@@ -140,10 +216,9 @@
                 <tr tag="data">
                     <td>{{task.text}}</td>
                     <td>{{task.User.name}}</td>
-                    <td><input type="checkbox" @click="updateTask(task, $event)" v-bind:checked="task.status===1"
-                               :readonly="canUpdateTask(task)"></td>
+                    <td><input type="checkbox" @click="updateTask(task, $event)" v-bind:checked="task.status===1"></td>
                     <td v-if="owner">
-                        <button @click="deleteTask(task, index)">X</button>
+                        <button tag="delete" @click="deleteTask(task, index)">X</button>
                     </td>
                 </tr>
             </template>
@@ -168,164 +243,91 @@
             </tr>
             </tbody>
         </table>
-        <!--
-         <div id="Aufgaben_samp">
-             <label for="vorname"></label>
-             <p></p>
-             <samp class="samp_Report">Getränke</samp>
-             <p></p>
-             <samp class="samp_Report"> Kuchen </samp>
-             <p></p>
-             <samp class="samp_Report">Skat Spiel </samp>
-             <p></p>
-             <samp class="samp_Report"> Kaffee </samp>
-             <p></p>
-             <samp class="samp_Report"> Bastelsachen </samp>
-             <p></p>
-             <samp class="samp_Report"> Musikbox </samp>
-         </div>
-
-         <div id="Responsible">
-             <label class="Resp_Header" for="vorname">Verantwortlicher:</label>
-             <p></p>
-             <samp class="samp_Report">Edmund</samp>
-             <p></p>
-             <samp class="samp_Report"> Ursula </samp>
-             <p></p>
-             <samp class="samp_Report">Angela </samp>
-             <p></p>
-             <samp class="samp_Report"> Martin </samp>
-             <p></p>
-             <samp class="samp_Report"> Sarah </samp>
-             <p></p>
-             <samp class="samp_Report" style="color: blue"> wird gesucht </samp>
-             <input type="button" name="Meldung" value="" style="background-repeat: no-repeat; border-color: #0000cd; background-image: url(finger.jpg);
-                         background-position: center; width: 15px; height:25px">
-         </div>
-
-         <div id="Pencil_Butt">
-             <input type="button" name="Change_1" value="" style="background-image: url(img/pencil.png)">
-             <p></p>
-             <input type="button" name="Change_2" value="" style="background-image: url(img/pencil.png)">
-             <p></p>
-             <input type="button" name="Change_3" value="" style="background-image: url(img/pencil.png)">
-             <p></p>
-             <input type="button" name="Change_4" value="" style="background-image: url(img/pencil.png)">
-             <p></p>
-             <input type="button" name="Change_5" value="" style="background-image: url(img/pencil.png)">
-             <p></p>
-             <input type="button" name="Change_6" value="" style="background-image: url(img/pencil.png)">
-         </div>
-
-         <div id="Status">
-             <center><label for="vorname">Status:</label>
-                 <p></p>
-                 <input type="checkbox" name="cp_1">
-                 <p></p>
-                 <input type="checkbox" name="cp_2">
-                 <p></p>
-                 <input type="checkbox" name="cp_3" checked="checked">
-                 <p></p>
-                 <input type="checkbox" name="cp_4">
-                 <p></p>
-                 <input type="checkbox" name="cp_5" checked="checked">
-                 <p></p>
-                 <input type="checkbox" name="cp_6">
-             </center>
-         </div>
-
-         <div id="Trash_Butt">
-             <input type="button" name="Trash_1" value="" style="background-image: url(img/trash.png)">
-             <p></p>
-             <input type="button" name="Trash_2" value="" style="background-image: url(img/trash.png)">
-             <p></p>
-             <input type="button" name="Trash_3" value="" style="background-image: url(img/trash.png)">
-             <p></p>
-             <input type="button" name="Trash_4" value="" style="background-image: url(img/trash.png)">
-             <p></p>
-             <input type="button" name="Trash_5" value="" style="background-image: url(img/trash.png)">
-             <p></p>
-             <input type="button" name="Trash_6" value="" style="background-image: url(img/trash.png)">
-         </div>
-
-         <div id="Butt_Add">
-             <input type="button" name="Add_Someone" value="+">
-         </div>
-     </div>-->
         <!-------------------------------------------AUFGABENLISTE ENDE------------------------------------------------------------->
 
-
-        <!--
-                        <td rowspan="5">
-        -->
-        <!--
-                    <template v-if="canEdit">
-                        <tr>
-                            <td class="identifier"><label>Was?</label></td>
-                            <td>
-                                <input v-model="partyname" placeholder="Name" v-bind:readonly="!canEdit"/>
-                            </td>
-                            <td><img src="img/pencil.png" width="20px"></td>
-                            <td></td>
-                            <td rowspan="5"><textarea v-model="beschreibung" rows="9"
-                                                      cols="55">Dies ist ein Beispieltext</textarea></td>
-                            <td><img src="img/pencil.png" width="20px"></td>
-                        </tr>
-                        <tr>
-                            <td class="identifier"><label>Wer?</label></td>
-                            <td><input v-model="gastgeber"/></td>
-                            <td><img src="img/pencil.png" width="20px"></td>
-                        </tr>
-                        <tr>
-                            <td class="identifier"><label>Wo?</label></td>
-                            <td><input v-model="ort" name="daddr"/></td>
-                            <td><img src="img/pencil.png" width="20px"></td>
-                            <td>
-                                <button @click="mapsAufrufen()"><img src="img/maps_icon.png" width="20px"></button>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td class="identifier"><label>Start?</label></td>
-                            <td><input v-model="startzeit"/></td>
-                            <td><img src="img/pencil.png" width="20px"></td>
-                        </tr>
-                        <tr>
-                            <td class="identifier"><label>Ende?</label></td>
-                            <td><input v-model="endzeit"/></td>
-                            <td><img src="img/pencil.png" width="20px"></td>
-                        </tr>
+        <!-------------------------------------------GÄSTELISTE START------------------------------------------------------------>
+        <table id="Gaesteliste" class="tabcontent" v-if="!isCreation">
+            <tbody>
+            <tr tag="header">
+                <td style="width: 30%;">Gäste:</td>
+                <td style="width: 3%;"/>
+                <td style="width: 30%;">Absagen:</td>
+                <td style="width: 3%;"/>
+                <td style="width: 30%;">Ausstehend:</td>
+                <td style="width: 3%;"/>
+            </tr>
+            <template v-for="(user, index) in guests">
+                <tr tag="data">
+                    <template v-if="user.status===1">
+                        <td><a :href="'profile.html?id='+user.user_id">{{user.User.name}}</a></td>
+                        <td>
+                            <button @click="confirmDeleteGuest(user)" v-if="owner">X</button>
+                        </td>
                     </template>
                     <template v-else>
-                        <tr>
-                            <td class="identifier"><label>Was?</label></td>
-                            <td><input v-model="partyname" readonly/></td>
-                            <td></td>
-                            <td rowspan="4"><textarea v-model="beschreibung" rows="9"
-                                                      cols="55" readonly>Dies ist ein Beispieltext</textarea></td>
-                        </tr>
-                        <tr>
-                            <td class="identifier"><label>Wer?</label></td>
-                            <td><input v-model="gastgeber" readonly/></td>
-                        </tr>
-                        <tr>
-                            <td class="identifier"><label>Wo?</label></td>
-                            <td><input v-model="ort" name="daddr" readonly/></td>
-                            <td>
-                                <button @click="mapsAufrufen()"><img src="img/maps_icon.png" width="20px"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="identifier"><label>Start?</label></td>
-                            <td><input v-model="startzeit" readonly/></td>
-                        </tr>
-                        <tr>
-                            <td class="identifier"><label>Ende?</label></td>
-                            <td><input v-model="endzeit" readonly/></td>
-                        </tr>
+                        <td></td>
+                        <td></td>
                     </template>
-                    -->
+
+                    <template v-if="user.status===2">
+                        <td><a :href="'profile.html?id='+user.user_id">{{user.User.name}}</a></td>
+                        <td>
+                            <button @click="confirmDeleteGuest(user)" v-if="owner">X</button>
+                        </td>
+                    </template>
+                    <template v-else>
+                        <td></td>
+                        <td></td>
+                    </template>
+
+                    <template v-if="user.status===0">
+                        <td><a :href="'profile.html?id='+user.user_id">{{user.User.name}}</a></td>
+                        <td>
+                            <button @click="confirmDeleteGuest(user)" v-if="owner">X</button>
+                        </td>
+                    </template>
+                    <template v-else>
+                        <td></td>
+                        <td></td>
+                    </template>
+                </tr>
+            </template>
+
+            <tr>
+                <td>
+                    <button @click="showAddGuests">+</button>
+                </td>
+            </tr>
+
+            </tbody>
         </table>
+        <!-------------------------------------------GÄSTELISTE ENDE------------------------------------------------------------->
+
+        <!-------------------------------------------BEWERTUNG START------------------------------------------------------------>
+        <div id="Bewertung" class="tabcontent inactive" v-if="!isCreation">
+            <template v-if="enableRating">
+                <p v-if="ratingAverage">Diese Party hat eine Gesamtwertung von {{ratingAverage*10}}%!<br>Du hast diese
+                    Party {{ratingSelected?"bereits bewertet.":"noch nicht bewertet. Gib jetzt deine Bewertung ab!"}}
+                </p>
+                <p v-else>Diese Party hat noch keine Bewertungen. Sei der Erste, der sie bewertet!</p>
+                <div class="rating">
+                    <template v-for="i in [ 5, 4, 3, 2, 1 ]">
+                        <input type="radio" :value="(i*2).toString()" v-model="ratingSelected" @click="clickRating(i*2)"
+                               :id="'star' + i" :disabled="allowRating"/><label :for="'star' + i" class="starFull"><img
+                            src="img/rating.png" :title="i+' Sterne'"/></label>
+                        <input type="radio" :value="(i*2-1).toString()" v-model="ratingSelected"
+                               @click="clickRating(i*2-1)" :id="'star' + (i-1) + '_5'" :disabled="allowRating"/><label
+                            :for="'star' + (i-1) + '_5'" class="starHalf"><img src="img/ratingHalf.png"
+                                                                               :title="(i-1)+'.5 Sterne'"/></label>
+                    </template>
+                </div>
+            </template>
+            <template v-else>
+                <p>Du kannst diese Party erst bewerten, nachdem sie stattgefunden hat!</p>
+            </template>
+        </div>
+        <!-------------------------------------------BEWERTUNG ENDE------------------------------------------------------------->
+
     </div>
 </main>
 

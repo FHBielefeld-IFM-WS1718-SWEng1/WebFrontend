@@ -52,7 +52,7 @@
     <div id="content">
         <table id="party_table">
             <tbody>
-            <template v-for="(party, index) in parties">
+            <template v-for="(party, index) in parties" v-if="party.status!==2">
                 <tr tag="name">
                     <td colspan=2><a :href="'party.html?id='+party.id">{{ party.name }}</a></td>
                 </tr>
@@ -69,7 +69,7 @@
                         <br>
                         Wo?: {{ party.location }}
                         <br>
-                        Wann?: {{ getPartyTime(party) }}
+                        Wann?: {{ party.time }}
                     </td>
 
                     <td tag="desc">
@@ -77,9 +77,8 @@
                     </td>
 
                     <td tag="butt">
-                        <input type="submit" name="info" value="" style="background-image: url(img/info.png)">
-                        <input type="submit" name="confirm" value="" style="background-image: url(img/thumb_up.png)">
-                        <input type="submit" name="deny" value="" style="background-image: url(img/thumb_down.png)">
+                        <button title="Einladung Annehmen" v-if="party.status===0" name="confirm" @click="updatePartyStatus(party, 1, index)"><img src="img/thumb_up.png" alt="Papla icon"></button>
+                        <button title="Einladung Ablehnen" v-if="party.status!==-1" name="deny" @click="updatePartyStatus(party, 2, index)"><img src="img/thumb_down.png" alt="Papla icon"></button>
                     </td>
                 </tr>
                 <tr tag="spacer"></tr>

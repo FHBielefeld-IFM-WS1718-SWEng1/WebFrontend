@@ -11,6 +11,41 @@
   overflow-y: scroll;
 }
 
+#addGuestsPopup {
+  max-height: unset;
+  max-width: 300px;
+
+  label {
+    margin-left: 5%;
+  }
+
+  .userlist {
+    --button-width: 25px;
+    --button-height: 20px;
+    height: 150px;
+    overflow-y: scroll;
+    text-align: right;
+    list-style-position: inside;
+
+    li {
+      width: 100%;
+      label {
+        margin-left: 2%;
+        margin-right: 2%;
+        display: inline-block;
+        white-space: nowrap;
+        width: 70%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: -7px;
+      }
+      button {
+        display: initial;
+      }
+    }
+  }
+}
+
 #content {
   grid-area: main;
   padding-left: 3%;
@@ -19,20 +54,52 @@
   height: 100%;
   display: grid;
   grid-template-columns: 20% 10% 30% 35%;
-  grid-template-rows: 50% 10% 40%;
+  grid-template-rows: 45% 13% 1fr;
 
   #picture {
     grid-row: 1;
     grid-column: 1;
-    margin-top: 5%;
-    margin-left: 0%;
-
-    img {
+    margin-top: 8%;
+    margin-left: 3%;
+    #imageFrame {
+      @media (max-device-width: 930px) {
+        width: 100px;
+        height: 100px;
+      }
       width: 150px;
+      height: 150px;
+      white-space: nowrap;
+      text-align: center;
+      //margin: 1em 0;
 
+      span {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+      }
+
+      img {
+        vertical-align: middle;
+        @media (max-device-width: 930px) {
+          max-width: 100px;
+          max-height: 100px;
+        }
+        max-width: 150px;
+        max-height: 150px;
+      }
+    }
+    button {
+      margin-top: 1%;
       @media (max-device-width: 930px) {
         width: 100px;
       }
+      width: 150px;
+      padding: 8px 12px;
+      display: inline-block;
+      border: 1px solid #dfdfdf;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #f9f9f9;
     }
   }
 
@@ -108,8 +175,13 @@
     grid-column: 4 / 5;
 
     textarea {
-      width: 90%;
-      height: 50%;
+      width: 100%;
+      height: 75%;
+      border: 1px solid #dfdfdf;
+      border-radius: 4px;
+      box-sizing: border-box;
+      resize: none;
+      background-color: #f9f9f9;
     }
   }
 
@@ -121,12 +193,28 @@
       margin: 0;
       padding: 0;
       li {
-        width: 16%;
+        width: 15%;
         display: inline-block;
         list-style-type: none;
         button {
+          @media (max-device-width: 850px) {
+            font-size: 10px;
+          }
+          @media (max-device-width: 600px) {
+            font-size: 8px;
+            padding: 0;
+          }
+          padding: 12px 5px;
+          border-color: var(--blue);
+          border-style: solid;
+          border-radius: 8px;
+          box-sizing: border-box;
           display: inline-block;
           width: 100%;
+          background-color: var(--lightblue);
+          &.inactive {
+            background-color: var(--lightgrey);
+          }
         }
       }
     }
@@ -137,9 +225,9 @@
     grid-column: 1 / 5;
     margin: 0 5%;
     width: 90%;
-  }
-  #Aufgabenliste {
-    border-collapse: collapse;
+    &.inactive {
+      display: none;
+    }
 
     input {
       width: 65%;
@@ -151,6 +239,14 @@
       font-size: 14px;
       background-color: #f9f9f9;
     }
+
+    @media (max-device-width: 850px) {
+      font-size: 12px;
+    }
+  }
+
+  table.tabcontent {
+    border-collapse: collapse;
 
     tr[tag=header] {
       margin-bottom: 2%;
@@ -167,7 +263,7 @@
           margin-left: 4%;
         }
 
-        button {
+        button[tag=delete] {
           border: 1px solid #dfdfdf;
           border-radius: 4px;
           box-sizing: border-box;
@@ -178,7 +274,75 @@
             background: #cc0000;
           }
         }
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      @media (max-device-width: 850px) {
+        font-size: 10px;
       }
     }
+  }
+
+  #Kommentare {
+    textarea {
+      width: 80%;
+      height: 25%;
+      border: 1px solid #dfdfdf;
+      border-radius: 4px;
+      box-sizing: border-box;
+      resize: none;
+      background-color: #f9f9f9;
+    }
+  }
+
+  #Bewertung {
+    p {
+      width: 50%;
+    }
+
+    .rating {
+      display: inline-block;
+      margin: -13% 0 0;
+      border: none;
+      padding: 0;
+
+      input {
+        display: none;
+      }
+      label {
+        filter: grayscale(100%);
+        width: 10%;
+        float: right;
+        img {
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      label:before {
+        margin: 5px;
+        display: inline-block;
+      }
+
+      .starHalf {
+        margin-right: -5%;
+        position: relative;
+        width: 5%;
+      }
+      //https://codepen.io/jamesbarnett/pen/vlpkh
+
+      input:checked ~ label {
+        filter: none;
+      }
+      input:not(:disabled) {
+        &:not(:checked) + label:hover,
+        &:not(:checked) + label:hover ~ label {
+          filter: brightness(75%);
+        }
+      }
+
+    }
+
   }
 }

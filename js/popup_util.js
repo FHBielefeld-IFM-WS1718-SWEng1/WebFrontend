@@ -8,7 +8,7 @@ class PopupHandler {
                 hoverBG: false
             },
             methods: {
-                callback(type, parameters) {
+                callback(type, ...parameters) {
                     return this.callbackMethods[type](parameters);
                 },
                 showAny() {

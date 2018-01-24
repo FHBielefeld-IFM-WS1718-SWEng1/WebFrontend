@@ -21,7 +21,7 @@ const contentVue = new Vue({
             if (!this.imageChanged)
                 this.doUpdate();
             else { //Wenn das Nutzerbild geändert wurde ist der Vorgang etwas komplizierter
-                let imageTruncated = this.image.substring(this.image.indexOf("base64")+7);
+                let imageTruncated = this.image.substring(this.image.indexOf("base64") + 7);
                 postRequest("image/?api=" + localStorage.getItem("apiKey"), JSON.stringify({"data": imageTruncated}), function (data) {
                     console.log("Image was uploaded: " + JSON.stringify(data));
                     if (data.filename) {
@@ -37,7 +37,7 @@ const contentVue = new Vue({
                 "name": this.name,
                 "birthdate": this.birthdate,
                 "gender": parseInt(this.gender),
-                "profilepicture": this.imagePath
+                "profilePicture": this.imagePath
             };
             putRequest("user/" + this.userId + "?api=" + localStorage.getItem("apiKey"), JSON.stringify(userObject), function (data) {
                 if (!data.error && data.name)
@@ -59,8 +59,8 @@ const contentVue = new Vue({
             return this.gender === 1 ? "Männlich" : this.gender === 2 ? "Weiblich" : this.gender === 3 ? "Andere" : "Keine Angabe";
         },
         search() {
-            if(contentVue.searchString!="")
-            popupVue.showPopup('search');
+            if (getSearchResults().length > 0)
+                popupVue.showPopup('search');
         },
         confirmDeleteContact(user) {
             this.contactToDelete = user;
@@ -68,7 +68,7 @@ const contentVue = new Vue({
         },
         deleteContact() {
             if (this.contactToDelete)
-                deleteRequest("user/contact?api=" + localStorage.getItem("apiKey"), JSON.stringify({"id": this.contactToDelete.id}), function (data) {
+                deleteRequest("user/contact?api=" + localStorage.getItem("apiKey"), JSON.stringify({"userid": this.contactToDelete.id}), function (data) {
                     popupVue.hidePopup('deleteContact');
                     for (let i = 0; i < contentVue.contactList.length; i++)
                         if (contentVue.contactList[i].id === contentVue.contactToDelete.id)
@@ -86,7 +86,7 @@ const contentVue = new Vue({
         this.owner = this.userId === loggedInId;
         //Nutzerdaten abrufen
         getRequest("user/" + this.userId + "?api=" + apiKey, function (data) {
-            if(data.error === "kein gültiger api schlüssel")
+            if (data.error === "kein gültiger api schlüssel")
                 clearStorage();
             if (!data.error) {
                 console.log("userdata: " + JSON.stringify(data));
@@ -94,11 +94,11 @@ const contentVue = new Vue({
                 contentVue.name = data.name;
                 contentVue.birthdate = data.birthdate;
                 contentVue.gender = data.gender;
-                if (data.profilepicture) {
-                    contentVue.imagePath = data.profilepicture;
-                    getRequest("image/" + data.profilepicture + "?api=" + apiKey, function (data) {
+                if (data.profilePicture) {
+                    contentVue.imagePath = data.profilePicture;
+                    getRequest("image/" + data.profilePicture + "?api=" + apiKey, function (data) {
                         if (data.data)
-                            contentVue.image = "data:image/png;base64,"+data.data;
+                            contentVue.image = "data:image/png;base64," + data.data;
                     });
                 }
             }
@@ -146,7 +146,7 @@ if (contentVue.owner) {
         if (!contentVue.searchString)
             return null;
         return userList.filter(function (obj) {
-            return obj.name.toLowerCase().startsWith(contentVue.searchString.toLowerCase()) && !nameInContacts(obj);
+            return obj.email !== contentVue.email && obj.name.toLowerCase().startsWith(contentVue.searchString.toLowerCase()) && !nameInContacts(obj);
         });
     }
 
@@ -173,7 +173,6 @@ if (contentVue.owner) {
                 }
             });
         }
-
 
     function selectProfilePicture(evt) {
         let dateien = evt.target.files;
