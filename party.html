@@ -197,8 +197,8 @@
         <!-------------------------------------------KOMMENTARE START------------------------------------------------------------>
         <div id="Kommentare" class="tabcontent inactive" v-if="!isCreation">
             <textarea v-model="tempComment" placeholder="Hier deinen Kommentar eingeben..."></textarea>
-            <div v-for="(comment, index) in comment">
-
+            <div v-for="(comment, index) in comments">
+                <p>{{comment.text}}</p>
             </div>
         </div>
         <!-------------------------------------------KOMMENTARE ENDE------------------------------------------------------------>

@@ -12,12 +12,12 @@ const contentVue = new Vue({
     },
     created: function () {
         let apiKey = localStorage.getItem("apiKey");
-        console.log("api: " + apiKey);
         let dateNow = new Date();
         getRequest("party?api=" + apiKey + "&guest=false", function (data) {
             if (!data.error && data.parties) {
                 for (let i in data.parties) {
                     const party = data.parties[i];
+
                     let date = new Date(party.endDate ? party.endDate : party.startDate);
                     if (date > dateNow)//Nur Parties anzeigen die noch nicht vorbei sind
                     {
@@ -35,6 +35,7 @@ const contentVue = new Vue({
                             getRequest("image/" + party.picture + "?api=" + apiKey, function (data) {
                                 if (data.data) {
                                     partyObject.image = data.data;
+                                    contentVue.parties.push(partyObject);
                                 }
                             });
                     }
