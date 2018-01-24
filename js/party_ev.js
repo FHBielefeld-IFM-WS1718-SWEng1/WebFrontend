@@ -30,6 +30,7 @@ function DeleteObject() {
 }
 
 function ToggleObject() {
+    document.getElementById("Abstimmung_Allgemein").style.visibility = "hidden";
     document.getElementById("Abstimmungen_Erstellen").style.visibility = "hidden";
     document.getElementById("Abstimmungen_Ansehen").style.visibility = "visible";
 }
@@ -42,6 +43,19 @@ function ToggleObj_2() {
     /*visible vorher*/
 }
 
+function CreateNewVote(){
+    document.getElementById("Abstimmungen_Erstellen").style.visibility = "visible";
+    document.getElementById("Abstimmungen_Ansehen").style.visibility = "hidden";
+    document.getElementById("Abstimmung_Allgemein").style.visibility = "hidden";
+}
+
+function GoBack(){
+    document.getElementById("Abstimmung_Allgemein").style.visibility = "visible";
+    document.getElementById("Abstimmungen_Erstellen").style.visibility = "hidden";
+    document.getElementById("Abstimmungen_Ansehen").style.visibility = "hidden";
+
+}
+
 function ChangeObj3() {
     document.getElementById("Gaesteliste_Main").style.visibility = "hidden";
     document.getElementById("Gaesteliste_Checkin").style.visibility = "visible";
@@ -51,7 +65,7 @@ function ChangeObj3() {
 document.getElementById("defaultOpen").click();
 
 
-window.onload = function () {
+/*window.onload = function () {
 
     var chart = new CanvasJS.Chart("chartContainer", {
         animationEnabled: true,
@@ -71,4 +85,4 @@ window.onload = function () {
         }]
     });
     chart.render();
-}
+}*/

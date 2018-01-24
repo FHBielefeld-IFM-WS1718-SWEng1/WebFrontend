@@ -11,7 +11,6 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="js/rest_util.js"></script>
     <script src="js/login_util.js"></script>
-    <script src="js/home.js" defer></script>
     <script src="js/party_ev.js"></script>
 
     <title>Papla - Dein Partyplaner!</title>
@@ -174,8 +173,7 @@
             <samp class="samp_Report"> Sarah </samp>
             <p></p>
             <samp class="samp_Report" style="color: blue"> wird gesucht </samp>
-            <input type="button" name="Meldung" value="" style="background-repeat: no-repeat; border-color: #0000cd; background-image: url(finger.jpg);
-                            background-position: center; width: 15px; height:25px">
+            <input type="button" name="Meldung" value="" style="width: 15px; height:25px">
         </div>
 
         <div id="Pencil_Butt">
@@ -413,138 +411,216 @@
     <!-------------------------------------------ABSTIMMUNGEN START------------------------------------------------------------>
     <div id="Abstimmungen" class="tabcontent">
 
-        <div id="Abstimmung_Allgemein">
+        <div id="Abstimmung_Allgemein" style="margin-top: 1%">
             <div>
-                <form action="">
-                    <input type="submit" name="Neue_Abstimmung" value="Neue Abstimmung Erstellen"
-                           onclick="ToggleObj_2()" style="width: 870px; height: 40px; margin-bottom: 1%">
-                </form>
+                <input type="submit" onclick="CreateNewVote()" name="Neue_Abstimmung" value="Neue Abstimmung Erstellen" style="width: 870px; height: 40px">
             </div>
             <div>
                 <fieldset>
                     <samp class="samp_Report"> Welche Pizzen sollen gekauft werden?</samp>
-                    <!--vorher ToggleObj_2()-->
-                    <input class="Voting" onclick="ToggleObj_2()" type="submit" name="Abstimmung"
-                           value="Abstimmung ansehen" style="width: 200px; height: 30px; float: right">
+                    <input  class="Voting" onclick="ToggleObject()" type="submit" name="Abstimmung" value="Abstimmung ansehen" style="width: 200px; height: 30px; float: right">
                 </fieldset>
-                <hr>
                 <fieldset>
                     <samp class="samp_Report"> Welche Musik soll gespielt werden?</samp>
-                    <input id="Butt_Verschiebung" class="Voting" type="submit" name="Abstimmung"
-                           value="Abstimmung ansehen" style="width: 200px; height: 30px; float: right">
+                    <input id="Butt_Verschiebung"  onclick="ToggleObject()" class="Voting" type="submit" name="Abstimmung" value="Abstimmung ansehen" style="width: 200px; height: 30px; float: right" >
                 </fieldset>
-                <hr>
                 <fieldset>
                     <samp class="samp_Report"> Soll Tim ein Eimer Wasser über den Kopf bekommen?</samp>
-                    <input class="Voting" type="submit" name="Abstimmung" value="Abstimmung ansehen"
-                           style="width: 200px; height: 30px; float: right">
-                </fieldset>
-                <hr>
-                <fieldset>
-                    <samp class="samp_Report"> Welche Getränke sollen angeboten werden?</samp>
-                    <input class="Voting" type="submit" name="Abstimmung" value="Abstimmung ansehen"
-                           style="width: 200px; height: 30px; float: right">
-                </fieldset>
-                <hr>
-                <fieldset>
-                    <samp class="samp_Report"> Wer hat den Keks geklaut?</samp>
-                    <input class="Voting" type="submit" name="Abstimmung" value="Abstimmung ansehen"
-                           style="width: 200px; height: 30px; float: right">
+                    <input class="Voting" onclick="ToggleObject()" type="submit" name="Abstimmung" value="Abstimmung ansehen" style="width: 200px; height: 30px; float: right" >
                 </fieldset>
             </div>
         </div>
+        <!--</div>-->
 
-
-        <!--------------------------------------------------------------ANDERER BEREICH START-------------------------------------------------------->
-        <div id="Abstimmungen_Erstellen" class="Inhalt_Abstimmemn_Erstellen" style="visibility:hidden">
-            <div id="btnReturn_2">
-                <input type="submit" name="Return" value="" style="background-repeat: no-repeat;
-                                    background-image: url(img/return_mini.png);background-position: center; height: 30px; width: 40px;">
-            </div>
-            <div id="btnAbstimmungEinsehen">
-                <!--vorher ToggleObject()-->
-                <button onclick="ToggleObj_2()">Abstimmung ansehen</button>
-            </div>
-            <hr>
-            <div id="Head">
-                <b>Frage?</b>
-                <input type="text" id="Frage" name="Frage" value="Frage hier eingeben">
-                <div id="Head_Button">
-                    <button onclick="" style="background-image: url(img/pencil.png)"></button>
-                </div>
-            </div>
-
-            <div style="margin-bottom: 2%"><label>Optionen:</label></div>
-            <hr>
-
-            <div id="Options">
-                <samp class="samp_Report"> Option 1 </samp>
-                <p></p>
-                <samp class="samp_Report"> Option 2 </samp>
-                <p></p>
-                <samp class="samp_Report"> Option 3 </samp>
-                <p></p>
-                <samp class="samp_Report"> Option 4 </samp>
-                <p></p>
-                <samp class="samp_Report"> Option 5 </samp>
-                <p></p>
-                <samp class="samp_Report"> Option 6 </samp>
-                <p></p>
-            </div>
-
-            <div id="Info_Change">
-                <input type="button" name="IC_1" value="" style="background-image: url(img/pencil.png)">
-                <p></p>
-                <input type="button" name="IC_2" value="" style="background-image: url(img/pencil.png)">
-                <p></p>
-                <input type="button" name="IC_3" value="" style="background-image: url(img/pencil.png)">
-                <p></p>
-                <input type="button" name="IC_4" value="" style="background-image: url(img/pencil.png)">
-                <p></p>
-                <input type="button" name="IC_5" value="" style="background-image: url(img/pencil.png)">
-                <p></p>
-                <input type="button" name="IC_6" value="" style="background-image: url(img/pencil.png)">
-            </div>
-        </div>
-
-        <div id="Abstimmungen_Ansehen" class="Inhalt_Abstimmemn_Ansehen">
+        <!----------------------------------------------------------Abstimmungen_Ansehen START-------------------------------------------------------->
+        <div id="Abstimmungen_Ansehen" class="Inhalt_Abstimmemn_Ansehen" style="margin-top: -10%">
 
             <div id="btnReturn">
-                <input type="submit" name="Return" value="" style="background-repeat: no-repeat;
-                                   background-image: url(img/return.png);background-position: center; height: 30px; width: 40px;"></button>
+                <input type="submit" name="Return" value="" onclick="GoBack()" style="background-repeat: no-repeat;
+                                   background-image: url(img/return.png);background-position: center; height: 35px; width: 35px;" ></button>
             </div>
             <hr>
             <div id="Radio_Abstimmung">
-                <h3><b>Frage?</b> Welche Pizza soll bestelt werden?</h3>
+                <h3> Welche Pizza soll bestelt werden?</h3>
                 <form>
-                    <input type="radio" name="food" value="option1" checked> Salami<br>
-                    <input type="radio" name="food" value="option2"> Margherita<br>
-                    <input type="radio" name="food" value="option3"> Schinken <br>
-                    <input type="radio" name="food" value="option4"> Thunfisch<br>
-                    <input type="radio" name="food" value="option5"> Hawai
+                    <input id="var1" type="button" onclick="count1();" name="" value="option1" > Salami<br>
+                    <input id="var2" type="button" onclick="count2();" name="" value="option2"> Margherita<br>
+                    <input id="var3" type="button" onclick="count3();" name="" value="option3"> Schinken <br>
+                    <input id="var4" type="button" onclick="count4();" name="" value="option4"> Thunfisch<br>
+                    <input id="var5" type="button" onclick="count5();" name="" value="option5"> Hawai
                 </form>
 
-                <div id="btnAbstimmen">
-                    <button onclick="DeleteObject()" style="height: 30px; width: 200px;">Abstimmen</button>
-                </div>
+                <script>
+                    function count(){
+                        Pie(0); }
+                    // initialisierung count
+                    ;
+                </script>
+                <script>
+                    function count1(){
+                        Pie(1); }
+                    // initialisierung count1
+                    count1.num = 0;
+                </script>
 
+                <script>
+                    function count2(){
+                        Pie(2); }
+                    // initialisierung count2
+                    count2.num = 0;
+                </script>
+                <script>
+                    function count3(){
+                        Pie(3); }
+                    // initialisierung count2
+                    count3.num = 0;
+                </script>
+                <script>
+                    function count4(){
+                        Pie(4); }
+                    // initialisierung count2
+                    count4.num = 0;
+                </script>
+                <script>
+                    function count5(){
+                        //alert(count2.num);
+                        //count1.num++;
+                        Pie(5); }
+                    // initialisierung count2
+                    count5.num = 0;
+                </script>
+
+                <!--Nicht mehr notwendig!-->
+                <!--<div id="btnAbstimmen">
+                    <button style="height: 30px; width: 200px;">Abstimmen</button> <!--onclick="DeleteObject()"
+                </div>-->
             </div>
 
-            <div id="PieDiagramm">
+            <div id="PieDiagramm" style="margin-left: 43%; margin-top: -22%">
+                <script>
+                    function Pie(flag) {
+                        if(flag == 0){
+                            ;
+                        }
+                        else if(flag == 1){
+                            count1.num++;
+                        }
+                        else if(flag == 2){
+                            count2.num++;
+                        }
+                        else if(flag == 3){
+                            count3.num++;
+                        }
+                        else if(flag == 4){
+                            count4.num++;
+                        }
+                        else if(flag == 5){
+                            count5.num++;
+                        }
 
+                        var chart = new CanvasJS.Chart("chartContainer", {
+                            animationEnabled: true,
+                            title: { text: ""  },
+                            data: [{
+                                type: "pie",
+                                startAngle: 240,
+                                yValueFormatString: "##0\" Person(en)\"",
+                                indexLabel: "{label} {y}",
+                                dataPoints: [
+                                    {y: count1.num, label: "Salami"},
+                                    {y: count2.num, label: "Margheritha"},
+                                    {y: count3.num, label: "Schinken"},
+                                    {y: count4.num, label: "Thunfisch"},
+                                    {y: count5.num, label: "Hawai"}
+                                ]
+                            }]
+                        });
+                        chart.render();
+                        document.getElementById("var1").disabled=true;
+                        document.getElementById("var2").disabled=true;
+                        document.getElementById("var3").disabled=true;
+                        document.getElementById("var4").disabled=true;
+                        document.getElementById("var5").disabled=true;
+                    }
+                    // initialize count1 number
+                    count1.num = 0;
+                    count2.num = 0;
+                    count3.num = 0;
+                    count4.num = 0;
+                    count5.num = 0;
+                </script>
 
                 <h3>Bisheriges Ergebnis</h3>
                 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
                 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
             </div>
         </div>
+        <!---------------------------------------------------------ABSTIMMUNG ERSTELLEN START--------------------------------------------------------------------->
+        <div id="Abstimmungen_Erstellen" class="Inhalt_Abstimmemn_Erstellen" style="visibility:hidden; margin-top: -40%" >
+            <div id="btnReturn_2">
+                <input type="submit" onclick="GoBack()" name="Return" value="" style="background-repeat: no-repeat;
+                                   background-image: url(img/return.png);background-position: center; height: 35px; width: 35px;">
+                <!--Neue Abstimmung Erstellen-->
+            </div>
+            <div id="btnAbstimmungEinsehen">
+                <button onclick="ToggleObject()" style="height: 30px; width: 200px;">Abstimmung ansehen</button>
+            </div>
+            <hr>
+            <form>
+                <b>Frage?</b>
+                <input type="text" id="Frage" name="Frage" value="Frage hier eingeben">
+            </form>
 
+            <div id="Table_Optionen">
+                <table style="height: 1px; width: 1400px;" >
+                    <tr>
+                        <th><samp class="samp_Report" style="margin-left: -1342px">Optionen:</samp></th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <samp id="o1" class="samp_Report"> </samp>
+                            <input id="InputOpt1" type="text" style="width: 15%; height: 100%; margin-left: 30%">
+
+                            <script>
+                                document.getElementById("InputOpt1").value = "Ihre Eingabe bitte";
+                                document.getElementById("o1").innerHTML= document.getElementById("InputOpt1").value;
+                                function changeOptionInput() {
+                                    document.getElementById("o1").innerHTML= document.getElementById("InputOpt1").value;}
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!--<td>
+                            <samp id="o2" class="samp_Report"></samp>
+                            <input id="InputOpt2" type="text" style="width: 15%; height: 100%; margin-left: 30%;">
+                            <button style="margin-left: 700px; background-repeat: no-repeat; background-image: url(img/pencil.png);background-position: center; height: 25px; width: 25px;"></button>
+                        </td>
+                    </tr>
+                 <!--<tr>
+                        <td>
+                            <samp class="samp_Report"> Option 3 </samp>
+                            <button  style="margin-left: 700px; background-repeat: no-repeat; background-image: url(img/pencil.png);background-position: center; height: 25px; width: 25px;"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <samp class="samp_Report"> Option 4 </samp>
+                            <button style="margin-left: 700px; background-repeat: no-repeat; background-image: url(img/pencil.png);background-position: center; height: 25px; width: 25px;"></button>
+                        </td>
+                    </tr>-->
+                </table>
+            </div>
+
+            <div style="margin-left: 10%; margin-top: -3%">
+                <button id="ChangeOpt1" onclick="changeOptionInput()" style="margin-left: 700px; background-repeat: no-repeat;
+                                background-image: url(img/pencil.png);background-position: center; height: 25px; width: 25px;"></button>
+            </div>
+        </div>
     </div>
 
     <!--------------------------------------------------------------ANDERER BEREICH ENDE-------------------------------------------------------->
 
-
-    </div> <!---Ende Abstimmungen---->
+    <!-------------------------------------------ABSTIMMUNGEN ENDE------------------------------------------------------------->
 
 </main>
 </body>
