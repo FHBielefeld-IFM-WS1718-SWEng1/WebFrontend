@@ -156,11 +156,18 @@
       overflow-y: auto;
       list-style-type: none;
 
+      a {
+        display: inline-block;
+        white-space: nowrap;
+        width: 86%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: -7px;
+      }
       button {
         width: 10%;
         float: right;
-        top: 3px;
-        position: relative;
+        margin-top: 3px;
         background: #8b0000;
         &:hover {
           background: #cc0000;

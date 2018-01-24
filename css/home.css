@@ -103,11 +103,9 @@
         text-align: center;
         white-space: pre-line;
         /*My ├änderung*/ }
-      #content table tbody > tr[tag=party] td[tag=butt] input {
-        background-position: center;
-        width: 32px;
-        height: 32px;
-        background-repeat: no-repeat; }
+      #content table tbody > tr[tag=party] td[tag=butt] button {
+        background: none;
+        border: none; }
       #content table tbody > tr[tag=party] td[tag=butt][name=info] {
         background-image: url(../img/info.png); }
       #content table tbody > tr[tag=party] td[tag=butt][name=confirm] {
