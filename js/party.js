@@ -154,6 +154,7 @@ const contentVue = new Vue({
                     "text": document.getElementById("addTaskName").value,
                     "status": 0
                 });
+                message = message.replace('"null"', 'null');
                 const apiKey = localStorage.getItem("apiKey");
                 postRequest("party/task?api=" + apiKey, message, function (data) {
                     if (!data.error)
@@ -173,6 +174,14 @@ const contentVue = new Vue({
                 putRequest("party/task?api=" + localStorage.getItem("apiKey"), JSON.stringify(task), function (data) {
                 });
             },
+            volunteerForTask(task) {
+                task.userid = parseInt(localStorage.getItem("userId"));
+                putRequest("party/task?api=" + localStorage.getItem("apiKey"), JSON.stringify(task), function (data) {
+                    getRequest("party/" + contentVue.partyId + "?api=" + localStorage.getItem("apiKey"), function (data) {
+                        contentVue.tasks = data.tasks;
+                    });
+                });
+            },
             deleteTask(task, arrayIndex) {
                 const c_arrayIndex = arrayIndex;
                 deleteRequest("party/task?api=" + localStorage.getItem("apiKey"), JSON.stringify({"id": task.id}), function (data) {
@@ -181,7 +190,10 @@ const contentVue = new Vue({
                 });
             },
             clickRating(rating) {
-                postRequest("party/rating?api=" + localStorage.getItem("apiKey"), JSON.stringify({"partyid": this.partyId, "rating": rating}), function (data) {
+                postRequest("party/rating?api=" + localStorage.getItem("apiKey"), JSON.stringify({
+                    "partyid": this.partyId,
+                    "rating": rating
+                }), function (data) {
                 });
                 let newAverage = (this.ratingAverage * this.ratingTotal + rating) / (this.ratingTotal + 1);
                 this.ratingAverage = Number(Math.round(newAverage + 'e2') + 'e-2');
