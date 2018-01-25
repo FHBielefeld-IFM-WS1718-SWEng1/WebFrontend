@@ -23,7 +23,6 @@ const contentVue = new Vue({
             else { //Wenn das Nutzerbild geändert wurde ist der Vorgang etwas komplizierter
                 let imageTruncated = this.image.substring(this.image.indexOf("base64") + 7);
                 postRequest("image/?api=" + localStorage.getItem("apiKey"), JSON.stringify({"data": imageTruncated}), function (data) {
-                    console.log("Image was uploaded: " + JSON.stringify(data));
                     if (data.filename) {
                         contentVue.imageChanged = false;
                         contentVue.imagePath = data.filename;
@@ -89,7 +88,6 @@ const contentVue = new Vue({
             if (data.error === "kein gültiger api schlüssel")
                 clearStorage();
             if (!data.error) {
-                console.log("userdata: " + JSON.stringify(data));
                 contentVue.email = data.email;
                 contentVue.name = data.name;
                 contentVue.birthdate = data.birthdate;
@@ -177,7 +175,6 @@ if (contentVue.owner) {
     function selectProfilePicture(evt) {
         let dateien = evt.target.files;
         let uploadDatei = dateien[0];
-        console.log("selected file: " + uploadDatei);
 
         // Ein Objekt um Dateien einzulesen
         let reader = new FileReader();

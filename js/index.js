@@ -12,10 +12,8 @@ Vue.component('login', {
         login() {
             if (this.$root.register) {
                 mail = this.email;
-                console.log("Register new user", this.username, mail, this.pw, this.pw_check);
                 if ((mail).match(REGEXEMAIL)) {
                     if (this.pw !== this.pw_check) {
-                        console.log("passwörter stimmen nicht überein");
                         this.$root.setInfo("Passwörter stimmen nicht überein.", true);
                     }
                     else {
@@ -23,7 +21,6 @@ Vue.component('login', {
                         postRequest("register",
                             JSON.stringify({"name": this.username, "email": mail, "password": this.pw}),
                             function (data) {
-                                console.log("Register return, " + data);
                                 if (data.error) {
                                     if (data.error === "Email must be unique")
                                         rooty.setInfo("Diese E-Mail ist bereits registriert.", true);
@@ -42,13 +39,12 @@ Vue.component('login', {
                 }
             }
             else {
-                console.log("Login existing user", this.email, this.pw);
                 const rooty = this.$root;
                 mail = this.email;
                 if (mail.toString().match(REGEXEMAIL)) {
                     papla_login(mail, this.pw, function (success) {
                             if (!success)
-                                rooty.setInfo("Die Login Daten sind ungültig " + this.email + " " + mail, true);
+                                rooty.setInfo("Die Login Daten sind ungültig.", true);
                             else {
                                 str = window.location.href;
                                 str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");

@@ -215,7 +215,10 @@
             <template v-for="(task, index) in tasks">
                 <tr tag="data">
                     <td>{{task.text}}</td>
-                    <td>{{task.User.name}}</td>
+                    <td v-if="task.User">{{task.User.name}}</td>
+                    <td v-else>
+                        <button @click="volunteerForTask(task)">Freiwillig Melden</button>
+                    </td>
                     <td><input type="checkbox" @click="updateTask(task, $event)" v-bind:checked="task.status===1"></td>
                     <td v-if="owner">
                         <button tag="delete" @click="deleteTask(task, index)">X</button>
@@ -231,6 +234,7 @@
                 <td><input id="addTaskName" placeholder="Aufgabe"></td>
                 <td>
                     <select id="addTaskUser" name="Nutzer"/>
+                    <option value="null">Suche Freiwillige</option>
                     <option v-for="(user, index) in addTaskUsers" :value="user.user_id">{{user.user_name}}</option>
                     </select>
                 </td>
