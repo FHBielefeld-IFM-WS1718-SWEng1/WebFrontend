@@ -49,7 +49,8 @@ const contentVue = new Vue({
                             "location": party.location,
                             "time": new Date(party.startDate).toLocaleDateString('de-DE', this.timeOptions),
                             "description": party.description,
-                            "status": party.user_id === userId ? -1 : 0
+                            "status": party.user_id === userId ? -1 : 0,
+                            "ersteller": party.ersteller
                         };
                         if (party.picture)
                             getRequest("image/" + party.picture + "?api=" + apiKey, function (data) {
