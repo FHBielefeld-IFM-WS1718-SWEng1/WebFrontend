@@ -25,7 +25,7 @@
   grid-template-areas: "header header header" "left navigation right" "left main right" "footer footer footer";
   grid-template-rows: 165px 51px 1fr 24px;
   grid-template-columns: 1fr 900px 1fr;
-  min-height: 110vh; }
+  min-height: 100vh; }
   @media (max-device-width: 700px) {
     .container {
       grid-template-columns: 10px 1fr 10px; } }
@@ -88,7 +88,7 @@
     width: 100%;
     align-self: start;
     font-size: 18px;
-    /*Ger├ñte mit 320px und 400px oder weniger haben kleineren Text*/
+    /*Geräte mit 320px und 400px oder weniger haben kleineren Text*/
     text-align: left;
     justify-content: center;
     display: flex; }
