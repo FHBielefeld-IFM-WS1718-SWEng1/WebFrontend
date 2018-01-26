@@ -44,7 +44,7 @@
   height: 100%;
   display: grid;
   grid-template-columns: 20% 10% 30% 35%;
-  grid-template-rows: 50% 15% 1fr; }
+  grid-template-rows: 267px 100px 1fr; }
   #content #picture {
     grid-row: 1;
     grid-column: 1;

@@ -299,7 +299,7 @@
 
             <tr>
                 <td>
-                    <button @click="showAddGuests">+</button>
+                    <button @click="showAddGuests" v-if="owner">+</button>
                 </td>
             </tr>
 
