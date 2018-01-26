@@ -47,7 +47,7 @@ Vue.component('login', {
                                 rooty.setInfo("Die Login Daten sind ungültig.", true);
                             else {
                                 str = window.location.href;
-                                str = str.replace(/(\/[\w]+\.html)[\S]*/g, "/home.html");
+                                str = str.replace(/(\.de\/).*/g, ".de/home.html");
                                 window.location.replace(str);
                             }
                         }
