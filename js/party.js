@@ -255,7 +255,7 @@ const contentVue = new Vue({
 
 
                         if (data.picture) {
-                            contentVue.userimagePath = data.picture;
+                            contentVue.imagePath = data.picture;
                             getRequest("image/" + data.picture + "?api=" + apiKey, function (data) {
                                 if (data.data) {
                                     contentVue.image = "data:image/png;base64," + data.data;

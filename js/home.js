@@ -18,8 +18,14 @@ const contentVue = new Vue({
             const c_status = status;
             const c_index = index;
             putRequest("party/guest?api=" + localStorage.getItem("apiKey"), message, function (data) {
-                if (!data.error && status === 2)
-                    contentVue.parties.splice(index, 1);
+                if (!data.error && c_status === 2)
+                    contentVue.parties.splice(c_index, 1);
+                else if(!data.error && c_status === 1)
+                {
+                    let updated = contentVue.parties[c_index];
+                    updated.status = 1;
+                    contentVue.parties.$set(c_index, updated);
+                }
             });
         }
     },
